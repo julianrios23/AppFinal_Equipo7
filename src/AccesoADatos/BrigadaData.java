@@ -14,10 +14,10 @@ import javax.swing.JOptionPane;
 
 public class BrigadaData {
 
-    private CuartelData cd = new CuartelData();
-    private Cuartel cuartel = new Cuartel();
+    private final CuartelData cd = new CuartelData();
+    private final Cuartel cuartel = new Cuartel();
     BomberoData bombero = new BomberoData();
-    private Connection con = null;
+    private final Connection con = null;
 
    
 

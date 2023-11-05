@@ -14,10 +14,12 @@ import javax.swing.JOptionPane;
 
 public class SiniestroData {
 
-    private Connection con;
-
-    private String sql;
+    private Connection con = null;
     private BrigadaData brigadaD = new BrigadaData();
+
+    public SiniestroData() {
+        con = Conexion.getConexion();
+    }
 
     
     public void GuardarSiniestro(Siniestro siniestro) {

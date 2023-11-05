@@ -16,6 +16,10 @@ public class BomberoData {
 
     private Connection con = null;
 
+    public BomberoData() {
+        con = Conexion.getConexion();
+    }
+
    
 
     public void GuardarBombero(Bombero bombero) {

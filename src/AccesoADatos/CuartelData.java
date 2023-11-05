@@ -12,7 +12,11 @@ import javax.swing.JOptionPane;
 
 public class CuartelData {
 
-    private Connection con;
+   private Connection con = null;
+
+    public CuartelData() {
+        con = Conexion.getConexion();
+    }
 
   
 
