@@ -87,7 +87,7 @@ public class SiniestroData {
               
                 int idBrigi = rs.getInt("id_brigada");
                 if (!rs.wasNull()) {
-                    brg = brigadaD.BuscarBrigada(rs.getInt("id_brigada"));
+                    //brg = brigadaD.BuscarBrigada(rs.getInt("id_brigada"));
                     siniestro.setBrigada(brg);
                 } else {
                     siniestro.setBrigada(null);

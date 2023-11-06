@@ -1,7 +1,13 @@
-
 package Vistas;
 
+import AccesoADatos.BrigadaData;
+import AccesoADatos.Conexion;
+import AccesoADatos.CuartelData;
+import Entidades.Brigada;
 import Entidades.Cuartel;
+import java.sql.Connection;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -9,12 +15,14 @@ import Entidades.Cuartel;
  */
 public class CargaBrigadas extends javax.swing.JFrame {
 
-    
+    private Connection con = null;
+
     public CargaBrigadas() {
+
+        con = Conexion.getConexion();
         initComponents();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -22,11 +30,10 @@ public class CargaBrigadas extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtCod = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbEspec = new javax.swing.JComboBox<>();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jLabel5 = new javax.swing.JLabel();
         JBBuscar = new javax.swing.JButton();
@@ -51,11 +58,13 @@ public class CargaBrigadas extends javax.swing.JFrame {
         btnBuscar = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jButton2 = new javax.swing.JButton();
+        checkAct = new javax.swing.JCheckBox();
+        checkNOAct = new javax.swing.JCheckBox();
+        btnGuardar = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cmbCuartel = new javax.swing.JComboBox<>();
+        txtCod1 = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -78,27 +87,24 @@ public class CargaBrigadas extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(663, 32, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Cod / Id Brigada:");
+        jLabel2.setText("Nombre Brigada:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 187, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 187, 109, -1));
+        txtCod.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(txtCod, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 187, 109, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Nombre de Brigada:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 250, -1, -1));
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 250, 204, -1));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Especialidad:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 305, -1, -1));
 
-        jComboBox2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01 - INCENDIO EN VIVIENDA", "02 - INCENDIO EN INDUSTRIA", "03 - SOCORRO EN DERRUMBE", "04 - SOCORRO EN AMBIRO DE MONTAÑA", "05 - SOCORRO ACCIDENTE DE TRANSITO", "06 - SOCORRO INUNDACIONES", "07 - SOCORRO EN ALTURA", "08 - PREVENCION", " " }));
-        jComboBox2.setSelectedIndex(-1);
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(329, 305, 273, -1));
+        cmbEspec.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cmbEspec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01 - INCENDIO EN VIVIENDA", "02 - INCENDIO EN INDUSTRIA", "03 - SOCORRO EN DERRUMBE", "04 - SOCORRO EN AMBIRO DE MONTAÑA", "05 - SOCORRO ACCIDENTE DE TRANSITO", "06 - SOCORRO INUNDACIONES", "07 - SOCORRO EN ALTURA", "08 - PREVENCION", " " }));
+        cmbEspec.setSelectedIndex(-1);
+        getContentPane().add(cmbEspec, new org.netbeans.lib.awtextra.AbsoluteConstraints(329, 305, 273, -1));
 
         jInternalFrame1.setClosable(true);
         jInternalFrame1.setIconifiable(true);
@@ -304,29 +310,32 @@ public class CargaBrigadas extends javax.swing.JFrame {
         jLabel14.setText("Estado:");
         getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 360, -1, -1));
 
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jCheckBox1.setText("ACTIVA");
-        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(329, 358, -1, -1));
+        checkAct.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        checkAct.setText("ACTIVA");
+        getContentPane().add(checkAct, new org.netbeans.lib.awtextra.AbsoluteConstraints(329, 358, -1, -1));
 
-        jCheckBox2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jCheckBox2.setText("NO ACTIVA");
-        getContentPane().add(jCheckBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(503, 358, -1, -1));
+        checkNOAct.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        checkNOAct.setText("NO ACTIVA");
+        getContentPane().add(checkNOAct, new org.netbeans.lib.awtextra.AbsoluteConstraints(503, 358, -1, -1));
 
-        jButton2.setBackground(new java.awt.Color(0, 0, 0));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("GUARDAR / MODIFICAR BRIGADA");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 488, -1, -1));
+        btnGuardar.setBackground(new java.awt.Color(0, 0, 0));
+        btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setText("GUARDAR / MODIFICAR BRIGADA");
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 460, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setText("Asignar a Cuartel:");
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 409, -1, -1));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(329, 409, 273, -1));
+        getContentPane().add(cmbCuartel, new org.netbeans.lib.awtextra.AbsoluteConstraints(329, 409, 273, -1));
+
+        txtCod1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(txtCod1, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 187, 109, -1));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 248, 204, -1));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -336,9 +345,36 @@ public class CargaBrigadas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void JBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarActionPerformed
+        try {
+            String nombre = txtNombre.getText(); 
+            BrigadaData brigadaData = new BrigadaData();
+            Brigada brig = brigadaData.BuscarBrigada(nombre);
 
-      
+            if (brig != null) {
 
+                txtNombre.setText(brig.getNombre_brigada());
+                cmbEspec.setSelectedItem(brig.getEspecialidad());
+                checkAct.setSelected(brig.isEstado());
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró una Brigada con este nombre.");
+            }
+
+            // Carga el JComboBox de cuarteles con los cuarteles existentes
+            CuartelData cuartelData = new CuartelData(); // Crear una instancia de CuartelData
+            List<Cuartel> cuarteles = cuartelData.ListarCuarteles();
+
+            cmbCuartel.removeAllItems(); // Limpia los elementos existentes en el combo
+
+            for (Cuartel cuartel : cuarteles) {
+                cmbCuartel.addItem(cuartel); // Agrega los cuarteles al combo
+            }
+
+            if (brig != null) {
+                cmbCuartel.setSelectedItem(brig.getCuartel()); // Establecer el cuartel seleccionado en el combo
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre válido" + e.getMessage());
+        }
     }//GEN-LAST:event_JBBuscarActionPerformed
 
     private void JBModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBModificarActionPerformed
@@ -351,28 +387,26 @@ public class CargaBrigadas extends javax.swing.JFrame {
 
     private void JBBuscarPorIDCuartelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarPorIDCuartelActionPerformed
 
-       
+
     }//GEN-LAST:event_JBBuscarPorIDCuartelActionPerformed
 
     private void JBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBNuevoActionPerformed
 
-        
+
     }//GEN-LAST:event_JBNuevoActionPerformed
 
     private void JCBCuartelesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCBCuartelesItemStateChanged
-       
+
     }//GEN-LAST:event_JCBCuartelesItemStateChanged
 
     private void JBLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBLimpiarActionPerformed
-       
+
     }//GEN-LAST:event_JBLimpiarActionPerformed
 
     private void JRBMostrarCuartelesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRBMostrarCuartelesActionPerformed
-       
+
     }//GEN-LAST:event_JRBMostrarCuartelesActionPerformed
 
-    
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBBuscar;
@@ -390,13 +424,12 @@ public class CargaBrigadas extends javax.swing.JFrame {
     private javax.swing.JTextField JTFNombreBrigada;
     private javax.swing.JTextField JTFidCuartel;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JCheckBox checkAct;
+    private javax.swing.JCheckBox checkNOAct;
+    private javax.swing.JComboBox<Cuartel> cmbCuartel;
+    private javax.swing.JComboBox<String> cmbEspec;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -412,7 +445,9 @@ public class CargaBrigadas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtCod;
+    private javax.swing.JTextField txtCod1;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -19,11 +19,15 @@ public class Escritorio extends javax.swing.JFrame {
         menuSiniestros = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         menuBusqueda = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         menuEstadisticas = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         menuAdministarcion = new javax.swing.JMenu();
         itemBomberos = new javax.swing.JMenuItem();
         itemCuarteles = new javax.swing.JMenuItem();
         itemBrigadas = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -63,10 +67,36 @@ public class Escritorio extends javax.swing.JFrame {
 
         menuBusqueda.setText("Busqueda/Listado");
         menuBusqueda.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        jMenuItem3.setText("Listar Brigadas");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        menuBusqueda.add(jMenuItem3);
+
+        jMenuItem4.setText("Listar Bomberos");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        menuBusqueda.add(jMenuItem4);
+
         jMenuBar1.add(menuBusqueda);
 
         menuEstadisticas.setText("Informes/Estadisticas");
         menuEstadisticas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        jMenuItem2.setText("Historial");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        menuEstadisticas.add(jMenuItem2);
+
         jMenuBar1.add(menuEstadisticas);
 
         menuAdministarcion.setText("Administración");
@@ -98,6 +128,14 @@ public class Escritorio extends javax.swing.JFrame {
             }
         });
         menuAdministarcion.add(itemBrigadas);
+
+        jMenuItem5.setText("Gestión Personal");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        menuAdministarcion.add(jMenuItem5);
 
         jMenuBar1.add(menuAdministarcion);
 
@@ -133,6 +171,26 @@ public class Escritorio extends javax.swing.JFrame {
         GestionSiniestros gs = new GestionSiniestros();
         gs.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+       HistoricoEventos he = new HistoricoEventos();
+       he.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        ListarBrigadas lb = new ListarBrigadas();
+        lb.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        ListarBomberos lb = new ListarBomberos();
+        lb.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        GestionPersonal gp = new GestionPersonal();
+        gp.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -176,6 +234,10 @@ public class Escritorio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenu menuAdministarcion;
     private javax.swing.JMenu menuBusqueda;
     private javax.swing.JMenu menuEstadisticas;
