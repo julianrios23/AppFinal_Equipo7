@@ -13,52 +13,46 @@ public class Siniestro {
     private double coord_X;
     private double coord_Y;
     private LocalDate fecha_siniestro;
+    private String hora_siniestro;
     private String tipo;
     private String detalles;
     private Brigada brigada;
     private LocalDate fecha_resolucion;
+    private String hora_fin_siniestro;
     private int calificacion;
     private Boolean estado;
 
     public Siniestro() {
     }
 
-    public Siniestro(double coord_X, double coord_Y, LocalDate fecha_siniestro, String tipo, String detalles, Brigada brigada, LocalDate fecha_resolucion, int calificacion, Boolean estado) {
+    public Siniestro(double coord_X, double coord_Y, LocalDate fecha_siniestro, String hora_siniestro, String tipo, String detalles, Brigada brigada, LocalDate fecha_resolucion, String hora_fin_siniestro, int calificacion, Boolean estado) {
         this.coord_X = coord_X;
         this.coord_Y = coord_Y;
         this.fecha_siniestro = fecha_siniestro;
+        this.hora_siniestro = hora_siniestro;
         this.tipo = tipo;
         this.detalles = detalles;
         this.brigada = brigada;
         this.fecha_resolucion = fecha_resolucion;
+        this.hora_fin_siniestro = hora_fin_siniestro;
         this.calificacion = calificacion;
         this.estado = estado;
     }
 
-    public Siniestro(int id_siniestro, double coord_X, double coord_Y, LocalDate fecha_siniestro, String tipo, String detalles, Brigada brigada, LocalDate fecha_resolucion, int calificacion, Boolean estado) {
+    public Siniestro(int id_siniestro, double coord_X, double coord_Y, LocalDate fecha_siniestro, String hora_siniestro, String tipo, String detalles, Brigada brigada, LocalDate fecha_resolucion, String hora_fin_siniestro, int calificacion, Boolean estado) {
         this.id_siniestro = id_siniestro;
         this.coord_X = coord_X;
         this.coord_Y = coord_Y;
         this.fecha_siniestro = fecha_siniestro;
+        this.hora_siniestro = hora_siniestro;
         this.tipo = tipo;
         this.detalles = detalles;
         this.brigada = brigada;
         this.fecha_resolucion = fecha_resolucion;
+        this.hora_fin_siniestro = hora_fin_siniestro;
         this.calificacion = calificacion;
         this.estado = estado;
     }
-
-    public Siniestro(int id_siniestro, double coord_X, double coord_Y, LocalDate fecha_siniestro, String tipo, String detalles, Boolean estado) {
-        this.id_siniestro = id_siniestro;
-        this.coord_X = coord_X;
-        this.coord_Y = coord_Y;
-        this.fecha_siniestro = fecha_siniestro;
-        this.tipo = tipo;
-        this.detalles = detalles;
-        this.estado = estado;
-    }
-    
-    
 
     public int getId_siniestro() {
         return id_siniestro;
@@ -90,6 +84,14 @@ public class Siniestro {
 
     public void setFecha_siniestro(LocalDate fecha_siniestro) {
         this.fecha_siniestro = fecha_siniestro;
+    }
+
+    public String getHora_siniestro() {
+        return hora_siniestro;
+    }
+
+    public void setHora_siniestro(String hora_siniestro) {
+        this.hora_siniestro = hora_siniestro;
     }
 
     public String getTipo() {
@@ -124,6 +126,14 @@ public class Siniestro {
         this.fecha_resolucion = fecha_resolucion;
     }
 
+    public String getHora_fin_siniestro() {
+        return hora_fin_siniestro;
+    }
+
+    public void setHora_fin_siniestro(String hora_fin_siniestro) {
+        this.hora_fin_siniestro = hora_fin_siniestro;
+    }
+
     public int getCalificacion() {
         return calificacion;
     }
@@ -132,7 +142,7 @@ public class Siniestro {
         this.calificacion = calificacion;
     }
 
-    public Boolean isEstado() {
+    public Boolean getEstado() {
         return estado;
     }
 
@@ -140,6 +150,7 @@ public class Siniestro {
         this.estado = estado;
     }
 
+    
     @Override
     public String toString() {
         return " ID" + id_siniestro
@@ -152,6 +163,10 @@ public class Siniestro {
                 + ", Fecha Resolucion " + fecha_resolucion
                 + ", Calificacion " + calificacion
                 + ", Estado " + estado;
+    }
+
+    public boolean isEstado() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

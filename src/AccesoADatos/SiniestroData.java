@@ -134,7 +134,7 @@ public class SiniestroData {
                 siniestro.setTipo(rs.getString("tipo"));
                 siniestro.setDetalles(rs.getString("detalles"));
 
-                // Verificar si id_brigada es NULL antes de asignarlo a la brigada
+              
                 int idBrigada = rs.getInt("id_brigada");
                 if (!rs.wasNull()) {
                     Brigada brigada = new Brigada();
@@ -169,10 +169,10 @@ public class SiniestroData {
             if (siniestro.getBrigada() == null) {
                 ps.setString(6, null);
             } else {
-                ps.setInt(6, siniestro.getBrigada().getId_brigada());//----------
+                ps.setInt(6, siniestro.getBrigada().getId_brigada());
             }
 
-            // Configura fecha_resolucion y calificacion
+            
             if (siniestro.getFecha_resolucion() != null) {
                 ps.setDate(7, Date.valueOf(siniestro.getFecha_resolucion()));
                 ps.setInt(8, siniestro.getCalificacion());

@@ -1,4 +1,3 @@
-
 package Vistas;
 
 import javax.swing.JOptionPane;
@@ -9,7 +8,6 @@ public class Escritorio extends javax.swing.JFrame {
         initComponents();
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -19,6 +17,7 @@ public class Escritorio extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuSiniestros = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menuBusqueda = new javax.swing.JMenu();
         menuEstadisticas = new javax.swing.JMenu();
         menuAdministarcion = new javax.swing.JMenu();
@@ -51,6 +50,15 @@ public class Escritorio extends javax.swing.JFrame {
 
         menuSiniestros.setText("Siniestros");
         menuSiniestros.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
+        jMenuItem1.setText("Gestión de Siniestros");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuSiniestros.add(jMenuItem1);
+
         jMenuBar1.add(menuSiniestros);
 
         menuBusqueda.setText("Busqueda/Listado");
@@ -106,21 +114,26 @@ public class Escritorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void itemBomberosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBomberosActionPerformed
-        GestionBombero gb = new GestionBombero();
+        CargaBombero gb = new CargaBombero();
         gb.setVisible(true);
     }//GEN-LAST:event_itemBomberosActionPerformed
 
     private void itemBrigadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBrigadasActionPerformed
-        GestionBrigada gbr = new GestionBrigada();
-        gbr.setVisible(true);
+        CargaBrigadas cb = new CargaBrigadas();
+        cb.setVisible(true);
+
     }//GEN-LAST:event_itemBrigadasActionPerformed
 
     private void itemCuartelesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCuartelesActionPerformed
-       GestionCuartel gc = new GestionCuartel();
-       gc.setVisible(true);
+        CargaCuarteles cc = new CargaCuarteles();
+        cc.setVisible(true);
     }//GEN-LAST:event_itemCuartelesActionPerformed
 
-   
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        GestionSiniestros gs = new GestionSiniestros();
+        gs.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -162,6 +175,7 @@ public class Escritorio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu menuAdministarcion;
     private javax.swing.JMenu menuBusqueda;
     private javax.swing.JMenu menuEstadisticas;
