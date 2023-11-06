@@ -65,7 +65,7 @@ public class SiniestroData {
 
     public Siniestro BuscarSiniestroPorID(int id) {
         Siniestro siniestro = new Siniestro();
-        String SQL = "SELECT * FROM siniestro WHERE id_siniestro = ?";
+        String SQL = "SELECT * FROM siniestro WHERE idSiniestro = ?";
 
         PreparedStatement ps = null;
 
@@ -115,7 +115,7 @@ public class SiniestroData {
 
     public Siniestro BuscarSiniestro_ID_NUEVO(int id) {
         Siniestro siniestro = null;
-        String SQL = "SELECT * FROM siniestro WHERE id_siniestro = ?";
+        String SQL = "SELECT * FROM siniestro WHERE idSiniestro = ?";
         PreparedStatement ps = null;
         ResultSet rs = null;
 
@@ -127,7 +127,7 @@ public class SiniestroData {
 
             if (rs.next()) {
                 siniestro = new Siniestro();
-                siniestro.setId_siniestro(rs.getInt("id_siniestro"));
+                siniestro.setId_siniestro(rs.getInt(1));
                 siniestro.setCoord_X(rs.getDouble("coord_X"));
                 siniestro.setCoord_Y(rs.getDouble("coord_Y"));
                 siniestro.setFecha_siniestro(rs.getDate("fecha_siniestro").toLocalDate());

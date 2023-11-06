@@ -1,12 +1,23 @@
 
 package Vistas;
 
+import AccesoADatos.BrigadaData;
+import AccesoADatos.SiniestroData;
+import Entidades.Brigada;
+import Entidades.Siniestro;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Julian Rios
  */
 public class GestionSiniestros extends javax.swing.JFrame {
-
+    SiniestroData sd = new SiniestroData();
+    BrigadaData bd = new BrigadaData();
     
     public GestionSiniestros() {
         initComponents();
@@ -177,6 +188,11 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("CARGAR NUEVO SINIESTRO");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 549, -1, -1));
 
         jButton3.setBackground(new java.awt.Color(0, 0, 0));
@@ -201,9 +217,66 @@ public class GestionSiniestros extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void JBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarActionPerformed
-
+        try{
+            int codigo = Integer.parseInt(txtCod.getText());
+            System.out.println("Buscando bombero con codigo:" + txtCod.getText());
+            Siniestro siniestroEncontrado = sd.BuscarSiniestroPorID(codigo);
+            
+            // Una vez encontrado el siniestro debo mostrarlo:
+            if(siniestroEncontrado != null){
+                txtX.setText(siniestroEncontrado.getCoord_X() + "");
+                txtY.setText(siniestroEncontrado.getCoord_Y() + "");
+                LocalDate fechaEnFormatoLocal = siniestroEncontrado.getFecha_siniestro();
+                Date fechaEnFormatoDate = Date.from(fechaEnFormatoLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                dateInicio.setDate(fechaEnFormatoDate);
+                cmbTipoSin.setSelectedIndex(siniestroEncontrado.getCalificacion());
+                txtHorainicio.setText(siniestroEncontrado.getHora_siniestro());
+                textarea.setText(siniestroEncontrado.getDetalles());
+                
+                // muestro la brigada que fue asignada al siniestro:
+                Brigada brigadaEncontrada = siniestroEncontrado.getBrigada();
+                if(brigadaEncontrada != null){ // el siniestro ya ha sido o esta siendo atendido
+                    cmbBrigaAsignada.setSelectedItem((String)brigadaEncontrada.getNombre_brigada());
+                    LocalDate fechaEnFormatoLocalR = siniestroEncontrado.getFecha_resolucion();
+                    Date fechaEnFormatoDateR = Date.from(fechaEnFormatoLocalR.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                    dateResolc.setDate(fechaEnFormatoDateR);
+                    txtHoraResoluc.setText(siniestroEncontrado.getHora_fin_siniestro());
+                    txtCalif.setText(siniestroEncontrado.getCalificacion() + "");
+                }
+                
+            }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "El codigo debe ser un entero y no debe estar vacio");
+        }catch(NullPointerException e){
+            System.out.println("No se encontro ningun bombero con el cod: " + txtCod.getText());
+        }
+        
      
     }//GEN-LAST:event_JBBuscarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        System.out.println("Guardando Siniestro: ...");
+        try{
+            Siniestro siniestroAGuardar = new Siniestro();
+            Double posX = Double.parseDouble(txtX.getText());
+            Double posY = Double.parseDouble(txtY.getText());
+            siniestroAGuardar.setCoord_X(posX);
+            siniestroAGuardar.setCoord_Y(posY);
+            Instant instant = dateInicio.getDate().toInstant();
+            siniestroAGuardar.setFecha_siniestro(LocalDate.ofInstant(instant, ZoneId.systemDefault()));
+            siniestroAGuardar.setTipo(cmbTipoSin.getSelectedItem().toString());
+            
+            // Aqui queda por mejorar que chequee el formato de hora introducido
+            siniestroAGuardar.setHora_siniestro(txtHorainicio.getText());
+            
+            //Una vez tengo el siniestro armado, lo mando a persistir, acá tmb debería de asegurarme q el siniestro va bien armado.
+            sd.GuardarSiniestro(siniestroAGuardar);
+        }catch(Exception e){
+            System.out.println("Error al Guardar Siniestro");
+        }
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     
    
