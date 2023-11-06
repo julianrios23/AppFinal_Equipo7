@@ -5,6 +5,7 @@ import AccesoADatos.BrigadaData;
 import AccesoADatos.SiniestroData;
 import Entidades.Brigada;
 import Entidades.Siniestro;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -187,6 +188,11 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("CARGAR NUEVO SINIESTRO");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 549, -1, -1));
 
         jButton3.setBackground(new java.awt.Color(0, 0, 0));
@@ -247,6 +253,30 @@ public class GestionSiniestros extends javax.swing.JFrame {
         
      
     }//GEN-LAST:event_JBBuscarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        System.out.println("Guardando Siniestro: ...");
+        try{
+            Siniestro siniestroAGuardar = new Siniestro();
+            Double posX = Double.parseDouble(txtX.getText());
+            Double posY = Double.parseDouble(txtY.getText());
+            siniestroAGuardar.setCoord_X(posX);
+            siniestroAGuardar.setCoord_Y(posY);
+            Instant instant = dateInicio.getDate().toInstant();
+            siniestroAGuardar.setFecha_siniestro(LocalDate.ofInstant(instant, ZoneId.systemDefault()));
+            siniestroAGuardar.setTipo(cmbTipoSin.getSelectedItem().toString());
+            
+            // Aqui queda por mejorar que chequee el formato de hora introducido
+            siniestroAGuardar.setHora_siniestro(txtHorainicio.getText());
+            
+            //Una vez tengo el siniestro armado, lo mando a persistir, acá tmb debería de asegurarme q el siniestro va bien armado.
+            sd.GuardarSiniestro(siniestroAGuardar);
+        }catch(Exception e){
+            System.out.println("Error al Guardar Siniestro");
+        }
+        
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     
    
