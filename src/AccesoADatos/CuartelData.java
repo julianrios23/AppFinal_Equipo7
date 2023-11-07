@@ -36,7 +36,7 @@ public class CuartelData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 cuartel.setId_cuartel(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Cuartel Agregado Exitosamente. ");
+                
             }
             rs.close();
             ps.close();
@@ -47,15 +47,11 @@ public class CuartelData {
 
     public Cuartel BuscarCuartelPorId(int id) {
         Cuartel cuartel = null;
-
         String SQL = "SELECT * FROM cuartel WHERE id_cuartel = ? ";
-
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(SQL);
-
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -70,7 +66,7 @@ public class CuartelData {
                 cuartel.setEstado(rs.getBoolean("estado"));
 
             } else {
-                JOptionPane.showMessageDialog(null, "No existe el Cuartel. ");
+                //JOptionPane.showMessageDialog(null, "No existe el Cuartel. ");
             }
             rs.close();
             ps.close();
@@ -100,9 +96,9 @@ public class CuartelData {
             int exito = ps.executeUpdate();
 
             if (exito > 0) {
-                JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+                //JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
             } else {
-                JOptionPane.showMessageDialog(null, "El Cuartel no existe");
+                //JOptionPane.showMessageDialog(null, "El Cuartel no existe");
             }
             ps.close();
         } catch (SQLException e) {
