@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,6 +22,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
     
     public GestionSiniestros() {
         initComponents();
+        // al inicializar la ventana, actualizo tmb el CBBriga
+        actualizarComboBoxBrigaAsignada();
     }
 
     
@@ -144,7 +147,11 @@ public class GestionSiniestros extends javax.swing.JFrame {
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 353, -1, -1));
 
         cmbBrigaAsignada.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cmbBrigaAsignada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbBrigaAsignada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBrigaAsignadaActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmbBrigaAsignada, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 353, 309, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -278,7 +285,23 @@ public class GestionSiniestros extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnCargarActionPerformed
 
+    private void cmbBrigaAsignadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBrigaAsignadaActionPerformed
+        // cada vez que alguien hace clic en el boton tengo que actualizar las brigadas existentes:
+        actualizarComboBoxBrigaAsignada();
+        
+    }//GEN-LAST:event_cmbBrigaAsignadaActionPerformed
+
     
+    private void actualizarComboBoxBrigaAsignada(){
+        List<Brigada> brigadasEnBD = bd.ListarBrigada();
+        if (!brigadasEnBD.isEmpty()){ // verifico que no este vacía
+            Escritorio.brigadasExistentes = Escritorio.transformarBrigadasAtexto(brigadasEnBD);
+        }
+        // una vez tengo las brigadas existentes como List<String>, actualizo mi combo box
+        for (String brigada : Escritorio.brigadasExistentes) {
+            cmbBrigaAsignada.addItem(brigada);
+        }
+    }
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,8 +1,14 @@
 package Vistas;
 
+import AccesoADatos.BrigadaData;
+import Entidades.Brigada;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class Escritorio extends javax.swing.JFrame {
+    
+    public static List<String> brigadasExistentes = new ArrayList<>();
 
     public Escritorio() {
         initComponents();
@@ -197,6 +203,14 @@ public class Escritorio extends javax.swing.JFrame {
         cb.setVisible(true);
     }//GEN-LAST:event_itemBomberosActionPerformed
 
+    public static List<String> transformarBrigadasAtexto(List<Brigada> brigadas){
+        List<String> respuesta = new ArrayList<>();
+        for (Brigada brigada : brigadas) {
+            respuesta.add(brigada.getNombre_brigada());
+        }
+        return respuesta;
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
