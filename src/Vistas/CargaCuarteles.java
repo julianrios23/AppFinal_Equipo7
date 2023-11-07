@@ -10,6 +10,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
     
     public CargaCuarteles() {
         initComponents();
+        setVisible(true);
     }
 
     

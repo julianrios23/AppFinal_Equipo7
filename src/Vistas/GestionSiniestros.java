@@ -56,8 +56,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         txtHoraResoluc = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnCargar = new javax.swing.JButton();
+        btnResolucion = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         txtCalif = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
@@ -163,7 +163,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
         getContentPane().add(txtHorainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 209, 165, -1));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setText("Usar formato 24 hs (Ej. 14,45)");
+        jLabel11.setText("Usar formato 24 hs (Ej. 14:45)");
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 212, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -184,22 +184,22 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jLabel14.setText("Usar formato 24 hs (Ej. 14,45)");
         getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(612, 474, -1, -1));
 
-        jButton2.setBackground(new java.awt.Color(0, 0, 0));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("CARGAR NUEVO SINIESTRO");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCargar.setBackground(new java.awt.Color(0, 0, 0));
+        btnCargar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCargar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCargar.setText("CARGAR NUEVO SINIESTRO");
+        btnCargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCargarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 549, -1, -1));
+        getContentPane().add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 549, -1, -1));
 
-        jButton3.setBackground(new java.awt.Color(0, 0, 0));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("GUARDAR RESOLUCION SINIESTRO");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 549, -1, -1));
+        btnResolucion.setBackground(new java.awt.Color(0, 0, 0));
+        btnResolucion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnResolucion.setForeground(new java.awt.Color(255, 255, 255));
+        btnResolucion.setText("GUARDAR RESOLUCION SINIESTRO");
+        getContentPane().add(btnResolucion, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 549, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setText("Calificación Siniestro:");
@@ -254,7 +254,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
      
     }//GEN-LAST:event_JBBuscarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         System.out.println("Guardando Siniestro: ...");
         try{
             Siniestro siniestroAGuardar = new Siniestro();
@@ -276,21 +276,21 @@ public class GestionSiniestros extends javax.swing.JFrame {
         }
         
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCargarActionPerformed
 
     
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBBuscar;
+    private javax.swing.JButton btnCargar;
+    private javax.swing.JButton btnResolucion;
     private javax.swing.JComboBox<String> cmbBrigServ;
     private javax.swing.JComboBox<String> cmbBrigaAsignada;
     private javax.swing.JComboBox<String> cmbTipoSin;
     private com.toedter.calendar.JDateChooser dateInicio;
     private com.toedter.calendar.JDateChooser dateResolc;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

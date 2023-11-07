@@ -21,6 +21,7 @@ public class CargaBrigadas extends javax.swing.JFrame {
 
         con = Conexion.getConexion();
         initComponents();
+        setVisible(true);
     }
 
     @SuppressWarnings("unchecked")

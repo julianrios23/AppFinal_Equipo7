@@ -13,8 +13,7 @@ import java.util.List;
 public class Principal {
 
     public static void main(String[] args) {
-        Escritorio menu = new Escritorio();
-        menu.setVisible(true);
+       
 
 //        //prueba generar cuartel nuevo
 //        Cuartel cuartel01 = new Cuartel("Cuartel: Los Polvorines", "San Martin 1234", 11352, 20153, "265245102", "polvorines@gmail.com", true);

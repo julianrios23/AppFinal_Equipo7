@@ -6,10 +6,10 @@ package Vistas;
  *
  * @author Julian Rios
  */
-public class GestionPersonal extends javax.swing.JFrame {
+public class Gestion_Personal extends javax.swing.JFrame {
 
     
-    public GestionPersonal() {
+    public Gestion_Personal() {
         initComponents();
     }
 

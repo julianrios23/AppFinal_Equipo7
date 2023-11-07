@@ -10,6 +10,7 @@ public class CargaBombero extends javax.swing.JFrame {
     
     public CargaBombero() {
         initComponents();
+        setVisible(true);
     }
 
     
