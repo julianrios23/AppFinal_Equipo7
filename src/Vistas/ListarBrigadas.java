@@ -1,18 +1,19 @@
-
 package Vistas;
 
-/**
- *
- * @author Julian Rios
- */
+import AccesoADatos.BrigadaData;
+import AccesoADatos.CuartelData;
+import Entidades.Brigada;
+import Entidades.Cuartel;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListarBrigadas extends javax.swing.JFrame {
 
-    
     public ListarBrigadas() {
         initComponents();
+        cargarComboBox();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -20,9 +21,9 @@ public class ListarBrigadas extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtBrigadas = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbCuartel = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -44,7 +45,7 @@ public class ListarBrigadas extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(694, 28, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtBrigadas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -70,7 +71,7 @@ public class ListarBrigadas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtBrigadas);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 198, 739, 320));
 
@@ -78,8 +79,13 @@ public class ListarBrigadas extends javax.swing.JFrame {
         jLabel2.setText("Seleccione Cuartel:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 113, -1, -1));
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 113, 266, -1));
+        cbCuartel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cbCuartel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCuartelActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cbCuartel, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 113, 266, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
@@ -91,17 +97,36 @@ public class ListarBrigadas extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
-    
+    //Cargar comboBox con cuarteles actuales 
+    private void cargarComboBox() {
+        cbCuartel.removeAllItems();
+        Cuartel cuartelVacio = new Cuartel();
+        cuartelVacio.setNombre_cuartel("Cuartel");
+        cbCuartel.addItem(cuartelVacio);
+        CuartelData cd = new CuartelData();
+        List<Cuartel> list = cd.ListarCuarteles();
+        for (Cuartel elem : list) {
+            cbCuartel.addItem(elem);
+        }
+    }
+
+
+    private void cbCuartelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCuartelActionPerformed
+        Cuartel cuartel = (Cuartel) cbCuartel.getSelectedItem();
+        int n = cuartel.getId_cuartel();
+        BrigadaData bd =new  BrigadaData();
+        List<Brigada> cuarteles = bd.ListarBrigadaPorCuartel(n);
+    }//GEN-LAST:event_cbCuartelActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Cuartel> cbCuartel;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtBrigadas;
     // End of variables declaration//GEN-END:variables
 
 }
