@@ -219,7 +219,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
     private void JBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarActionPerformed
         try{
             int codigo = Integer.parseInt(txtCod.getText());
-            System.out.println("Buscando bombero con codigo:" + txtCod.getText());
+            System.out.println("Buscando siniestro con codigo:" + txtCod.getText());
             Siniestro siniestroEncontrado = sd.BuscarSiniestroPorID(codigo);
             
             // Una vez encontrado el siniestro debo mostrarlo:
@@ -248,7 +248,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
         }catch(NumberFormatException e){
             JOptionPane.showMessageDialog(this, "El codigo debe ser un entero y no debe estar vacio");
         }catch(NullPointerException e){
-            System.out.println("No se encontro ningun bombero con el cod: " + txtCod.getText());
+            System.out.println("No se encontro ningun siniestro con el cod: " + txtCod.getText());
         }
         
      

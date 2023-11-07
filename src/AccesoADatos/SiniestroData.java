@@ -65,7 +65,7 @@ public class SiniestroData {
 
     public Siniestro BuscarSiniestroPorID(int id) {
         Siniestro siniestro = new Siniestro();
-        String SQL = "SELECT * FROM siniestro WHERE idSiniestro = ?";
+        String SQL = "SELECT * FROM siniestro WHERE id_siniestro = ?";
 
         PreparedStatement ps = null;
 
@@ -85,7 +85,7 @@ public class SiniestroData {
                 siniestro.setTipo(rs.getString("tipo"));
                 siniestro.setDetalles(rs.getString("detalles"));
               
-                int idBrigi = rs.getInt("id_brigada");
+                int idBrigi = rs.getInt("brigada");
                 if (!rs.wasNull()) {
                     //brg = brigadaD.BuscarBrigada(rs.getInt("id_brigada"));
                     siniestro.setBrigada(brg);
