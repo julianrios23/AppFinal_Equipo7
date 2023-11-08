@@ -62,7 +62,7 @@ public class BrigadaData {
             if (rs.next()) {
                 brigada = new Brigada();
                 cuart = new Cuartel();
-                brigada.setId_brigada(rs.getInt("id_brigada"));
+                //brigada.setId_brigada(rs.getInt("id_brigada"));
                 brigada.setNombre_brigada(rs.getString("nombre_brigada"));
                 brigada.setEspecialidad(rs.getString("especialidad"));
                 brigada.setEstado(rs.getBoolean("estado"));
@@ -71,7 +71,7 @@ public class BrigadaData {
                 cuart.setId_cuartel(rs.getInt("id_cuartel"));
                 brigada.setCuartel(cuart);
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró una Brigada con este nombre.");
+                //JOptionPane.showMessageDialog(null, "No se encontró una Brigada con este nombre.");
             }
 
             ps.close();

@@ -18,7 +18,21 @@ public class CargaBrigadas extends javax.swing.JFrame {
 
         con = Conexion.getConexion();
         initComponents();
+        cargarComboBox();
         setVisible(true);
+    }
+
+    //Cargar comboBox con cuarteles actuales 
+    private void cargarComboBox() {
+        cmbCuartel.removeAllItems();
+        Cuartel cuartelVacio = new Cuartel();
+        cuartelVacio.setNombre_cuartel("Cuarteles");
+        cmbCuartel.addItem(cuartelVacio.getNombre_cuartel());
+        CuartelData cd = new CuartelData();
+        List<Cuartel> list = cd.ListarCuarteles();
+        for (Cuartel elem : list) {
+            cmbCuartel.addItem(elem.getNombre_cuartel());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -28,7 +42,7 @@ public class CargaBrigadas extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtCod = new javax.swing.JTextField();
+        txtnomBuscar = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cmbEspec = new javax.swing.JComboBox<>();
@@ -57,12 +71,13 @@ public class CargaBrigadas extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         checkAct = new javax.swing.JCheckBox();
-        checkNOAct = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         cmbCuartel = new javax.swing.JComboBox<>();
         txtCod1 = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
+        btnModificar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -85,11 +100,11 @@ public class CargaBrigadas extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(663, 32, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Nombre Brigada:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 187, -1, -1));
+        jLabel2.setText("Ingrese Nombre Brigada:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 187, 180, -1));
 
-        txtCod.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtCod, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 187, 109, -1));
+        txtnomBuscar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(txtnomBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(327, 187, 130, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Nombre de Brigada:");
@@ -100,8 +115,7 @@ public class CargaBrigadas extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 305, -1, -1));
 
         cmbEspec.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cmbEspec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01 - INCENDIO EN VIVIENDA", "02 - INCENDIO EN INDUSTRIA", "03 - SOCORRO EN DERRUMBE", "04 - SOCORRO EN AMBIRO DE MONTAÑA", "05 - SOCORRO ACCIDENTE DE TRANSITO", "06 - SOCORRO INUNDACIONES", "07 - SOCORRO EN ALTURA", "08 - PREVENCION", " " }));
-        cmbEspec.setSelectedIndex(-1);
+        cmbEspec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE ESPECIALIDAD", "01 - INCENDIO EN VIVIENDA", "02 - INCENDIO EN INDUSTRIA", "03 - SOCORRO EN DERRUMBE", "04 - SOCORRO EN AMBITO DE MONTAÑA", "05 - SOCORRO ACCIDENTE DE TRANSITO", "06 - SOCORRO INUNDACIONES", "07 - SOCORRO EN ALTURA", "08 - PREVENCION", " " }));
         getContentPane().add(cmbEspec, new org.netbeans.lib.awtextra.AbsoluteConstraints(329, 305, 273, -1));
 
         jInternalFrame1.setClosable(true);
@@ -298,6 +312,11 @@ public class CargaBrigadas extends javax.swing.JFrame {
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("BUSCAR");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(475, 187, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -309,18 +328,20 @@ public class CargaBrigadas extends javax.swing.JFrame {
         getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 360, -1, -1));
 
         checkAct.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        checkAct.setText("ACTIVA");
+        checkAct.setText("ACTIVA / NO ACTIVA");
         getContentPane().add(checkAct, new org.netbeans.lib.awtextra.AbsoluteConstraints(329, 358, -1, -1));
-
-        checkNOAct.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        checkNOAct.setText("NO ACTIVA");
-        getContentPane().add(checkNOAct, new org.netbeans.lib.awtextra.AbsoluteConstraints(503, 358, -1, -1));
 
         btnGuardar.setBackground(new java.awt.Color(0, 0, 0));
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
-        btnGuardar.setText("GUARDAR / MODIFICAR BRIGADA");
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 460, -1, -1));
+        btnGuardar.setText("GUARDAR ");
+        btnGuardar.setToolTipText("Nueva Brigada");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setText("Asignar a Cuartel:");
@@ -331,6 +352,24 @@ public class CargaBrigadas extends javax.swing.JFrame {
         txtCod1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         getContentPane().add(txtCod1, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 187, 109, -1));
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 248, 204, -1));
+
+        btnModificar.setBackground(new java.awt.Color(0, 0, 0));
+        btnModificar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificar.setText("MODIFICAR");
+        btnModificar.setToolTipText("Modificar Brigada Existente");
+        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(386, 469, -1, -1));
+
+        btnLimpiar.setBackground(new java.awt.Color(0, 0, 0));
+        btnLimpiar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(571, 469, -1, -1));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 600));
@@ -344,7 +383,7 @@ public class CargaBrigadas extends javax.swing.JFrame {
 
     private void JBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarActionPerformed
         try {
-            String nombre = txtNombre.getText(); 
+            String nombre = txtNombre.getText();
             BrigadaData brigadaData = new BrigadaData();
             Brigada brig = brigadaData.BuscarBrigada(nombre);
 
@@ -358,13 +397,13 @@ public class CargaBrigadas extends javax.swing.JFrame {
             }
 
             // Carga el JComboBox de cuarteles con los cuarteles existentes
-            CuartelData cuartelData = new CuartelData(); // Crear una instancia de CuartelData
+            CuartelData cuartelData = new CuartelData();
             List<Cuartel> cuarteles = cuartelData.ListarCuarteles();
 
             cmbCuartel.removeAllItems(); // Limpia los elementos existentes en el combo
 
             for (Cuartel cuartel : cuarteles) {
-                cmbCuartel.addItem(cuartel); // Agrega los cuarteles al combo
+                cmbCuartel.addItem(cuartel.getNombre_cuartel()); // Agrega los nombres de los cuarteles al combo
             }
 
             if (brig != null) {
@@ -405,6 +444,75 @@ public class CargaBrigadas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_JRBMostrarCuartelesActionPerformed
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try {
+            String nombre = txtnomBuscar.getText();
+            String nombreBrigada = txtNombre.getText();
+            String especialidad = (String) cmbEspec.getSelectedItem();
+            boolean estado = checkAct.isSelected();
+            Cuartel cuartelSeleccionado = (Cuartel) cmbCuartel.getSelectedItem();
+
+            Brigada brigada = new Brigada();
+            brigada.setNombre_brigada(nombreBrigada);
+            brigada.setEspecialidad(especialidad);
+            brigada.setEstado(estado);
+            brigada.setCuartel(cuartelSeleccionado);
+
+            BrigadaData brigadaData = new BrigadaData();
+            brigadaData.GuardarBrigada(brigada);
+
+            CuartelData cuartelData = new CuartelData();
+            List<Cuartel> cuarteles = cuartelData.ListarCuarteles();
+            cmbCuartel.removeAllItems();
+
+            for (Cuartel cuartel : cuarteles) {
+                cmbCuartel.addItem(cuartel.getNombre_cuartel());
+            }
+
+            limpiar();
+
+            JOptionPane.showMessageDialog(this, "Brigada agregada exitosamente.");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ingrese una palabra válida para el nombre");
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try {
+            String nombre = txtnomBuscar.getText();
+
+            BrigadaData brigadaData = new BrigadaData();
+            Brigada brigada = brigadaData.BuscarBrigada(nombre);
+
+            if (brigada != null) {
+
+                txtNombre.setText(brigada.getNombre_brigada());
+
+                cmbEspec.setSelectedItem(brigada.getEspecialidad());
+
+                checkAct.setSelected(brigada.isEstado());
+
+                CuartelData cuartelData = new CuartelData();
+                List<Cuartel> cuarteles = cuartelData.ListarCuarteles();
+                cmbCuartel.removeAllItems();
+
+                for (Cuartel cuartel : cuarteles) {
+                    cmbCuartel.addItem(cuartel.getNombre_cuartel());
+                }
+
+                cmbCuartel.setSelectedItem(brigada.getNombre_cuartel());
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró una Brigada con este nombre.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre válido para la búsqueda: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBBuscar;
@@ -423,9 +531,10 @@ public class CargaBrigadas extends javax.swing.JFrame {
     private javax.swing.JTextField JTFidCuartel;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JCheckBox checkAct;
-    private javax.swing.JCheckBox checkNOAct;
-    private javax.swing.JComboBox<Cuartel> cmbCuartel;
+    private javax.swing.JComboBox<String> cmbCuartel;
     private javax.swing.JComboBox<String> cmbEspec;
     private javax.swing.JButton jButton1;
     private javax.swing.JInternalFrame jInternalFrame1;
@@ -443,9 +552,18 @@ public class CargaBrigadas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField txtCod;
     private javax.swing.JTextField txtCod1;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtnomBuscar;
     // End of variables declaration//GEN-END:variables
+
+    private void limpiar() {
+        txtnomBuscar.setText("");
+        txtNombre.setText("");
+        cmbCuartel.setSelectedIndex(-1);
+        cmbEspec.setSelectedIndex(-1);
+        checkAct.setSelected(false);
+
+    }
 
 }
