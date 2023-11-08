@@ -6,8 +6,12 @@ import Entidades.Brigada;
 import Entidades.Cuartel;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class ListarBrigadas extends javax.swing.JFrame {
+
+    // generar un modelo para la tabla que muestra los productos
+    private DefaultTableModel modelo = new DefaultTableModel();
 
     public ListarBrigadas() {
         initComponents();
@@ -112,21 +116,21 @@ public class ListarBrigadas extends javax.swing.JFrame {
 
 
     private void cbCuartelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCuartelActionPerformed
-        //CuartelData contiene funcion BuscarCuartelPorNombre()
+        BrigadaData bd = new BrigadaData();
         CuartelData cd = new CuartelData();
-        //Variable para guardar el cuartel encontrado
         Cuartel cuartel = new Cuartel();
-        cuartel = cd.BuscarCuartelPorNombre((String) cbCuartel.getSelectedItem());
-        int idCuartel = cuartel.getId_cuartel();
-       //BrigadaData contiene listarBrigadasPorCuartel(idCuartel)
-        BrigadaData bd =new  BrigadaData();
-        //List<Brigada> brigadas = bd.ListarBrigadaPorCuartel();
-        
-        
-//        //CARGAR DATOS filas
-//        if (!prod.getCategoria().equals("-")) {
-//            modelo.addRow(new Object[]{prod.getCategoria(), prod.getNombre(), prod.getPrecio()});
-//        }
+        String cuartelNombre = (String) cbCuartel.getSelectedItem();
+        List<Brigada> brigadas = new ArrayList<>();
+        brigadas = bd.ListarBrigadasPorNombreCuartel(cuartelNombre);
+
+        DefaultTableModel modelo = (DefaultTableModel) jtBrigadas.getModel();
+        modelo.setRowCount(0); // Limpia la tabla antes de agregar nuevas filas
+
+        for (Brigada elem : brigadas) {
+            modelo.addRow(new Object[]{elem.getId_brigada(), elem.getNombre_brigada(), elem.getEspecialidad(), elem.isEstado(), elem.getNombre_cuartel(), elem.isDisponibilidad()});
+        }
+
+
     }//GEN-LAST:event_cbCuartelActionPerformed
 
 

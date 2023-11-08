@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 public class CargaBrigadas extends javax.swing.JFrame {
 
     private Connection con = null;
+    
 
     public CargaBrigadas() {
 
@@ -468,7 +469,6 @@ public class CargaBrigadas extends javax.swing.JFrame {
             for (Cuartel cuartel : cuarteles) {
                 cmbCuartel.addItem(cuartel.getNombre_cuartel());
             }
-
             limpiar();
 
             JOptionPane.showMessageDialog(this, "Brigada agregada exitosamente.");

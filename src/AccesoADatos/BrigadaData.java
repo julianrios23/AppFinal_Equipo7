@@ -194,6 +194,37 @@ public class BrigadaData {
         }
         return brigadas;
     }
+    
+       public List<Brigada> ListarBrigadasPorNombreCuartel(String nombreCuartel) {
+        List<Brigada> brigadas = new ArrayList<>();
+
+        try {
+            String SQL = "SELECT * FROM brigada WHERE nombre_cuartel = ?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, nombreCuartel);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Brigada brigada = new Brigada();
+                Cuartel cuartel = new Cuartel();
+
+                brigada.setId_brigada(rs.getInt("id_brigada"));
+                brigada.setNombre_brigada(rs.getString("nombre_brigada"));
+                brigada.setEspecialidad(rs.getString("especialidad"));
+                brigada.setEstado(rs.getBoolean("estado"));
+                brigada.setDisponibilidad(rs.getBoolean("disponibilidad"));
+                brigada.setNombre_cuartel(rs.getString("nombre_cuartel"));
+
+                brigada.setCuartel(cuartel);
+
+                brigadas.add(brigada);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada" + ex.getMessage());
+        }
+        return brigadas;
+    }
 
     public List<Brigada> ObtenerBrigadasNODisponibles() {
         ArrayList<Brigada> brigadas = new ArrayList<>();
