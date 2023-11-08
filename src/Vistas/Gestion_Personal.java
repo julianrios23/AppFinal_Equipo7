@@ -37,7 +37,6 @@ public class Gestion_Personal extends javax.swing.JFrame {
         txtTelefono = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         checkAct = new javax.swing.JCheckBox();
-        checkNOAct = new javax.swing.JCheckBox();
         jLabel10 = new javax.swing.JLabel();
         txtIdent2 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -66,6 +65,8 @@ public class Gestion_Personal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Chapa Identificación:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 98, -1, -1));
+
+        txtIdent.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         getContentPane().add(txtIdent, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 98, 157, -1));
 
         btnBuscar.setBackground(new java.awt.Color(0, 0, 0));
@@ -79,14 +80,14 @@ public class Gestion_Personal extends javax.swing.JFrame {
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 154, -1, -1));
 
         txtNombre.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 154, 191, -1));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 154, 230, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Apellido:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 154, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(421, 154, 70, -1));
 
         txtApe.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtApe, new org.netbeans.lib.awtextra.AbsoluteConstraints(549, 154, 191, -1));
+        getContentPane().add(txtApe, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 154, 250, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Fecha Nacimiento:");
@@ -97,6 +98,7 @@ public class Gestion_Personal extends javax.swing.JFrame {
         jLabel6.setText("Grupo Sanguineo:");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 204, -1, -1));
 
+        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "O+", "B+", "AB+", "A-", "O-", "B-", "AB-" }));
         jComboBox1.setSelectedIndex(-1);
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(549, 204, 191, -1));
@@ -105,6 +107,7 @@ public class Gestion_Personal extends javax.swing.JFrame {
         jLabel7.setText("BRIGADA: ");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(226, 385, -1, -1));
 
+        cmbBrigada.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         getContentPane().add(cmbBrigada, new org.netbeans.lib.awtextra.AbsoluteConstraints(336, 389, 256, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -112,23 +115,21 @@ public class Gestion_Personal extends javax.swing.JFrame {
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 254, -1, -1));
 
         txtTelefono.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 254, 139, -1));
+        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 254, 180, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("Estado:");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(377, 254, -1, -1));
 
         checkAct.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        checkAct.setText("ACTIVO");
+        checkAct.setText("ACTIVO / NO ACTIVO");
         getContentPane().add(checkAct, new org.netbeans.lib.awtextra.AbsoluteConstraints(479, 252, -1, -1));
-
-        checkNOAct.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        checkNOAct.setText("NO ACTIVO");
-        getContentPane().add(checkNOAct, new org.netbeans.lib.awtextra.AbsoluteConstraints(608, 252, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Chapa Identificación:");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 324, -1, -1));
+
+        txtIdent2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         getContentPane().add(txtIdent2, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 324, 157, -1));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -158,7 +159,6 @@ public class Gestion_Personal extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JCheckBox checkAct;
-    private javax.swing.JCheckBox checkNOAct;
     private javax.swing.JComboBox<String> cmbBrigada;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
