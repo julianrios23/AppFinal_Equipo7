@@ -9,10 +9,7 @@ import java.sql.Connection;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Julian Rios
- */
+
 public class CargaBrigadas extends javax.swing.JFrame {
 
     private Connection con = null;

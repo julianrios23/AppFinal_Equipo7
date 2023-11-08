@@ -1,10 +1,5 @@
-
 package Vistas;
 
-/**
- *
- * @author Julian Rios
- */
 public class CargaBombero extends javax.swing.JFrame {
 
     

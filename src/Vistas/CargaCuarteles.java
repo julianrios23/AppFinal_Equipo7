@@ -35,7 +35,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
         checkAct = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
         txtTel = new javax.swing.JTextField();
-        btnAgregar = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
@@ -127,27 +127,16 @@ public class CargaCuarteles extends javax.swing.JFrame {
         txtTel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         getContentPane().add(txtTel, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 356, 209, -1));
 
-
         jButton3.setBackground(new java.awt.Color(0, 0, 0));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("AGREGAR CUARTEL");
+        jButton3.setText("NUEVO CUARTEL");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton3ActionPerformed1(evt);
             }
         });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 466, -1, -1));
-        btnAgregar.setBackground(new java.awt.Color(0, 0, 0));
-        btnAgregar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregar.setText("NUEVO CUARTEL");
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 466, -1, -1));
 
         btnModificar.setBackground(new java.awt.Color(0, 0, 0));
         btnModificar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -185,7 +174,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton3ActionPerformed
    
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+    private void jButton3ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed1
 
         Cuartel cuartel = new Cuartel();
         cuartel.setNombre_cuartel(txtNombre.getText());
@@ -234,7 +223,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Cuartel Agregado Exitosamente. ");
             limpiar();
         }
-    }//GEN-LAST:event_btnAgregarActionPerformed
+    }//GEN-LAST:event_jButton3ActionPerformed1
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
@@ -319,12 +308,12 @@ public class CargaCuarteles extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JCheckBox checkAct;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
