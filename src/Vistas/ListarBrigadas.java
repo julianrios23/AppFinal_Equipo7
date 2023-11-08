@@ -101,26 +101,37 @@ public class ListarBrigadas extends javax.swing.JFrame {
     private void cargarComboBox() {
         cbCuartel.removeAllItems();
         Cuartel cuartelVacio = new Cuartel();
-        cuartelVacio.setNombre_cuartel("Cuartel");
-        cbCuartel.addItem(cuartelVacio);
+        cuartelVacio.setNombre_cuartel("Cuarteles");
+        cbCuartel.addItem(cuartelVacio.getNombre_cuartel());
         CuartelData cd = new CuartelData();
         List<Cuartel> list = cd.ListarCuarteles();
         for (Cuartel elem : list) {
-            cbCuartel.addItem(elem);
+            cbCuartel.addItem(elem.getNombre_cuartel());
         }
     }
 
 
     private void cbCuartelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCuartelActionPerformed
-        Cuartel cuartel = (Cuartel) cbCuartel.getSelectedItem();
-        int n = cuartel.getId_cuartel();
+        //CuartelData contiene funcion BuscarCuartelPorNombre()
+        CuartelData cd = new CuartelData();
+        //Variable para guardar el cuartel encontrado
+        Cuartel cuartel = new Cuartel();
+        cuartel = cd.BuscarCuartelPorNombre((String) cbCuartel.getSelectedItem());
+        int idCuartel = cuartel.getId_cuartel();
+       //BrigadaData contiene listarBrigadasPorCuartel(idCuartel)
         BrigadaData bd =new  BrigadaData();
-        List<Brigada> cuarteles = bd.ListarBrigadaPorCuartel(n);
+        //List<Brigada> brigadas = bd.ListarBrigadaPorCuartel();
+        
+        
+//        //CARGAR DATOS filas
+//        if (!prod.getCategoria().equals("-")) {
+//            modelo.addRow(new Object[]{prod.getCategoria(), prod.getNombre(), prod.getPrecio()});
+//        }
     }//GEN-LAST:event_cbCuartelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<Cuartel> cbCuartel;
+    private javax.swing.JComboBox<String> cbCuartel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

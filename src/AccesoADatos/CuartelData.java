@@ -75,6 +75,40 @@ public class CuartelData {
         }
         return cuartel;
     }
+    
+    //En listar brigadas del comboBox obtengo el Strin nombre del cuartel
+    //Necesito buscar ese cuartel y tenerlo como objeto para capturar su id 
+    //ListarBrigadasPorCuartel(id) para agregar las brigadas a la tabla
+       public Cuartel BuscarCuartelPorNombre(String nombre) {
+        Cuartel cuartel = null;
+        String SQL = "SELECT * FROM cuartel WHERE nombre_cuartel = ? ";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(SQL);
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                cuartel = new Cuartel();
+                cuartel.setId_cuartel(rs.getInt( "id_cuartel"));
+                cuartel.setNombre_cuartel(rs.getString("nombre_cuartel"));
+                cuartel.setDireccion(rs.getString("direccion"));
+                cuartel.setCoord_X(rs.getDouble("coord_X"));
+                cuartel.setCoord_Y(rs.getDouble("coord_Y"));
+                cuartel.setTelefono(rs.getString("telefono"));
+                cuartel.setCorreo(rs.getString("correo"));
+                cuartel.setEstado(rs.getBoolean("estado"));
+
+            } else {
+                //JOptionPane.showMessageDialog(null, "No existe el Cuartel. ");
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Cuartel" + e.getMessage());
+        }
+        return cuartel;
+    }
 
     public void ModificarCuartel(Cuartel cuartel) {
 
