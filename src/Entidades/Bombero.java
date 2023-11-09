@@ -19,24 +19,12 @@ public class Bombero {
     private Brigada brigada;
     private String celular;
     private boolean estado;
-    private String nombre_clave;
+    private String chapa_iden;
 
     public Bombero() {
     }
 
-    public Bombero(String nombre, String apellido, int dni, LocalDate fecha_nacimiento, String grupo_sanguineo, Brigada brigada, String celular, boolean estado, String nombre_clave) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.fecha_nacimiento = fecha_nacimiento;
-        this.grupo_sanguineo = grupo_sanguineo;
-        this.brigada = brigada;
-        this.celular = celular;
-        this.estado = estado;
-        this.nombre_clave = nombre_clave;
-    }
-
-    public Bombero(int id_bombero, String nombre, String apellido, int dni, LocalDate fecha_nacimiento, String grupo_sanguineo, Brigada brigada, String celular, boolean estado,String nombre_clave) {
+    public Bombero(int id_bombero, String nombre, String apellido, int dni, LocalDate fecha_nacimiento, String grupo_sanguineo, Brigada brigada, String celular, boolean estado, String chapa_iden) {
         this.id_bombero = id_bombero;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -46,7 +34,19 @@ public class Bombero {
         this.brigada = brigada;
         this.celular = celular;
         this.estado = estado;
-        this.nombre_clave = nombre_clave;
+        this.chapa_iden = chapa_iden;
+    }
+
+    public Bombero(String nombre, String apellido, int dni, LocalDate fecha_nacimiento, String grupo_sanguineo, Brigada brigada, String celular, boolean estado, String chapa_iden) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.grupo_sanguineo = grupo_sanguineo;
+        this.brigada = brigada;
+        this.celular = celular;
+        this.estado = estado;
+        this.chapa_iden = chapa_iden;
     }
 
     public int getId_bombero() {
@@ -121,29 +121,20 @@ public class Bombero {
         this.estado = estado;
     }
 
-    public String getNombre_clave() {
-        return nombre_clave;
+    public String getChapa_iden() {
+        return chapa_iden;
     }
 
-    public void setNombre_clave(String nombre_clave) {
-        this.nombre_clave = nombre_clave;
+    public void setChapa_iden(String chapa_iden) {
+        this.chapa_iden = chapa_iden;
+    }
+
+    @Override
+    public String toString() {
+        return "Bombero{" + "id_bombero=" + id_bombero + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", fecha_nacimiento=" + fecha_nacimiento + ", grupo_sanguineo=" + grupo_sanguineo + ", brigada=" + brigada + ", celular=" + celular + ", estado=" + estado + ", chapa_iden=" + chapa_iden + '}';
     }
 
     
-    @Override
-    public String toString() {
-        return "ID" + id_bombero + 
-                ", Nombre" + nombre +
-                ", Apellido" + apellido + 
-                ", Dni" + dni +
-                ", Fecha Nacimiento" + fecha_nacimiento +
-                ", Grupo Sanguineo" + grupo_sanguineo + 
-                ", Brigada" + brigada + 
-                ", Celular" + celular + 
-                ", Estado" + estado +
-                ", Nombre clave" + nombre_clave;
-                
-    }
 
     
 

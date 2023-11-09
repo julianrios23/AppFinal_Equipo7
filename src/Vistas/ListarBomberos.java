@@ -1,13 +1,28 @@
 package Vistas;
 
+import AccesoADatos.CuartelData;
+import Entidades.Cuartel;
+import java.util.List;
+
 public class ListarBomberos extends javax.swing.JFrame {
 
     
     public ListarBomberos() {
         initComponents();
+        cargarComboBox();
     }
 
-    
+    private void cargarComboBox() {
+        cmbCuartel.removeAllItems();
+        Cuartel cuartelVacio = new Cuartel();
+        cuartelVacio.setNombre_cuartel("Cuarteles");
+        cmbCuartel.addItem(cuartelVacio.getNombre_cuartel());
+        CuartelData cd = new CuartelData();
+        List<Cuartel> list = cd.ListarCuarteles();
+        for (Cuartel elem : list) {
+            cmbCuartel.addItem(elem.getNombre_cuartel());
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -75,11 +90,6 @@ public class ListarBomberos extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 106, -1, -1));
 
         cmbCuartel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cmbCuartel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbCuartelActionPerformed(evt);
-            }
-        });
         getContentPane().add(cmbCuartel, new org.netbeans.lib.awtextra.AbsoluteConstraints(277, 106, 356, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
@@ -91,9 +101,6 @@ public class ListarBomberos extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void cmbCuartelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCuartelActionPerformed
-    }//GEN-LAST:event_cmbCuartelActionPerformed
 
     
    

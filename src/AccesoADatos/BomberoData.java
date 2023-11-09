@@ -23,7 +23,7 @@ public class BomberoData {
    
 
     public void GuardarBombero(Bombero bombero) {
-        String SQL = "INSERT INTO bombero (nombre, apellido, dni, fecha_nacimiento, grupo_sanguineo, id_brigada, celular, estado, nombre_clave) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO bombero (nombre, apellido, dni, fecha_nacimiento, grupo_sanguineo, id_brigada, celular, estado, chapa_iden) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, bombero.getNombre());
@@ -34,7 +34,7 @@ public class BomberoData {
             ps.setInt(6, bombero.getBrigada().getId_brigada());
             ps.setString(7, bombero.getCelular());
             ps.setBoolean(8, bombero.isEstado());
-            ps.setString(9, bombero.getNombre_clave());
+            ps.setString(9, bombero.getChapa_iden());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
 
@@ -42,10 +42,8 @@ public class BomberoData {
                 bombero.setId_bombero(rs.getInt(1));
                 JOptionPane.showMessageDialog(null, "Personal agregado exitosamente");
             }
-
             rs.close();
             ps.close();
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error a Acceder a la tabla Bombero" + e.getMessage());
         }
@@ -53,21 +51,16 @@ public class BomberoData {
 
     public Bombero BuscarBombero(int id) {
         Bombero bombero = null;
-
         String SQL = "SELECT * FROM bombero WHERE id_bombero=?";
         PreparedStatement ps = null;
-
         try {
             ps = con.prepareStatement(SQL);
-
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
             Brigada brg;
             if (rs.next()) {
                 bombero = new Bombero();
                 brg = new Brigada();
-
                 bombero.setId_bombero(id);
                 bombero.setNombre(rs.getString("nombre"));
                 bombero.setApellido(rs.getString("apellido"));
@@ -78,7 +71,7 @@ public class BomberoData {
                 bombero.setBrigada(brg);
                 bombero.setCelular(rs.getString("celular"));
                 bombero.setEstado(rs.getBoolean("estado"));
-                bombero.setNombre_clave(rs.getNString("nombre_clave"));
+                bombero.setChapa_iden(rs.getNString("chapa_iden"));
             } else {
                 JOptionPane.showMessageDialog(null, "No existe el empleado");
             }
@@ -93,7 +86,7 @@ public class BomberoData {
     public void ModificarBombero(Bombero bombero) {
 
         String SQL = " UPDATE bombero "
-                + "SET nombre = ?, apellido =?, fecha_nacimiento = ?, grupo_sanguineo = ?, id_brigada = ?, celular = ?, estado = ?, nombre_clave = ? "
+                + "SET nombre = ?, apellido =?, fecha_nacimiento = ?, grupo_sanguineo = ?, id_brigada = ?, celular = ?, estado = ?, chapa_iden = ? "
                 + "WHERE dni = ?";//LO CAMBIE AL ULTIMO DATO POR DNI NO ID_BOMBERO
         PreparedStatement ps = null;
         try {
@@ -106,7 +99,7 @@ public class BomberoData {
             ps.setInt(5, bombero.getBrigada().getId_brigada());
             ps.setString(6, bombero.getCelular());
             ps.setBoolean(7, bombero.isEstado());
-            ps.setString(8, bombero.getNombre_clave());
+            ps.setString(8, bombero.getChapa_iden());
             ps.setInt(9, bombero.getDni());
 
             int exito = ps.executeUpdate();
@@ -160,7 +153,7 @@ public class BomberoData {
                 bombero.setBrigada(brg);
                 bombero.setCelular(rs.getString("celular"));
                 bombero.setEstado(rs.getBoolean("estado"));
-                bombero.setNombre_clave(rs.getString("nombre_clave"));
+                bombero.setChapa_iden(rs.getString("chapa_iden"));
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontró un bombero con este DNI.");
             }
@@ -192,7 +185,7 @@ public class BomberoData {
                 bombero.setBrigada(brigada);
                 bombero.setCelular(rs.getString("celular"));
                 bombero.setEstado(true);
-                bombero.setNombre_clave(rs.getNString("nombre_clave"));
+                bombero.setChapa_iden(rs.getNString("chapa_iden"));
                 bomberos.add(bombero);
             }
             ps.close();
@@ -225,7 +218,7 @@ public class BomberoData {
                 bombero.setBrigada(brigada);
                 bombero.setCelular(rs.getString("celular"));
                 bombero.setEstado(true);
-                bombero.setNombre_clave(rs.getNString("nombre_clave"));
+                bombero.setChapa_iden(rs.getNString("chapa_iden"));
                 bomberos.add(bombero);
             }
             ps.close();

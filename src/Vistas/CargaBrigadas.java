@@ -21,7 +21,6 @@ public class CargaBrigadas extends javax.swing.JFrame {
         setVisible(true);
     }
 
-    //Cargar comboBox con cuarteles actuales 
     private void cargarComboBox() {
         cmbCuartel.removeAllItems();
         Cuartel cuartelVacio = new Cuartel();
@@ -115,7 +114,8 @@ public class CargaBrigadas extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, -1, -1));
 
         cmbEspec.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cmbEspec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE ESPECIALIDAD", "01 - INCENDIO EN VIVIENDA", "02 - INCENDIO EN INDUSTRIA", "03 - SOCORRO EN DERRUMBE", "04 - SOCORRO EN AMBITO DE MONTAÑA", "05 - SOCORRO ACCIDENTE DE TRANSITO", "06 - SOCORRO INUNDACIONES", "07 - SOCORRO EN ALTURA", "08 - PREVENCION", " " }));
+        cmbEspec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INCENDIO EN VIVIENDA", "INCENDIO EN INDUSTRIA", "SOCORRO EN DERRUMBE", "SOCORRO EN AMBITO DE MONTAÑA", "SOCORRO ACCIDENTE DE TRANSITO", "SOCORRO INUNDACIONES", "SOCORRO EN ALTURA", "PREVENCION", " " }));
+        cmbEspec.setSelectedIndex(-1);
         getContentPane().add(cmbEspec, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 273, -1));
 
         jInternalFrame1.setClosable(true);
@@ -400,24 +400,24 @@ public class CargaBrigadas extends javax.swing.JFrame {
                 txtNombre.setText(brig.getNombre_brigada());
                 cmbEspec.setSelectedItem(brig.getEspecialidad());
                 checkAct.setSelected(brig.isEstado());
+
+                cargarComboBox();
+
+                CuartelData cd = new CuartelData();
+                List<Cuartel> cuarteles = cd.ListarCuarteles();
+
+                cmbCuartel.removeAllItems();
+
+                for (Cuartel cuartel : cuarteles) {
+                    cmbCuartel.addItem(cuartel.getNombre_cuartel());
+                }
+
+                cmbCuartel.setSelectedItem(brig.getNombreCuartel());
+
+
             } else {
                 System.out.println("No se encontró una Brigada con este nombre.");
                 JOptionPane.showMessageDialog(this, "No se encontró una Brigada con este nombre.");
-            }
-
-            cargarComboBox();
-
-            CuartelData cd = new CuartelData();
-            List<Cuartel> cuarteles = cd.ListarCuarteles();
-
-            cmbCuartel.removeAllItems();
-
-            for (Cuartel cuartel : cuarteles) {
-                cmbCuartel.addItem(cuartel.getNombre_cuartel());
-            }
-
-            if (brig != null) {
-                cmbCuartel.setSelectedItem(brig.getCuartel().getNombre_cuartel());
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingrese un nombre válido" + e.getMessage());
@@ -455,32 +455,21 @@ public class CargaBrigadas extends javax.swing.JFrame {
     }//GEN-LAST:event_JRBMostrarCuartelesActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        BrigadaData brigadaData = new BrigadaData();
-        CuartelData cuartelData = new CuartelData();
 
-        // Crear una nueva brigada
+        BrigadaData brigadaData = new BrigadaData();
         Brigada nuevaBrigada = new Brigada();
+
         nuevaBrigada.setNombre_brigada(txtNombre.getText());
         nuevaBrigada.setEspecialidad((String) cmbEspec.getSelectedItem());
         nuevaBrigada.setDisponibilidad(checkDispon.isSelected());
         nuevaBrigada.setEstado(checkAct.isSelected());
 
-        // Obtener el cuartel seleccionado del combo
-        String nombreCuartelSeleccionado = (String) cmbCuartel.getSelectedItem();
-        Cuartel cuartelSeleccionado = cuartelData.BuscarCuartelPorNombre(nombreCuartelSeleccionado);
+        asignarCuartelABrigada(nuevaBrigada);
 
-        // Verificar si el cuartel existe
-        if (cuartelSeleccionado != null) {
-            nuevaBrigada.setCuartel(cuartelSeleccionado);
+        brigadaData.GuardarBrigada(nuevaBrigada);
 
-            // Guardar la brigada
-            brigadaData.GuardarBrigada(nuevaBrigada);
-
-            JOptionPane.showMessageDialog(this, "Brigada Agregada Exitosamente.");
-            limpiar();
-        } else {
-            JOptionPane.showMessageDialog(this, "Seleccione un Cuartel válido.");
-        }
+        JOptionPane.showMessageDialog(this, "Brigada Agregada Exitosamente.");
+        limpiar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -501,6 +490,7 @@ public class CargaBrigadas extends javax.swing.JFrame {
                 cmbEspec.setSelectedItem(brigada.getEspecialidad());
 
                 checkAct.setSelected(brigada.isEstado());
+                checkDispon.setSelected(brigada.getDisponibilidad());
 
                 CuartelData cuartelData = new CuartelData();
                 List<Cuartel> cuarteles = cuartelData.ListarCuarteles();
@@ -568,10 +558,25 @@ public class CargaBrigadas extends javax.swing.JFrame {
         txtnomBuscar.setText("");
         txtNombre.setText("");
         cmbCuartel.setSelectedIndex(0);
-        cmbEspec.setSelectedIndex(0);
+        cmbEspec.setSelectedIndex(-1);
         checkAct.setSelected(false);
         checkDispon.setSelected(false);
 
+    }
+
+    private Cuartel obtenerCuartelSeleccionado() {
+        CuartelData cuartelData = new CuartelData();
+        String nombreCuartelSeleccionado = (String) cmbCuartel.getSelectedItem();
+        return cuartelData.BuscarCuartelPorNombre(nombreCuartelSeleccionado);
+    }
+
+    private void asignarCuartelABrigada(Brigada brigada) {
+        Cuartel cuartelSeleccionado = obtenerCuartelSeleccionado();
+        if (cuartelSeleccionado != null) {
+            brigada.asignarCuartel(cuartelSeleccionado);
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un Cuartel válido.");
+        }
     }
 
 }
