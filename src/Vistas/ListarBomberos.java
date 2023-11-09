@@ -1,13 +1,20 @@
 package Vistas;
 
+import AccesoADatos.CuartelData;
+import Entidades.Cuartel;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 public class ListarBomberos extends javax.swing.JFrame {
 
+    // generar un modelo para la tabla que muestra los productos
+    //private DefaultTableModel modelo = new DefaultTableModel();
     
     public ListarBomberos() {
         initComponents();
+//        cargarComboBox();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -95,8 +102,35 @@ public class ListarBomberos extends javax.swing.JFrame {
     private void cmbCuartelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCuartelActionPerformed
     }//GEN-LAST:event_cmbCuartelActionPerformed
 
-    
-   
+    //Cargar comboBox con cuarteles actuales 
+//    private void cargarComboBox() {
+//        cbCuartel.removeAllItems();
+//        Cuartel cuartelVacio = new Cuartel();
+//        cuartelVacio.setNombre_cuartel("Cuarteles");
+//        cbCuartel.addItem(cuartelVacio.getNombre_cuartel());
+//        CuartelData cd = new CuartelData();
+//        List<Cuartel> list = cd.ListarCuarteles();
+//        for (Cuartel elem : list) {
+//            cbCuartel.addItem(elem.getNombre_cuartel());
+//        }
+//    }
+//    private void cbCuartelActionPerformed(java.awt.event.ActionEvent evt) {                                          
+//        BrigadaData bd = new BrigadaData();
+//        CuartelData cd = new CuartelData();
+//        Cuartel cuartel = new Cuartel();
+//        String cuartelNombre = (String) cbCuartel.getSelectedItem();
+//        List<Brigada> brigadas = new ArrayList<>();
+//        brigadas = bd.ListarBrigadasPorNombreCuartel(cuartelNombre);
+//
+//        DefaultTableModel modelo = (DefaultTableModel) jtBrigadas.getModel();
+//        modelo.setRowCount(0); // Limpia la tabla antes de agregar nuevas filas
+//
+//        for (Brigada elem : brigadas) {
+//            modelo.addRow(new Object[]{elem.getId_brigada(), elem.getNombre_brigada(), elem.getEspecialidad(), elem.isEstado(), elem.getNombre_cuartel(), elem.isDisponibilidad()});
+//        }
+//
+//
+//    }                                         
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbCuartel;
