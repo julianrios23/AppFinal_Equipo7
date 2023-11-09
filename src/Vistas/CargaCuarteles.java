@@ -188,7 +188,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
             cuartel.setCoord_Y(Double.parseDouble(coordenadaY));
         } else {
             JOptionPane.showMessageDialog(this, "Las coordenadas deben ser números válidos.");
-            return; // No continúa si las coordenadas no son validas
+            return; 
         }
 
         // valido tel

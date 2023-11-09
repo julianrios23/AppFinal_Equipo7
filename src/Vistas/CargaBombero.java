@@ -21,7 +21,6 @@ public class CargaBombero extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtDni = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        dateNac = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
@@ -67,7 +66,6 @@ public class CargaBombero extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Fecha Nacimiento:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 225, -1, -1));
-        getContentPane().add(dateNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(546, 225, 223, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Grupo Sanguineo:");
@@ -152,7 +150,6 @@ public class CargaBombero extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JCheckBox checkAct;
     private javax.swing.JCheckBox checkNoAct;
-    private com.toedter.calendar.JDateChooser dateNac;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
