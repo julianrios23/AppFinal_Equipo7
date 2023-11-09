@@ -28,7 +28,6 @@ public class Gestion_Personal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtApe = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
@@ -92,7 +91,6 @@ public class Gestion_Personal extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Fecha Nacimiento:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 204, -1, -1));
-        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(226, 204, 186, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Grupo Sanguineo:");
@@ -162,7 +160,6 @@ public class Gestion_Personal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbBrigada;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

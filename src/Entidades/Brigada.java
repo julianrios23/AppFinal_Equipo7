@@ -12,7 +12,7 @@ public class Brigada {
     private String nombre_brigada;
     private String especialidad;
     private boolean estado;
-    private Cuartel cuartel;
+    private int id_cuartel;
     private Boolean disponibilidad;
     private String nombre_cuartel;
    
@@ -20,21 +20,21 @@ public class Brigada {
     public Brigada() {
     }
 
-    public Brigada(String nombre_brigada, String especialidad, boolean estado, Cuartel cuartel, Boolean disponibilidad,String nombre_cuartel) {
-        this.nombre_brigada = nombre_brigada;
-        this.especialidad = especialidad;
-        this.estado = estado;
-        this.cuartel = cuartel;
-        this.disponibilidad = disponibilidad;
-        this.nombre_cuartel = nombre_cuartel;
-    }
-
-    public Brigada(int id_brigada, String nombre_brigada, String especialidad, boolean estado, Cuartel cuartel,Boolean disponibilidad, String nombre_cuartel) {
+    public Brigada(int id_brigada, String nombre_brigada, String especialidad, boolean estado, int id_cuartel, Boolean disponibilidad, String nombre_cuartel) {
         this.id_brigada = id_brigada;
         this.nombre_brigada = nombre_brigada;
         this.especialidad = especialidad;
         this.estado = estado;
-        this.cuartel = cuartel;
+        this.id_cuartel = id_cuartel;
+        this.disponibilidad = disponibilidad;
+        this.nombre_cuartel = nombre_cuartel;
+    }
+
+    public Brigada(String nombre_brigada, String especialidad, boolean estado, int id_cuartel, Boolean disponibilidad, String nombre_cuartel) {
+        this.nombre_brigada = nombre_brigada;
+        this.especialidad = especialidad;
+        this.estado = estado;
+        this.id_cuartel = id_cuartel;
         this.disponibilidad = disponibilidad;
         this.nombre_cuartel = nombre_cuartel;
     }
@@ -71,20 +71,20 @@ public class Brigada {
         this.estado = estado;
     }
 
-    public Cuartel getCuartel() {
-        return cuartel;
+    public int getId_cuartel() {
+        return id_cuartel;
     }
 
-    public void setCuartel(Cuartel cuartel) {
-        this.cuartel = cuartel;
+    public void setId_cuartel(int id_cuartel) {
+        this.id_cuartel = id_cuartel;
     }
 
-    public Boolean isDisponibilidad() {
+    public Boolean getDisponibilidad() {
         return disponibilidad;
     }
 
-    public void setDisponibilidad(Boolean disponibiblidad) {
-        this.disponibilidad = disponibiblidad;
+    public void setDisponibilidad(Boolean disponibilidad) {
+        this.disponibilidad = disponibilidad;
     }
 
     public String getNombre_cuartel() {
@@ -95,27 +95,27 @@ public class Brigada {
         this.nombre_cuartel = nombre_cuartel;
     }
     
-    
-    //METODO UTIL EN LA VISTA BusquedaYModificacionDeBrigadasView...
-    
-        public String ObtenerNombreCuartel(Brigada brigada) {
-        if (brigada != null && brigada.getCuartel() != null) {
-            return brigada.getCuartel().getNombre_cuartel();
-        } else {
-            return "Sin cuartel asignado";
-        }
+     public void asignarCuartel(Cuartel cuartel) {
+        this.id_cuartel = cuartel.getId_cuartel();
+        this.nombre_cuartel = cuartel.getNombre_cuartel();
+     }
+     
+     public String getNombreCuartel() {
+        return this.nombre_cuartel;
     }
+     
+     public Object[] toArray() {
+    return new Object[]{id_brigada, nombre_brigada, especialidad, estado, nombre_cuartel, disponibilidad};
+}
+
 
     @Override
     public String toString() {
-        return " ID " + id_brigada + 
-                ", Nombre " + nombre_brigada +
-                ", Especialidad " + especialidad + 
-                ", Estado " + estado + 
-                ", Cuartel " + cuartel + 
-                ", Disponibilidad " + disponibilidad +
-                ", Nombre Cuartel " + nombre_cuartel;
-        
+        return "Brigada{" + "id_brigada=" + id_brigada + ", nombre_brigada=" + nombre_brigada + ", especialidad=" + especialidad + ", estado=" + estado + ", id_cuartel=" + id_cuartel + ", disponibilidad=" + disponibilidad + ", nombre_cuartel=" + nombre_cuartel + '}';
     }
+
+    
+
+    
 
 }

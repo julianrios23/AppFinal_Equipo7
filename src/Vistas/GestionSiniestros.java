@@ -20,6 +20,9 @@ public class GestionSiniestros extends javax.swing.JFrame {
     SiniestroData sd = new SiniestroData();
     BrigadaData bd = new BrigadaData();
     
+    /**
+     *
+     */
     public GestionSiniestros() {
         initComponents();
         // al inicializar la ventana, actualizo tmb el CBBriga
@@ -41,7 +44,6 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtY = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        dateInicio = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         cmbTipoSin = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
@@ -55,7 +57,6 @@ public class GestionSiniestros extends javax.swing.JFrame {
         txtHorainicio = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        dateResolc = new com.toedter.calendar.JDateChooser();
         jLabel13 = new javax.swing.JLabel();
         txtHoraResoluc = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -63,6 +64,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
         btnResolucion = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         txtCalif = new javax.swing.JTextField();
+        dateInicio = new com.toedter.calendar.JDateChooser();
+        dateResol = new com.toedter.calendar.JDateChooser();
         jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -120,9 +123,6 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jLabel5.setText("Fecha De Inicio:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 171, -1, -1));
 
-        dateInicio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(dateInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 169, 165, -1));
-
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Tipo de Siniestro:");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 169, -1, -1));
@@ -177,9 +177,6 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jLabel12.setText("Fecha Resolución Siniestro:");
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 433, -1, -1));
 
-        dateResolc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(dateResolc, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 431, 252, -1));
-
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel13.setText("Hora Resolución Siniestro:");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 471, -1, -1));
@@ -212,6 +209,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jLabel15.setText("Calificación Siniestro:");
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(79, 511, -1, -1));
         getContentPane().add(txtCalif, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 511, 313, -1));
+        getContentPane().add(dateInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 171, 165, -1));
+        getContentPane().add(dateResol, new org.netbeans.lib.awtextra.AbsoluteConstraints(256, 433, 240, -1));
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
         getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
@@ -246,7 +245,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
                     cmbBrigaAsignada.setSelectedItem((String)brigadaEncontrada.getNombre_brigada());
                     LocalDate fechaEnFormatoLocalR = siniestroEncontrado.getFecha_resolucion();
                     Date fechaEnFormatoDateR = Date.from(fechaEnFormatoLocalR.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                    dateResolc.setDate(fechaEnFormatoDateR);
+                    dateResol.setDate(fechaEnFormatoDateR);
                     txtHoraResoluc.setText(siniestroEncontrado.getHora_fin_siniestro());
                     txtCalif.setText(siniestroEncontrado.getCalificacion() + "");
                 }
@@ -312,7 +311,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbBrigaAsignada;
     private javax.swing.JComboBox<String> cmbTipoSin;
     private com.toedter.calendar.JDateChooser dateInicio;
-    private com.toedter.calendar.JDateChooser dateResolc;
+    private com.toedter.calendar.JDateChooser dateResol;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

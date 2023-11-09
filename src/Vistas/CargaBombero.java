@@ -1,14 +1,39 @@
 package Vistas;
 
+import AccesoADatos.BomberoData;
+import AccesoADatos.BrigadaData;
+import Entidades.Bombero;
+import Entidades.Brigada;
+import Entidades.Cuartel;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 public class CargaBombero extends javax.swing.JFrame {
 
-    
+    private String chapa_iden;
+
     public CargaBombero() {
         initComponents();
         setVisible(true);
+        cargarComboBrigadas();
     }
 
-    
+    private void cargarComboBrigadas() {
+        cmbBrigadas.removeAllItems();
+        Brigada brigadaVacia = new Brigada();
+        brigadaVacia.setNombre_cuartel("Brigadas");
+        cmbBrigadas.addItem(brigadaVacia.getNombre_cuartel());
+
+        BrigadaData bd = new BrigadaData();
+        List<Brigada> brigadas = bd.ListarBrigada();
+
+        for (Brigada elem : brigadas) {
+            cmbBrigadas.addItem(elem.getNombre_brigada());
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -21,20 +46,19 @@ public class CargaBombero extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtDni = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        dateNac = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbGrupSan = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cmbBrigadas = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         txtIdentif = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         checkAct = new javax.swing.JCheckBox();
-        checkNoAct = new javax.swing.JCheckBox();
         jLabel10 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
+        dateNac = new com.toedter.calendar.JDateChooser();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -67,39 +91,35 @@ public class CargaBombero extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Fecha Nacimiento:");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 225, -1, -1));
-        getContentPane().add(dateNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(546, 225, 223, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Grupo Sanguineo:");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 281, -1, -1));
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "O+", "B+", "AB+", "A-", "O-", "B-", "AB-" }));
-        jComboBox1.setSelectedIndex(-1);
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 281, 168, -1));
+        cmbGrupSan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cmbGrupSan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A+", "O+", "B+", "AB+", "A-", "O-", "B-", "AB-" }));
+        cmbGrupSan.setSelectedIndex(-1);
+        getContentPane().add(cmbGrupSan, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 281, 168, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Brigada Asisgnada:");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 281, -1, -1));
 
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(546, 281, 223, -1));
+        cmbBrigadas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(cmbBrigadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(546, 281, 223, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Chapa Identificación:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 330, -1, -1));
         getContentPane().add(txtIdentif, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 330, 168, -1));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel9.setText("ESTADO");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 330, -1, -1));
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setText("Estado:");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 330, -1, -1));
 
         checkAct.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        checkAct.setText("ACTIVO");
-        getContentPane().add(checkAct, new org.netbeans.lib.awtextra.AbsoluteConstraints(428, 373, -1, -1));
-
-        checkNoAct.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        checkNoAct.setText("NO ACTIVO");
-        getContentPane().add(checkNoAct, new org.netbeans.lib.awtextra.AbsoluteConstraints(642, 373, -1, -1));
+        checkAct.setText("ACTIVO / NO ACTIVO");
+        getContentPane().add(checkAct, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 330, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Teléfono:");
@@ -130,6 +150,9 @@ public class CargaBombero extends javax.swing.JFrame {
         });
         getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 30, -1, -1));
 
+        dateNac.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(dateNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 223, 229, -1));
+
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
@@ -141,20 +164,51 @@ public class CargaBombero extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        
+
+        try {
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+            int dni = Integer.parseInt(txtDni.getText());
+            java.util.Date fechaNacimientoUtil = dateNac.getDate();
+            LocalDate fechaNacimiento = fechaNacimientoUtil.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            String grupoSanguineo = (String) cmbGrupSan.getSelectedItem();
+            String celular = txtTelefono.getText();
+            boolean estado = checkAct.isSelected();
+            String chapaiden = txtIdentif.getText();
+
+            String nombreBrigada = (String) cmbBrigadas.getSelectedItem();
+            BrigadaData brigadaData = new BrigadaData();
+            Brigada brigada = brigadaData.BuscarBrigada(nombreBrigada);
+           
+
+            if (brigada != null && brigada.getId_brigada() != 0) {
+                Bombero nuevoBombero = new Bombero(nombre, apellido, dni, fechaNacimiento, grupoSanguineo, brigada, celular, estado, chapa_iden);
+
+                BomberoData bomberoData = new BomberoData();
+                bomberoData.GuardarBombero(nuevoBombero);
+
+                JOptionPane.showMessageDialog(null, "Bombero agregado exitosamente");
+            } else {
+                // Manejo de error o mensaje indicando que la Brigada no es válida
+                JOptionPane.showMessageDialog(null, "La Brigada seleccionada no es válida.");
+            }
+
+            limpiar();
+
+            JOptionPane.showMessageDialog(this, "Bombero agregado exitosamente.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un DNI válido" + e.getMessage());
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JCheckBox checkAct;
-    private javax.swing.JCheckBox checkNoAct;
+    private javax.swing.JComboBox<String> cmbBrigadas;
+    private javax.swing.JComboBox<String> cmbGrupSan;
     private com.toedter.calendar.JDateChooser dateNac;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -173,4 +227,15 @@ public class CargaBombero extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 
+    private void limpiar() {
+
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtDni.setText("");
+        txtIdentif.setText("");
+        txtTelefono.setText("");
+        checkAct.setSelected(false);
+        cmbBrigadas.setSelectedIndex(0);
+        cmbGrupSan.setSelectedIndex(-1);
+    }
 }

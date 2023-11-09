@@ -169,8 +169,8 @@ public class Escritorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-      HistoricoEventos hh = new HistoricoEventos();
-      hh.setVisible(true);
+     HistoricoEventos hs = new HistoricoEventos();
+     hs.setVisible(true);//hello
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed

@@ -4,7 +4,6 @@ import AccesoADatos.*;
 import Entidades.*;
 import javax.swing.JOptionPane;
 
-
 public class CargaCuarteles extends javax.swing.JFrame {
 
     public CargaCuarteles() {
@@ -19,7 +18,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
+        txtBucarNom = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
@@ -60,11 +59,11 @@ public class CargaCuarteles extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 32, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Cod / ID");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(251, 111, -1, -1));
+        jLabel2.setText("Buscar Por Nombre");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, -1, -1));
 
-        txtID.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 111, 150, -1));
+        txtBucarNom.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(txtBucarNom, new org.netbeans.lib.awtextra.AbsoluteConstraints(324, 111, 150, -1));
 
         btnBuscar.setBackground(new java.awt.Color(0, 0, 0));
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -161,7 +160,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(562, 466, -1, -1));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 620));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -173,7 +172,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
     }//GEN-LAST:event_jButton3ActionPerformed
-   
+
     private void jButton3ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed1
 
         Cuartel cuartel = new Cuartel();
@@ -188,7 +187,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
             cuartel.setCoord_Y(Double.parseDouble(coordenadaY));
         } else {
             JOptionPane.showMessageDialog(this, "Las coordenadas deben ser números válidos.");
-            return; // No continúa si las coordenadas no son validas
+            return;
         }
 
         // valido tel
@@ -228,10 +227,10 @@ public class CargaCuarteles extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
         try {
-            int id = Integer.parseInt(txtID.getText());
+            String nombre = txtBucarNom.getText();
 
             CuartelData cuartelData = new CuartelData();
-            Cuartel cuartel = cuartelData.BuscarCuartelPorId(id);
+            Cuartel cuartel = cuartelData.BuscarCuartelPorNombre(nombre);
 
             if (cuartel != null) {
                 txtNombre.setText(cuartel.getNombre_cuartel());
@@ -242,10 +241,10 @@ public class CargaCuarteles extends javax.swing.JFrame {
                 txtCorreo.setText(cuartel.getCorreo());
                 checkAct.setSelected(cuartel.isEstado());
             } else {
-                JOptionPane.showMessageDialog(this, "No se encontró un Cuartel con este ID.");
+                JOptionPane.showMessageDialog(this, "No se encontró un Cuartel con este nombre.");
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número válido para el ID: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre válido para la búsqueda: " + e.getMessage());
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -255,10 +254,10 @@ public class CargaCuarteles extends javax.swing.JFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
-            int id = Integer.parseInt(txtID.getText());
+            String nombre = txtBucarNom.getText();
 
             CuartelData cuartelData = new CuartelData();
-            Cuartel cuartel = cuartelData.BuscarCuartelPorId(id);
+            Cuartel cuartel = cuartelData.BuscarCuartelPorNombre(nombre);
 
             if (cuartel != null) {
                 cuartel.setNombre_cuartel(txtNombre.getText());
@@ -272,7 +271,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
                     cuartel.setCoord_Y(Double.parseDouble(coordenadaY));
                 } else {
                     JOptionPane.showMessageDialog(this, "Las coordenadas deben ser números válidos.");
-                    return; 
+                    return;
                 }
 
                 // valido telefono
@@ -281,7 +280,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
                     cuartel.setTelefono(telefono);
                 } else {
                     JOptionPane.showMessageDialog(this, "El teléfono debe contener solo números.");
-                    return; 
+                    return;
                 }
 
                 // valido correo
@@ -290,7 +289,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
                     cuartel.setCorreo(correo);
                 } else {
                     JOptionPane.showMessageDialog(this, "El correo no es válido.");
-                    return; 
+                    return;
                 }
 
                 cuartel.setEstado(checkAct.isSelected());
@@ -298,8 +297,9 @@ public class CargaCuarteles extends javax.swing.JFrame {
                 // metodo modificar cuartel
                 cuartelData.ModificarCuartel(cuartel);
                 JOptionPane.showMessageDialog(this, "Cuartel modificado exitosamente.");
+                limpiar();
             } else {
-                JOptionPane.showMessageDialog(this, "No se encontró un Cuartel con este ID.");
+                JOptionPane.showMessageDialog(this, "No se encontró un Cuartel con este nombre.");
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingrese un número válido para el ID: " + e.getMessage());
@@ -324,17 +324,17 @@ public class CargaCuarteles extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField txtBucarNom;
     private javax.swing.JTextField txtCoorX;
     private javax.swing.JTextField txtCoorY;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDirecc;
-    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTel;
     // End of variables declaration//GEN-END:variables
 
     private void limpiar() {
-        txtID.setText("");
+        txtBucarNom.setText("");
         txtNombre.setText("");
         txtCoorX.setText("");
         txtCoorY.setText("");

@@ -127,7 +127,7 @@ public class ListarBrigadas extends javax.swing.JFrame {
         modelo.setRowCount(0); // Limpia la tabla antes de agregar nuevas filas
 
         for (Brigada elem : brigadas) {
-            modelo.addRow(new Object[]{elem.getId_brigada(), elem.getNombre_brigada(), elem.getEspecialidad(), elem.isEstado(), elem.getNombre_cuartel(), elem.isDisponibilidad()});
+            modelo.addRow(elem.toArray());
         }
 
 
