@@ -2,6 +2,7 @@
 package Entidades;
 
 import java.time.LocalDate;
+import java.util.Vector;
 
 /**
  
@@ -133,6 +134,10 @@ public class Bombero {
     public String toString() {
         return "Bombero{" + "id_bombero=" + id_bombero + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", fecha_nacimiento=" + fecha_nacimiento + ", grupo_sanguineo=" + grupo_sanguineo + ", brigada=" + brigada + ", celular=" + celular + ", estado=" + estado + ", chapa_iden=" + chapa_iden + '}';
     }
+
+         public Object[] toArray() {
+    return new Object[]{id_bombero, nombre,apellido ,dni ,  fecha_nacimiento, grupo_sanguineo, brigada, celular, estado ,chapa_iden};
+}
 
     
 

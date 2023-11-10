@@ -64,27 +64,23 @@ public class BrigadaData {
         Brigada brigada = null;
         String SQL = "SELECT * FROM brigada WHERE nombre_brigada = ?";
         PreparedStatement ps = null;
-
         try {
             ps = con.prepareStatement(SQL);
             ps.setString(1, nombre);
-
             ResultSet rs = ps.executeQuery();
             Cuartel cuart;
-
             if (rs.next()) {
                 brigada = new Brigada();
                 cuart = new Cuartel();
+                brigada.setId_brigada(rs.getInt("id_brigada"));
                 brigada.setNombre_brigada(rs.getString("nombre_brigada"));
                 brigada.setEspecialidad(rs.getString("especialidad"));
                 brigada.setEstado(rs.getBoolean("estado"));
                 brigada.setDisponibilidad(rs.getBoolean("disponibilidad"));
                 brigada.setNombre_cuartel(rs.getString("nombre_cuartel"));
-
                 String nombreCuartel = rs.getString("nombre_cuartel");
                 CuartelData cuartelData = new CuartelData();
                 Cuartel cuartel = cuartelData.BuscarCuartelPorNombre(nombreCuartel);
-
                 if (cuartel != null) {
                     brigada.setNombre_cuartel(nombreCuartel);
                     //JOptionPane.showMessageDialog(null, "No se encontró un Cuartel con este nombre.");

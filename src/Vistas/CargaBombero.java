@@ -166,23 +166,24 @@ public class CargaBombero extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         try {
-            String nombre = txtNombre.getText();
-            String apellido = txtApellido.getText();
-            int dni = Integer.parseInt(txtDni.getText());
+            String nombree = txtNombre.getText();
+            String apellidoo = txtApellido.getText();
+            int dnii = Integer.parseInt(txtDni.getText());
             java.util.Date fechaNacimientoUtil = dateNac.getDate();
             LocalDate fechaNacimiento = fechaNacimientoUtil.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             String grupoSanguineo = (String) cmbGrupSan.getSelectedItem();
-            String celular = txtTelefono.getText();
-            boolean estado = checkAct.isSelected();
+            String celularr = txtTelefono.getText();
+            boolean estadoo = checkAct.isSelected();
             String chapaiden = txtIdentif.getText();
 
             String nombreBrigada = (String) cmbBrigadas.getSelectedItem();
             BrigadaData brigadaData = new BrigadaData();
-            Brigada brigada = brigadaData.BuscarBrigada(nombreBrigada);
+            Brigada brigadaa = brigadaData.BuscarBrigada(nombreBrigada);
+            System.out.println(brigadaa);
            
 
-            if (brigada != null && brigada.getId_brigada() != 0) {
-                Bombero nuevoBombero = new Bombero(nombre, apellido, dni, fechaNacimiento, grupoSanguineo, brigada, celular, estado, chapa_iden);
+            if (brigadaa != null && brigadaa.getId_brigada() != 0) {
+                Bombero nuevoBombero = new Bombero(nombree, apellidoo, dnii, fechaNacimiento, grupoSanguineo, brigadaa, celularr, estadoo, chapaiden);
 
                 BomberoData bomberoData = new BomberoData();
                 bomberoData.GuardarBombero(nuevoBombero);

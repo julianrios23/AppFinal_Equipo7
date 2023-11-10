@@ -11,7 +11,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import org.mariadb.jdbc.Statement;
 
-
 public class BomberoData {
 
     private Connection con = null;
@@ -20,10 +19,8 @@ public class BomberoData {
         con = Conexion.getConexion();
     }
 
-   
-
     public void GuardarBombero(Bombero bombero) {
-        String SQL = "INSERT INTO bombero (nombre, apellido, dni, fecha_nacimiento, grupo_sanguineo, id_brigada, celular, estado, chapa_iden) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO bombero (nombre, apellido, dni, fecha_nacimiento, grupo_sanguineo,brigada , celular, estado, chapa_iden) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, bombero.getNombre());
@@ -219,6 +216,37 @@ public class BomberoData {
                 bombero.setCelular(rs.getString("celular"));
                 bombero.setEstado(true);
                 bombero.setChapa_iden(rs.getNString("chapa_iden"));
+                bomberos.add(bombero);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Bombero" + ex.getMessage());
+        }
+        return bomberos;
+    }
+
+    public List<Bombero> ListarBomberosPorCuartel(String nombreCuartel) {
+        List<Bombero> bomberos = new ArrayList<>();
+        try {
+            String SQL = "SELECT * FROM bombero b JOIN brigada br ON b.brigada = br.id_brigada JOIN"+
+                     " cuartel c ON br.id_cuartel = c.id_cuartel WHERE c.nombre_cuartel = ?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setString(1, nombreCuartel);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Bombero bombero = new Bombero();
+                Brigada brigada = new Brigada();
+                bombero.setId_bombero(rs.getInt("id_bombero"));
+                bombero.setNombre(rs.getString("nombre"));
+                bombero.setApellido(rs.getString("apellido"));
+                bombero.setDni(rs.getInt("dni"));
+                bombero.setFecha_nacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
+                bombero.setGrupo_sanguineo(rs.getString("grupo_sanguineo"));
+                brigada.setId_brigada(rs.getInt("id_brigada"));
+                bombero.setBrigada(brigada);
+                bombero.setCelular(rs.getString("celular"));
+                bombero.setEstado(true);
+                bombero.setChapa_iden(rs.getString("chapa_iden"));
                 bomberos.add(bombero);
             }
             ps.close();

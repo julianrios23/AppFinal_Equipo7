@@ -1,12 +1,18 @@
 package Vistas;
 
+import AccesoADatos.BomberoData;
 import AccesoADatos.CuartelData;
+import Entidades.Bombero;
 import Entidades.Cuartel;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class ListarBomberos extends javax.swing.JFrame {
-
     
+    // generar un modelo para la tabla que muestra los productos
+    private DefaultTableModel modelo = new DefaultTableModel();
+
     public ListarBomberos() {
         initComponents();
         cargarComboBox();
@@ -23,6 +29,7 @@ public class ListarBomberos extends javax.swing.JFrame {
             cmbCuartel.addItem(elem.getNombre_cuartel());
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -90,6 +97,11 @@ public class ListarBomberos extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 106, -1, -1));
 
         cmbCuartel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cmbCuartel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCuartelActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmbCuartel, new org.netbeans.lib.awtextra.AbsoluteConstraints(277, 106, 356, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
@@ -102,8 +114,24 @@ public class ListarBomberos extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
-   
+    private void cmbCuartelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCuartelActionPerformed
+
+        BomberoData bd = new BomberoData();
+        String cuartelNombre = (String) cmbCuartel.getSelectedItem();
+        if (cuartelNombre != "Cuarteles") {
+            List<Bombero> bomberos = new ArrayList<>();
+            bomberos = bd.ListarBomberosPorCuartel(cuartelNombre);
+
+            DefaultTableModel modelo = (DefaultTableModel) tabBomb.getModel();
+            modelo.setRowCount(0); // Limpia la tabla antes de agregar nuevas filas
+
+            for (Bombero elem : bomberos) {
+                modelo.addRow(elem.toArray());
+            }
+        }
+
+    }//GEN-LAST:event_cmbCuartelActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbCuartel;
