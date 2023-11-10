@@ -28,6 +28,7 @@ public class Escritorio extends javax.swing.JFrame {
         menuBusqueda = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         menuEstadisticas = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         menuAdministarcion = new javax.swing.JMenu();
@@ -93,6 +94,15 @@ public class Escritorio extends javax.swing.JFrame {
             }
         });
         menuBusqueda.add(jMenuItem4);
+
+        jMenuItem6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem6.setText("Listar Cuarteles");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        menuBusqueda.add(jMenuItem6);
 
         jMenuBar1.add(menuBusqueda);
 
@@ -203,6 +213,11 @@ public class Escritorio extends javax.swing.JFrame {
         cb.setVisible(true);
     }//GEN-LAST:event_itemBomberosActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+       ListarCuarteles lc = new ListarCuarteles();
+       lc.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     public static List<String> transformarBrigadasAtexto(List<Brigada> brigadas){
         List<String> respuesta = new ArrayList<>();
         for (Brigada brigada : brigadas) {
@@ -257,6 +272,7 @@ public class Escritorio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenu menuAdministarcion;
     private javax.swing.JMenu menuBusqueda;
     private javax.swing.JMenu menuEstadisticas;

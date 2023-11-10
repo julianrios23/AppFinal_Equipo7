@@ -86,6 +86,8 @@ public class CargaBombero extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("DNI N°:");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 225, -1, -1));
+
+        txtDni.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         getContentPane().add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 225, 251, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -188,7 +190,7 @@ public class CargaBombero extends javax.swing.JFrame {
                 BomberoData bomberoData = new BomberoData();
                 bomberoData.GuardarBombero(nuevoBombero);
 
-                JOptionPane.showMessageDialog(null, "Bombero agregado exitosamente");
+                
             } else {
                 // Manejo de error o mensaje indicando que la Brigada no es válida
                 JOptionPane.showMessageDialog(null, "La Brigada seleccionada no es válida.");

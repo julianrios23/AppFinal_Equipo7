@@ -37,7 +37,7 @@ public class BomberoData {
 
             if (rs.next()) {
                 bombero.setId_bombero(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Personal agregado exitosamente");
+                
             }
             rs.close();
             ps.close();
