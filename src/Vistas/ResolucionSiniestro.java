@@ -10,10 +10,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Julian Rios
- */
 public class ResolucionSiniestro extends javax.swing.JFrame {
 
     public ResolucionSiniestro() {
@@ -48,6 +44,7 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
         txtTipo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         txtBrigada = new javax.swing.JTextField();
+        btnCerra = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -141,6 +138,17 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 220, -1, -1));
         getContentPane().add(txtBrigada, new org.netbeans.lib.awtextra.AbsoluteConstraints(524, 220, 190, -1));
 
+        btnCerra.setBackground(new java.awt.Color(0, 0, 0));
+        btnCerra.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCerra.setForeground(new java.awt.Color(255, 255, 255));
+        btnCerra.setText("CERRAR");
+        btnCerra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerraActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCerra, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 30, -1, -1));
+
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
@@ -179,9 +187,14 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
 
     }//GEN-LAST:event_JBBuscarActionPerformed
 
+    private void btnCerraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerraActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_btnCerraActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBBuscar;
+    private javax.swing.JButton btnCerra;
     private javax.swing.JButton btnResolucion;
     private com.toedter.calendar.JDateChooser dateInicio;
     private com.toedter.calendar.JDateChooser dateResol;
