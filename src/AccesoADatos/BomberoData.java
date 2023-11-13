@@ -37,7 +37,7 @@ public class BomberoData {
 
             if (rs.next()) {
                 bombero.setId_bombero(rs.getInt(1));
-                
+
             }
             rs.close();
             ps.close();
@@ -128,6 +128,38 @@ public class BomberoData {
         }
     }
 
+    public Bombero BuscarBomberoPorIdent(String chapaId) {
+        Bombero bombero = null;
+        String SQL = "SELECT * FROM bombero WHERE chapa_iden = ?";
+        try (PreparedStatement ps = con.prepareStatement(SQL)) {
+            ps.setString(1, chapaId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    bombero = new Bombero();
+                    bombero.setDni(rs.getInt("chapa_iden"));
+                    bombero.setId_bombero(rs.getInt("id_bombero"));
+                    bombero.setNombre(rs.getString("nombre"));
+                    bombero.setApellido(rs.getString("apellido"));
+                    bombero.setFecha_nacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
+                    bombero.setGrupo_sanguineo(rs.getString("grupo_sanguineo"));
+
+                    Brigada brg = new Brigada();
+                    brg.setId_brigada(rs.getInt("id_brigada"));
+                    bombero.setBrigada(brg);
+
+                    bombero.setCelular(rs.getString("celular"));
+                    bombero.setEstado(rs.getBoolean("estado"));
+                    bombero.setChapa_iden(rs.getString("chapa_iden"));
+                } else {
+                    // JOptionPane.showMessageDialog(null, "No se encontró un bombero con este DNI.");
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Bombero: " + ex);
+        }
+        return bombero;
+    }
+    
     public Bombero BuscarBomberoPorDni(String dni) {
         Bombero bombero = null;
         String SQL = "SELECT * FROM bombero WHERE dni = ?";
@@ -152,12 +184,14 @@ public class BomberoData {
                 bombero.setEstado(rs.getBoolean("estado"));
                 bombero.setChapa_iden(rs.getString("chapa_iden"));
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró un bombero con este DNI.");
+                
             }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Bombero: " + ex);
+         ex.printStackTrace();
         }
+        
         return bombero;
     }
 
@@ -228,8 +262,8 @@ public class BomberoData {
     public List<Bombero> ListarBomberosPorCuartel(String nombreCuartel) {
         List<Bombero> bomberos = new ArrayList<>();
         try {
-            String SQL = "SELECT * FROM bombero b JOIN brigada br ON b.brigada = br.id_brigada JOIN"+
-                     " cuartel c ON br.id_cuartel = c.id_cuartel WHERE c.nombre_cuartel = ?";
+            String SQL = "SELECT * FROM bombero b JOIN brigada br ON b.brigada = br.id_brigada JOIN"
+                    + " cuartel c ON br.id_cuartel = c.id_cuartel WHERE c.nombre_cuartel = ?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, nombreCuartel);
             ResultSet rs = ps.executeQuery();

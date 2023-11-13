@@ -25,10 +25,11 @@ public class Escritorio extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         menuSiniestros = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         menuBusqueda = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         menuEstadisticas = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         menuAdministarcion = new javax.swing.JMenu();
@@ -72,19 +73,19 @@ public class Escritorio extends javax.swing.JFrame {
         });
         menuSiniestros.add(jMenuItem1);
 
+        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem7.setText("Resolución de Siniestros");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        menuSiniestros.add(jMenuItem7);
+
         jMenuBar1.add(menuSiniestros);
 
         menuBusqueda.setText("Busqueda/Listado");
         menuBusqueda.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-
-        jMenuItem3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenuItem3.setText("Listar Brigadas");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        menuBusqueda.add(jMenuItem3);
 
         jMenuItem4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jMenuItem4.setText("Listar Bomberos");
@@ -103,6 +104,15 @@ public class Escritorio extends javax.swing.JFrame {
             }
         });
         menuBusqueda.add(jMenuItem6);
+
+        jMenuItem3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem3.setText("Listar Brigadas");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        menuBusqueda.add(jMenuItem3);
 
         jMenuBar1.add(menuBusqueda);
 
@@ -151,12 +161,6 @@ public class Escritorio extends javax.swing.JFrame {
         menuAdministarcion.add(itemBrigadas);
 
         jMenuItem5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jMenuItem5.setText("Gestión Personal");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
         menuAdministarcion.add(jMenuItem5);
 
         jMenuBar1.add(menuAdministarcion);
@@ -193,10 +197,10 @@ public class Escritorio extends javax.swing.JFrame {
         hh.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        Gestion_Personal xx = new Gestion_Personal();
-        xx.setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+       ListarCuarteles lc = new ListarCuarteles();
+       lc.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void itemBrigadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBrigadasActionPerformed
         CargaBrigadas cc = new CargaBrigadas();
@@ -204,8 +208,8 @@ public class Escritorio extends javax.swing.JFrame {
     }//GEN-LAST:event_itemBrigadasActionPerformed
 
     private void itemCuartelesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCuartelesActionPerformed
-       CargaCuarteles cc = new CargaCuarteles();
-       cc.setVisible(true);
+        CargaCuarteles cc = new CargaCuarteles();
+        cc.setVisible(true);
     }//GEN-LAST:event_itemCuartelesActionPerformed
 
     private void itemBomberosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBomberosActionPerformed
@@ -213,10 +217,10 @@ public class Escritorio extends javax.swing.JFrame {
         cb.setVisible(true);
     }//GEN-LAST:event_itemBomberosActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-       ListarCuarteles lc = new ListarCuarteles();
-       lc.setVisible(true);
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        ResolucionSiniestro rs = new ResolucionSiniestro();
+        rs.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     public static List<String> transformarBrigadasAtexto(List<Brigada> brigadas){
         List<String> respuesta = new ArrayList<>();
@@ -273,6 +277,7 @@ public class Escritorio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenu menuAdministarcion;
     private javax.swing.JMenu menuBusqueda;
     private javax.swing.JMenu menuEstadisticas;
