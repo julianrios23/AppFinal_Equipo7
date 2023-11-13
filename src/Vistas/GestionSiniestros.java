@@ -19,10 +19,7 @@ import javax.swing.JOptionPane;
 public class GestionSiniestros extends javax.swing.JFrame {
     SiniestroData sd = new SiniestroData();
     BrigadaData bd = new BrigadaData();
-    
-    /**
-     *
-     */
+   
     public GestionSiniestros() {
         initComponents();
         // al inicializar la ventana, actualizo tmb el CBBriga
@@ -36,9 +33,6 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        txtCod = new javax.swing.JTextField();
-        JBBuscar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtX = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -51,22 +45,13 @@ public class GestionSiniestros extends javax.swing.JFrame {
         textarea = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
         cmbBrigaAsignada = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
-        cmbBrigServ = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         txtHorainicio = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        txtHoraResoluc = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
         btnCargar = new javax.swing.JButton();
-        btnResolucion = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
-        txtCalif = new javax.swing.JTextField();
         dateInicio = new com.toedter.calendar.JDateChooser();
-        dateResol = new com.toedter.calendar.JDateChooser();
         jLabel16 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -87,109 +72,63 @@ public class GestionSiniestros extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(692, 35, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Buscar Por Codigo/ID de Siniestro:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 85, 246, -1));
-
-        txtCod.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtCod, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 85, 140, -1));
-
-        JBBuscar.setBackground(new java.awt.Color(0, 0, 0));
-        JBBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        JBBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        JBBuscar.setText("BUSCAR");
-        JBBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBBuscarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(JBBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(552, 80, -1, 31));
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Coordenas X:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 129, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, -1, -1));
 
         txtX.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtX, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 129, 165, -1));
+        getContentPane().add(txtX, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 165, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Coordenadas Y:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 129, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, -1, -1));
 
         txtY.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtY, new org.netbeans.lib.awtextra.AbsoluteConstraints(497, 129, 260, -1));
+        getContentPane().add(txtY, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 260, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Fecha De Inicio:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 171, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Tipo de Siniestro:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 169, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, -1, -1));
 
         cmbTipoSin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cmbTipoSin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01 - INCENDIO EN VIVIENDA", "02 - INCENDIO EN INDUSTRIA", "03 - SOCORRO EN DERRUMBE", "04 - SOCORRO EN AMBIRO DE MONTAÑA", "05 - SOCORRO ACCIDENTE DE TRANSITO", "06 - SOCORRO INUNDACIONES", "07 - SOCORRO EN ALTURA", "08 - PREVENCION", " " }));
+        cmbTipoSin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INCENDIO EN VIVIENDA", "INCENDIO EN INDUSTRIA", "SOCORRO EN DERRUMBE", "SOCORRO EN AMBIRO DE MONTAÑA", "SOCORRO ACCIDENTE DE TRANSITO", "SOCORRO INUNDACIONES", "SOCORRO EN ALTURA", "PREVENCION", " " }));
         cmbTipoSin.setSelectedIndex(-1);
-        getContentPane().add(cmbTipoSin, new org.netbeans.lib.awtextra.AbsoluteConstraints(502, 169, 260, -1));
+        getContentPane().add(cmbTipoSin, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 220, 260, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel7.setText("DETALLES DEL SINIESTRO");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 282, -1, -1));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
 
         textarea.setColumns(20);
         textarea.setRows(5);
         jScrollPane1.setViewportView(textarea);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(284, 270, 480, 65));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 310, 480, 65));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Brigada Asignada:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 353, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 410, -1, -1));
 
         cmbBrigaAsignada.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cmbBrigaAsignada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbBrigaAsignadaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(cmbBrigaAsignada, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 353, 309, -1));
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setText("Mostar Brigadas en Servicio:");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 393, -1, -1));
-
-        cmbBrigServ.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cmbBrigServ.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cmbBrigServ, new org.netbeans.lib.awtextra.AbsoluteConstraints(256, 393, 240, -1));
+        getContentPane().add(cmbBrigaAsignada, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, 309, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Hora de Inicio:");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 209, -1, -1));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
 
         txtHorainicio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtHorainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 209, 165, -1));
+        getContentPane().add(txtHorainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 165, -1));
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jLabel11.setText("Usar formato 24 hs (Ej. 14:45)");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 212, -1, -1));
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel12.setText("Fecha Resolución Siniestro:");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 433, -1, -1));
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel13.setText("Hora Resolución Siniestro:");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 471, -1, -1));
-
-        txtHoraResoluc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtHoraResoluc, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 471, 354, -1));
-
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel14.setText("Usar formato 24 hs (Ej. 14,45)");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(612, 474, -1, -1));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, -1, -1));
 
         btnCargar.setBackground(new java.awt.Color(0, 0, 0));
-        btnCargar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCargar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnCargar.setForeground(new java.awt.Color(255, 255, 255));
         btnCargar.setText("CARGAR NUEVO SINIESTRO");
         btnCargar.addActionListener(new java.awt.event.ActionListener() {
@@ -197,23 +136,15 @@ public class GestionSiniestros extends javax.swing.JFrame {
                 btnCargarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(196, 549, -1, -1));
+        getContentPane().add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, -1, -1));
+        getContentPane().add(dateInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, 165, -1));
 
-        btnResolucion.setBackground(new java.awt.Color(0, 0, 0));
-        btnResolucion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnResolucion.setForeground(new java.awt.Color(255, 255, 255));
-        btnResolucion.setText("GUARDAR RESOLUCION SINIESTRO");
-        getContentPane().add(btnResolucion, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 549, -1, -1));
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel16.setText("Nuevo Siniestro");
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 82, -1, 40));
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel15.setText("Calificación Siniestro:");
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(79, 511, -1, -1));
-        getContentPane().add(txtCalif, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 511, 313, -1));
-        getContentPane().add(dateInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 171, 165, -1));
-        getContentPane().add(dateResol, new org.netbeans.lib.awtextra.AbsoluteConstraints(256, 433, 240, -1));
-
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -221,44 +152,6 @@ public class GestionSiniestros extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void JBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarActionPerformed
-        try{
-            int codigo = Integer.parseInt(txtCod.getText());
-            System.out.println("Buscando siniestro con codigo:" + txtCod.getText());
-            Siniestro siniestroEncontrado = sd.BuscarSiniestroPorID(codigo);
-            
-            // Una vez encontrado el siniestro debo mostrarlo:
-            if(siniestroEncontrado != null){
-                txtX.setText(siniestroEncontrado.getCoord_X() + "");
-                txtY.setText(siniestroEncontrado.getCoord_Y() + "");
-                LocalDate fechaEnFormatoLocal = siniestroEncontrado.getFecha_siniestro();
-                Date fechaEnFormatoDate = Date.from(fechaEnFormatoLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                dateInicio.setDate(fechaEnFormatoDate);
-                cmbTipoSin.setSelectedIndex(siniestroEncontrado.getCalificacion());
-                txtHorainicio.setText(siniestroEncontrado.getHora_siniestro());
-                textarea.setText(siniestroEncontrado.getDetalles());
-                
-                // muestro la brigada que fue asignada al siniestro:
-                Brigada brigadaEncontrada = siniestroEncontrado.getBrigada();
-                if(brigadaEncontrada != null){ // el siniestro ya ha sido o esta siendo atendido
-                    cmbBrigaAsignada.setSelectedItem((String)brigadaEncontrada.getNombre_brigada());
-                    LocalDate fechaEnFormatoLocalR = siniestroEncontrado.getFecha_resolucion();
-                    Date fechaEnFormatoDateR = Date.from(fechaEnFormatoLocalR.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                    dateResol.setDate(fechaEnFormatoDateR);
-                    txtHoraResoluc.setText(siniestroEncontrado.getHora_fin_siniestro());
-                    txtCalif.setText(siniestroEncontrado.getCalificacion() + "");
-                }
-                
-            }
-        }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "El codigo debe ser un entero y no debe estar vacio");
-        }catch(NullPointerException e){
-            System.out.println("No se encontro ningun siniestro con el cod: " + txtCod.getText());
-        }
-        
-     
-    }//GEN-LAST:event_JBBuscarActionPerformed
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         System.out.println("Guardando Siniestro: ...");
@@ -284,12 +177,6 @@ public class GestionSiniestros extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnCargarActionPerformed
 
-    private void cmbBrigaAsignadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBrigaAsignadaActionPerformed
-        // cada vez que alguien hace clic en el boton tengo que actualizar las brigadas existentes:
-        actualizarComboBoxBrigaAsignada();
-        
-    }//GEN-LAST:event_cmbBrigaAsignadaActionPerformed
-
     
     private void actualizarComboBoxBrigaAsignada(){
         List<Brigada> brigadasEnBD = bd.ListarBrigada();
@@ -304,22 +191,14 @@ public class GestionSiniestros extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBBuscar;
     private javax.swing.JButton btnCargar;
-    private javax.swing.JButton btnResolucion;
-    private javax.swing.JComboBox<String> cmbBrigServ;
     private javax.swing.JComboBox<String> cmbBrigaAsignada;
     private javax.swing.JComboBox<String> cmbTipoSin;
     private com.toedter.calendar.JDateChooser dateInicio;
-    private com.toedter.calendar.JDateChooser dateResol;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -328,12 +207,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea textarea;
-    private javax.swing.JTextField txtCalif;
-    private javax.swing.JTextField txtCod;
-    private javax.swing.JTextField txtHoraResoluc;
     private javax.swing.JTextField txtHorainicio;
     private javax.swing.JTextField txtX;
     private javax.swing.JTextField txtY;

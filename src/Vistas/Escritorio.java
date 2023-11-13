@@ -25,6 +25,7 @@ public class Escritorio extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         menuSiniestros = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         menuBusqueda = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -71,6 +72,15 @@ public class Escritorio extends javax.swing.JFrame {
             }
         });
         menuSiniestros.add(jMenuItem1);
+
+        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jMenuItem7.setText("Resolución de Siniestros");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        menuSiniestros.add(jMenuItem7);
 
         jMenuBar1.add(menuSiniestros);
 
@@ -207,6 +217,11 @@ public class Escritorio extends javax.swing.JFrame {
         cb.setVisible(true);
     }//GEN-LAST:event_itemBomberosActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        ResolucionSiniestro rs = new ResolucionSiniestro();
+        rs.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     public static List<String> transformarBrigadasAtexto(List<Brigada> brigadas){
         List<String> respuesta = new ArrayList<>();
         for (Brigada brigada : brigadas) {
@@ -262,6 +277,7 @@ public class Escritorio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenu menuAdministarcion;
     private javax.swing.JMenu menuBusqueda;
     private javax.swing.JMenu menuEstadisticas;
