@@ -337,5 +337,6 @@ public class CargaBombero extends javax.swing.JFrame {
         checkAct.setSelected(false);
         cmbBrigadas.setSelectedIndex(0);
         cmbGrupSan.setSelectedIndex(-1);
+        dateNac.setDate(null);
     }
 }

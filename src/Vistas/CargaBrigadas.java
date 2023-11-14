@@ -5,6 +5,7 @@ import AccesoADatos.Conexion;
 import AccesoADatos.CuartelData;
 import Entidades.Brigada;
 import Entidades.Cuartel;
+import Entidades.Especialidad;
 import java.sql.Connection;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -18,7 +19,8 @@ public class CargaBrigadas extends javax.swing.JFrame {
         con = Conexion.getConexion();
         initComponents();
         cargarComboBox();
-        setVisible(true);
+        cargarEspecialidad();
+        
     }
 
     private void cargarComboBox() {
@@ -32,6 +34,13 @@ public class CargaBrigadas extends javax.swing.JFrame {
             cmbCuartel.addItem(elem.getNombre_cuartel());
         }
     }
+    private void cargarEspecialidad() {
+    cmbEspec.removeAllItems();
+    Especialidad[] especialidades = Especialidad.values();
+    for (Especialidad especialidad : especialidades) {
+        cmbEspec.addItem(especialidad);
+    }
+}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -114,7 +123,6 @@ public class CargaBrigadas extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, -1, -1));
 
         cmbEspec.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cmbEspec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INCENDIO EN VIVIENDA", "INCENDIO EN INDUSTRIA", "SOCORRO EN DERRUMBE", "SOCORRO EN AMBITO DE MONTAÑA", "SOCORRO ACCIDENTE DE TRANSITO", "SOCORRO INUNDACIONES", "SOCORRO EN ALTURA", "PREVENCION", " " }));
         cmbEspec.setSelectedIndex(-1);
         getContentPane().add(cmbEspec, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 273, -1));
 
@@ -460,7 +468,9 @@ public class CargaBrigadas extends javax.swing.JFrame {
         Brigada nuevaBrigada = new Brigada();
 
         nuevaBrigada.setNombre_brigada(txtNombre.getText());
-        nuevaBrigada.setEspecialidad((String) cmbEspec.getSelectedItem());
+        Especialidad especialidadSeleccionada = (Especialidad) cmbEspec.getSelectedItem();
+        String especialidadComoString = especialidadSeleccionada.toString();
+        nuevaBrigada.setEspecialidad(especialidadComoString);
         nuevaBrigada.setDisponibilidad(checkDispon.isSelected());
         nuevaBrigada.setEstado(checkAct.isSelected());
 
@@ -532,7 +542,7 @@ public class CargaBrigadas extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkAct;
     private javax.swing.JCheckBox checkDispon;
     private javax.swing.JComboBox<String> cmbCuartel;
-    private javax.swing.JComboBox<String> cmbEspec;
+    private javax.swing.JComboBox<Especialidad> cmbEspec;
     private javax.swing.JButton jButton1;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
