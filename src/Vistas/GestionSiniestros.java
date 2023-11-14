@@ -1,15 +1,18 @@
-
 package Vistas;
 
 import AccesoADatos.BrigadaData;
+import AccesoADatos.CuartelData;
 import AccesoADatos.SiniestroData;
 import Entidades.Brigada;
+import Entidades.Cuartel;
 import Entidades.Siniestro;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,16 +20,17 @@ import javax.swing.JOptionPane;
  * @author Julian Rios
  */
 public class GestionSiniestros extends javax.swing.JFrame {
+
     SiniestroData sd = new SiniestroData();
     BrigadaData bd = new BrigadaData();
-   
+    private Iterable<Brigada> listarBrigadas;
+    Siniestro siniestro = new Siniestro();
+
     public GestionSiniestros() {
         initComponents();
-        // al inicializar la ventana, actualizo tmb el CBBriga
-        actualizarComboBoxBrigaAsignada();
+
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -44,13 +48,15 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         textarea = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
-        cmbBrigaAsignada = new javax.swing.JComboBox<>();
+        cmbBrigadas = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         txtHorainicio = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         btnCargar = new javax.swing.JButton();
         dateInicio = new com.toedter.calendar.JDateChooser();
         jLabel16 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtCuarteCercano = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -100,21 +106,21 @@ public class GestionSiniestros extends javax.swing.JFrame {
         getContentPane().add(cmbTipoSin, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 220, 260, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setText("DETALLES DEL SINIESTRO");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
+        jLabel7.setText("DETALLES DEL SINIESTRO:");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, -1, -1));
 
         textarea.setColumns(20);
         textarea.setRows(5);
         jScrollPane1.setViewportView(textarea);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 310, 480, 65));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, 370, 65));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setText("Brigada Asignada:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 410, -1, -1));
+        jLabel8.setText("Asignar Brigada:");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 410, -1, 20));
 
-        cmbBrigaAsignada.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(cmbBrigaAsignada, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 410, 309, -1));
+        cmbBrigadas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(cmbBrigadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 410, 170, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Hora de Inicio:");
@@ -125,7 +131,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jLabel11.setText("Usar formato 24 hs (Ej. 14:45)");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, -1, -1));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 260, -1, 20));
 
         btnCargar.setBackground(new java.awt.Color(0, 0, 0));
         btnCargar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -143,6 +149,13 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jLabel16.setText("Nuevo Siniestro");
         getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 82, -1, 40));
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setText("Cuertel mas Cercano:");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, -1, 50));
+
+        txtCuarteCercano.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(txtCuarteCercano, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, 161, 30));
+
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
@@ -154,45 +167,120 @@ public class GestionSiniestros extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        System.out.println("Guardando Siniestro: ...");
-        try{
-            Siniestro siniestroAGuardar = new Siniestro();
-            Double posX = Double.parseDouble(txtX.getText());
-            Double posY = Double.parseDouble(txtY.getText());
-            siniestroAGuardar.setCoord_X(posX);
-            siniestroAGuardar.setCoord_Y(posY);
-            Instant instant = dateInicio.getDate().toInstant();
-            siniestroAGuardar.setFecha_siniestro(LocalDate.ofInstant(instant, ZoneId.systemDefault()));
-            siniestroAGuardar.setTipo(cmbTipoSin.getSelectedItem().toString());
-            
-            // Aqui queda por mejorar que chequee el formato de hora introducido
-            siniestroAGuardar.setHora_siniestro(txtHorainicio.getText());
-            
-            //Una vez tengo el siniestro armado, lo mando a persistir, acá tmb debería de asegurarme q el siniestro va bien armado.
-            sd.GuardarSiniestro(siniestroAGuardar);
-        }catch(Exception e){
-            System.out.println("Error al Guardar Siniestro");
+        try {
+            validarCampos();
+            Siniestro nuevoSiniestro = new Siniestro();
+            cargarDatosSiniestro(nuevoSiniestro);
+            SiniestroData siniestroData = new SiniestroData();
+            siniestroData.GuardarSiniestro(nuevoSiniestro);
+            JOptionPane.showMessageDialog(this, "Siniestro Cargado exitosamente.");
+            limpiar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Hubo un problema al cargar el siniestro. " + e.getMessage());
+            e.printStackTrace();
+            limpiar();
         }
-        
-        
+
     }//GEN-LAST:event_btnCargarActionPerformed
 
-    
-    private void actualizarComboBoxBrigaAsignada(){
-        List<Brigada> brigadasEnBD = bd.ListarBrigada();
-        if (!brigadasEnBD.isEmpty()){ // verifico que no este vacía
-            Escritorio.brigadasExistentes = Escritorio.transformarBrigadasAtexto(brigadasEnBD);
-        }
-        // una vez tengo las brigadas existentes como List<String>, actualizo mi combo box
-        for (String brigada : Escritorio.brigadasExistentes) {
-            cmbBrigaAsignada.addItem(brigada);
+    public void designarCuartel(Siniestro siniestro) {
+        try {
+            validarCampos();
+
+            Siniestro nuevoSiniestro = new Siniestro();
+            cargarDatosSiniestro(nuevoSiniestro);
+
+            SiniestroData siniestroData = new SiniestroData();
+            siniestroData.GuardarSiniestro(nuevoSiniestro);
+
+            JOptionPane.showMessageDialog(this, "Siniestro Cargado exitosamente.");
+
+            limpiar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Hubo un problema al cargar el siniestro. " + e.getMessage());
+            e.printStackTrace();
+            limpiar();
         }
     }
-   
+
+    private void validarCampos() {
+        if (txtX.getText().isEmpty() || txtY.getText().isEmpty() || dateInicio.getDate() == null
+                || cmbTipoSin.getSelectedItem() == null || txtHorainicio.getText().isEmpty()
+                || cmbBrigadas.getSelectedItem() == null) {
+            throw new IllegalArgumentException("Complete todos los campos.");
+        }
+    }
+
+    private void cargarDatosSiniestro(Siniestro nuevoSiniestro) {
+        nuevoSiniestro.setCoord_X(Double.parseDouble(txtX.getText()));
+        nuevoSiniestro.setCoord_Y(Double.parseDouble(txtY.getText()));
+        Cuartel cuartelMasCercano = calcularCuartelMasCercano(nuevoSiniestro);
+        txtCuarteCercano.setText(cuartelMasCercano.getNombre_cuartel() + " " + cuartelMasCercano.getDireccion() + " " + cuartelMasCercano.getTelefono());
+        cargarBrigadasDisponibles(cuartelMasCercano, cmbBrigadas);
+        nuevoSiniestro.setFecha_siniestro(dateInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        nuevoSiniestro.setTipo((String) cmbTipoSin.getSelectedItem());
+        nuevoSiniestro.setHora_siniestro(txtHorainicio.getText());
+        nuevoSiniestro.setDetalles(textarea.getText());
+        nuevoSiniestro.setTipo(cuartelMasCercano.getNombre_cuartel());
+        //Cuartel cuartelMasCercano = calcularCuartelMasCercano(nuevoSiniestro);
+        //txtCuarteCercano.setText(cuartelMasCercano.getNombre_cuartel() + " " + cuartelMasCercano.getDireccion() + " " + cuartelMasCercano.getTelefono());
+        //cargarBrigadasDisponibles(cuartelMasCercano, cmbBrigadas);
+    }
+
+    private Cuartel calcularCuartelMasCercano(Siniestro siniestro) {
+        Cuartel cuartelMasCercano = null;
+        Double distanciaMinima = null;
+
+        for (Cuartel cuartel : listarCuarteles) {
+            if (cuartel.isEstado()) {
+                Double distancia = calcularDistancia(cuartel, siniestro);
+                if (distanciaMinima == null || distancia < distanciaMinima) {
+                    distanciaMinima = distancia;
+                    cuartelMasCercano = cuartel;
+                }
+            }
+        }
+        return cuartelMasCercano;
+    }
+
+    private void cargarBrigadasDisponibles(Cuartel cuartel, JComboBox<Brigada> comboBrigadas) {
+        comboBrigadas.removeAllItems();
+
+        if (listarBrigadas != null && cuartel != null && comboBrigadas != null) {
+            for (Brigada brigada : listarBrigadas) {
+                try {
+                    Cuartel cuartelBrigada = brigada.getCuartel();
+                    if (cuartelBrigada != null && cuartelBrigada.getId_cuartel() == cuartel.getId_cuartel() && brigada.isDisponibilidad()) {
+                        comboBrigadas.addItem(brigada);
+                    }
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
+            }
+        } else {
+            System.err.println("Al menos una de las variables es null. Verifica la inicialización de las variables.");
+        }
+    }
+
+    private Double calcularDistancia(Cuartel cuartel, Siniestro siniestro) {
+        return Math.sqrt(Math.pow(cuartel.getCoord_X() - siniestro.getCoord_X(), 2) + Math.pow(cuartel.getCoord_Y() - siniestro.getCoord_Y(), 2));
+    }
+
+    private Cuartel cuartelMasCercano = new Cuartel();
+    private CuartelData cd = new CuartelData();
+    private Cuartel cuartel;
+    private List<Cuartel> listarCuarteles = cd.ListarCuarteles();
+    SiniestroData xx = new SiniestroData();
+    private Siniestro s1;
+    private List<Siniestro> listarSiniestros = sd.ListarSiniestro();
+    private Brigada brigada = new Brigada();
+    private BrigadaData brigadaData = new BrigadaData();
+    private List<Brigada> listarBrigada = brigadaData.ListarBrigada();
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargar;
-    private javax.swing.JComboBox<String> cmbBrigaAsignada;
+    private javax.swing.JComboBox<Brigada> cmbBrigadas;
     private javax.swing.JComboBox<String> cmbTipoSin;
     private com.toedter.calendar.JDateChooser dateInicio;
     private javax.swing.JButton jButton1;
@@ -207,11 +295,25 @@ public class GestionSiniestros extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea textarea;
+    private javax.swing.JTextField txtCuarteCercano;
     private javax.swing.JTextField txtHorainicio;
     private javax.swing.JTextField txtX;
     private javax.swing.JTextField txtY;
     // End of variables declaration//GEN-END:variables
 
+    public void limpiar() {
+        txtCuarteCercano.setText("");
+        txtHorainicio.setText("");
+        txtX.setText("");
+        txtY.setText("");
+        btnCargar.setSelected(false);
+        cmbBrigadas.setSelectedIndex(-1);
+        textarea.setText("");
+        dateInicio.setDate(null);
+        cmbTipoSin.setSelectedIndex(-1);
+
+    }
 }
