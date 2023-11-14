@@ -260,7 +260,7 @@ public class CargaBombero extends javax.swing.JFrame {
                 java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
                 dateNac.setDate(sqlDate);
                 String grupoSanguineo = bomberoOk.getGrupo_sanguineo();
-                cmbGrupSan.addItem(grupoSanguineo);
+                cmbGrupSan.setSelectedItem(grupoSanguineo);
 
                 txtTelefono.setText(bomberoOk.getCelular());
                 txtIdentif.setText(bomberoOk.getChapa_iden());
@@ -270,14 +270,10 @@ public class CargaBombero extends javax.swing.JFrame {
                 if (brigada != null) {
                     String nombreBrigada = brigada.getNombre_brigada();
                     cmbBrigadas.addItem(nombreBrigada);
-                } else {
-                    
+                } else {   
                     JOptionPane.showMessageDialog(this, "El bombero no tiene asignada una brigada.");
                 }
-
-                
-
-                JOptionPane.showMessageDialog(this, "El bombero con DNI " + dniBuscar + " ya existe en la base de datos.");
+                JOptionPane.showMessageDialog(this, "Bombero encontrado: Dni " + dniBuscar + " . Puede ver/modificar sus datos en la tabla.");
                 return;
             }
         } catch (Exception e) {
@@ -285,10 +281,7 @@ public class CargaBombero extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al buscar el bombero por DNI: " + e.getMessage());
             System.out.println("Error");
             e.printStackTrace();
-
         }
-
-
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifActionPerformed

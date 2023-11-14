@@ -156,34 +156,34 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBBuscarActionPerformed
-        try {
-            int codigo = Integer.parseInt(txtCod.getText());
-            System.out.println("Buscando siniestro con codigo:" + txtCod.getText());
-            Siniestro siniestroEncontrado = sd.BuscarSiniestroPorID(codigo);
-
-            // Una vez encontrado el siniestro debo mostrarlo:
-            if (siniestroEncontrado != null) {
-                txtX.setText(siniestroEncontrado.getCoord_X() + "");
-                txtY.setText(siniestroEncontrado.getCoord_Y() + "");
-                LocalDate fechaEnFormatoLocal = siniestroEncontrado.getFecha_siniestro();
-                Date fechaEnFormatoDate = Date.from(fechaEnFormatoLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                dateInicio.setDate(fechaEnFormatoDate);
-                txtTipo.setText(siniestroEncontrado.getTipo());
-                txtHorainicio.setText(siniestroEncontrado.getHora_siniestro());
-
-                cmbBrigaAsignada.setSelectedItem((String) brigadaEncontrada.getNombre_brigada());
-                LocalDate fechaEnFormatoLocalR = siniestroEncontrado.getFecha_resolucion();
-                Date fechaEnFormatoDateR = Date.from(fechaEnFormatoLocalR.atStartOfDay(ZoneId.systemDefault()).toInstant());
-                dateResol.setDate(fechaEnFormatoDateR);
-                txtHoraResoluc.setText(siniestroEncontrado.getHora_fin_siniestro());
-                txtCalif.setText(siniestroEncontrado.getCalificacion() + "");
-
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "El codigo debe ser un entero y no debe estar vacio");
-        } catch (NullPointerException e) {
-            System.out.println("No se encontro ningun siniestro con el cod: " + txtCod.getText());
-        }
+//        try {
+//            int codigo = Integer.parseInt(txtCod.getText());
+//            System.out.println("Buscando siniestro con codigo:" + txtCod.getText());
+//            Siniestro siniestroEncontrado = sd.BuscarSiniestroPorID(codigo);
+//
+//            // Una vez encontrado el siniestro debo mostrarlo:
+//            if (siniestroEncontrado != null) {
+//                txtX.setText(siniestroEncontrado.getCoord_X() + "");
+//                txtY.setText(siniestroEncontrado.getCoord_Y() + "");
+//                LocalDate fechaEnFormatoLocal = siniestroEncontrado.getFecha_siniestro();
+//                Date fechaEnFormatoDate = Date.from(fechaEnFormatoLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+//                dateInicio.setDate(fechaEnFormatoDate);
+//                txtTipo.setText(siniestroEncontrado.getTipo());
+//                txtHorainicio.setText(siniestroEncontrado.getHora_siniestro());
+//
+//                cmbBrigaAsignada.setSelectedItem((String) brigadaEncontrada.getNombre_brigada());
+//                LocalDate fechaEnFormatoLocalR = siniestroEncontrado.getFecha_resolucion();
+//                Date fechaEnFormatoDateR = Date.from(fechaEnFormatoLocalR.atStartOfDay(ZoneId.systemDefault()).toInstant());
+//                dateResol.setDate(fechaEnFormatoDateR);
+//                txtHoraResoluc.setText(siniestroEncontrado.getHora_fin_siniestro());
+//                txtCalif.setText(siniestroEncontrado.getCalificacion() + "");
+//
+//            }
+//        } catch (NumberFormatException e) {
+//            JOptionPane.showMessageDialog(this, "El codigo debe ser un entero y no debe estar vacio");
+//        } catch (NullPointerException e) {
+//            System.out.println("No se encontro ningun siniestro con el cod: " + txtCod.getText());
+//        }
 
     }//GEN-LAST:event_JBBuscarActionPerformed
 

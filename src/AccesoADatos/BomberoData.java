@@ -178,7 +178,6 @@ public class BomberoData {
                 bombero.setApellido(rs.getString("apellido"));
                 bombero.setFecha_nacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
                 bombero.setGrupo_sanguineo(rs.getString("grupo_sanguineo"));
-                brg.setId_brigada(rs.getInt("id_brigada"));
                 bombero.setBrigada(brg);
                 bombero.setCelular(rs.getString("celular"));
                 bombero.setEstado(rs.getBoolean("estado"));
