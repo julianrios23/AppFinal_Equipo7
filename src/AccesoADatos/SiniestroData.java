@@ -250,6 +250,31 @@ public class SiniestroData {
         }
         return siniestros;
     }
+    
+     public ArrayList<String[]> listarCuarteslesXEsp(String especialidad) {
+        ArrayList<String[]> DatosXEsp = new ArrayList<>();
+
+        String sql = "SELECT b.id_brigada, b.nombre_brigada, c.nombre_cuartel, c.id_cuartel FROM bridaga b JOIN cuartel c "
+                + "ON (b.id_Cuartel = c.id_Cuartel) WHERE especialidad = ? AND b.estado = 1";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, especialidad);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String[] datos = new String[4];
+                datos[0] = rs.getInt("id_brigada") + "";
+                datos[1] = rs.getString("nombre_brigada");
+                datos[2] = rs.getString("nombre_cuartel");
+                datos[3] = rs.getInt("id_cuartel") + "";
+                DatosXEsp.add(datos);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "No hay Cuarteles que cumplan los requisitos","ERROR !!",2);
+        }
+
+        return DatosXEsp;
+    }
 
     
        

@@ -18,7 +18,17 @@ public class Brigada {
     public Brigada() {
     }
 
-    public Brigada(int id_brigada, String nombre_brigada, String especialidad, boolean estado, int id_cuartel, Boolean disponibilidad, String nombre_cuartel) {
+    public Brigada(String nombre_brigada, String especialidad, boolean estado, int id_cuartel, Boolean disponibilidad, String nombre_cuartel, Cuartel cuartel) {
+        this.nombre_brigada = nombre_brigada;
+        this.especialidad = especialidad;
+        this.estado = estado;
+        this.id_cuartel = id_cuartel;
+        this.disponibilidad = disponibilidad;
+        this.nombre_cuartel = nombre_cuartel;
+        this.cuartel = cuartel;
+    }
+
+    public Brigada(int id_brigada, String nombre_brigada, String especialidad, boolean estado, int id_cuartel, Boolean disponibilidad, String nombre_cuartel, Cuartel cuartel) {
         this.id_brigada = id_brigada;
         this.nombre_brigada = nombre_brigada;
         this.especialidad = especialidad;
@@ -26,16 +36,10 @@ public class Brigada {
         this.id_cuartel = id_cuartel;
         this.disponibilidad = disponibilidad;
         this.nombre_cuartel = nombre_cuartel;
+        this.cuartel = cuartel;
     }
 
-    public Brigada(String nombre_brigada, String especialidad, boolean estado, int id_cuartel, Boolean disponibilidad, String nombre_cuartel) {
-        this.nombre_brigada = nombre_brigada;
-        this.especialidad = especialidad;
-        this.estado = estado;
-        this.id_cuartel = id_cuartel;
-        this.disponibilidad = disponibilidad;
-        this.nombre_cuartel = nombre_cuartel;
-    }
+    
 
     public int getId_brigada() {
         return id_brigada;
@@ -101,6 +105,12 @@ public class Brigada {
     public String getNombreCuartel() {
         return this.nombre_cuartel;
     }
+
+    public void setCuartel(Cuartel cuartel) {
+        this.cuartel = cuartel;
+    }
+    
+    
 
     public Object[] toArray() {
         return new Object[]{id_brigada, nombre_brigada, especialidad, estado, nombre_cuartel, disponibilidad};
