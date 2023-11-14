@@ -1,13 +1,11 @@
-
 package Entidades;
 
 /**
- 
+ *
  * @author Julian Rios
  */
 public class Brigada {
-    
-   
+
     private int id_brigada;
     private String nombre_brigada;
     private String especialidad;
@@ -15,8 +13,8 @@ public class Brigada {
     private int id_cuartel;
     private Boolean disponibilidad;
     private String nombre_cuartel;
-   
-     
+    private Cuartel cuartel;
+
     public Brigada() {
     }
 
@@ -94,28 +92,31 @@ public class Brigada {
     public void setNombre_cuartel(String nombre_cuartel) {
         this.nombre_cuartel = nombre_cuartel;
     }
-    
-     public void asignarCuartel(Cuartel cuartel) {
+
+    public void asignarCuartel(Cuartel cuartel) {
         this.id_cuartel = cuartel.getId_cuartel();
         this.nombre_cuartel = cuartel.getNombre_cuartel();
-     }
-     
-     public String getNombreCuartel() {
+    }
+
+    public String getNombreCuartel() {
         return this.nombre_cuartel;
     }
-     
-     public Object[] toArray() {
-    return new Object[]{id_brigada, nombre_brigada, especialidad, estado, nombre_cuartel, disponibilidad};
-}
 
+    public Object[] toArray() {
+        return new Object[]{id_brigada, nombre_brigada, especialidad, estado, nombre_cuartel, disponibilidad};
+    }
+
+    public Cuartel getCuartel() {
+        return this.cuartel;
+    }
+
+    public boolean isDisponibilidad() {
+        return this.disponibilidad != null && this.disponibilidad;
+    }
 
     @Override
     public String toString() {
         return "Brigada{" + "id_brigada=" + id_brigada + ", nombre_brigada=" + nombre_brigada + ", especialidad=" + especialidad + ", estado=" + estado + ", id_cuartel=" + id_cuartel + ", disponibilidad=" + disponibilidad + ", nombre_cuartel=" + nombre_cuartel + '}';
     }
-
-    
-
-    
 
 }

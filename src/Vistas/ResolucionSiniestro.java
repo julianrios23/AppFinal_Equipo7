@@ -1,8 +1,10 @@
 
 package Vistas;
 
+import AccesoADatos.BrigadaData;
+import AccesoADatos.SiniestroData;
+import Entidades.Brigada;
 import Entidades.Siniestro;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -89,6 +91,11 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
         btnResolucion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnResolucion.setForeground(new java.awt.Color(255, 255, 255));
         btnResolucion.setText("GUARDAR RESOLUCION SINIESTRO");
+        btnResolucion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResolucionActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnResolucion, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 490, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -151,6 +158,58 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
     private void btnCerraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerraActionPerformed
         setVisible(false);
     }//GEN-LAST:event_btnCerraActionPerformed
+
+    private void btnResolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResolucionActionPerformed
+        try {
+            Siniestro sini = null;
+            int id = Integer.parseInt(JTCodigo.getText());
+            sini = sd.BuscarSiniestroPorID(id);//LA SOLUCION ERA USAR EL METODO NUEVO DE ID
+
+            if (sini != null) {
+                JTFCoordX.setText(String.valueOf(sini.getCoord_X()));
+                JTFCoordY.setText(String.valueOf(sini.getCoord_Y()));
+                JDCFechaInicio.setDate(Date.from(sini.getFecha_siniestro().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                jCBoxTipoSiniestro.setSelectedItem(sini.getTipo());
+                
+                if (sini.getBrigada() != null) {
+                    JCBAsignarBrigada.setSelectedItem(sini.getBrigada());
+                  
+                    JRBBrigadaNull.setSelected(false);
+                } else {
+                    JCBAsignarBrigada.setSelectedItem(null);
+                    
+                    JRBBrigadaNull.setSelected(true);
+                }
+
+                JTDetallesDelSiniestro.setText(sini.getDetalles());
+                llenarComboBox();
+
+                if (sini.getFecha_resolucion() == null) {
+                    JDCFechaDeResolucion.setDate(null);
+                } else {
+                    JDCFechaDeResolucion.setDate(Date.from(sini.getFecha_resolucion().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                }
+
+                JCBCalificacion.setSelectedIndex(sini.getCalificacion());
+
+                if (sini.isEstado() != null) {
+                    if (sini.isEstado()) {
+                        JRBEstado.setSelected(true);
+                    } else {
+                        JRBEstado.setSelected(false);
+                    }
+                }
+            }
+
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(this, "No deje campos vacios" + ex.getMessage());
+            limpiar();
+            ex.printStackTrace();
+        } catch (NumberFormatException ex2) {
+            JOptionPane.showMessageDialog(this, "El dni debe ser un numero" + ex2.getMessage());
+            limpiar();
+        }
+    }//GEN-LAST:event_btnResolucionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
