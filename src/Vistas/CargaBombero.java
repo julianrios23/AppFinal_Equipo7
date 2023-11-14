@@ -6,7 +6,9 @@ import Entidades.Bombero;
 import Entidades.Brigada;
 import Entidades.Cuartel;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -21,11 +23,12 @@ public class CargaBombero extends javax.swing.JFrame {
         cargarComboBrigadas();
     }
 
+    //cargar todas las brigadas
     private void cargarComboBrigadas() {
         cmbBrigadas.removeAllItems();
         Brigada brigadaVacia = new Brigada();
-        brigadaVacia.setNombre_cuartel("Brigadas");
-        cmbBrigadas.addItem(brigadaVacia.getNombre_cuartel());
+        brigadaVacia.setNombre_brigada("Brigadas");
+        cmbBrigadas.addItem(brigadaVacia.getNombre_brigada());
 
         BrigadaData bd = new BrigadaData();
         List<Brigada> brigadas = bd.ListarBrigada();
@@ -208,37 +211,100 @@ public class CargaBombero extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        try {
+        // Lista para almacenar mensajes de error
+        List<String> mensajesError = new ArrayList<>();
 
+        try {
             String nombre = txtNombre.getText();
             String apellido = txtApellido.getText();
-            int dni = Integer.parseInt(txtDni.getText());
-            java.util.Date fechaNacimientoUtil = dateNac.getDate();
-            LocalDate fechaNacimiento = fechaNacimientoUtil.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            String dniStr = txtDni.getText();
             String grupoSanguineo = (String) cmbGrupSan.getSelectedItem();
             String celular = txtTelefono.getText();
             boolean estado = checkAct.isSelected();
             String chapaIden = txtIdentif.getText();
-
             String nombreBrigada = (String) cmbBrigadas.getSelectedItem();
-            BrigadaData brigadaData = new BrigadaData();
-            Brigada brigada = brigadaData.BuscarBrigada(nombreBrigada);
 
-            if (brigada != null && brigada.getId_brigada() != 0) {
-                Bombero nuevoBombero = new Bombero(nombre, apellido, dni, fechaNacimiento, grupoSanguineo, brigada, celular, estado, chapaIden);
+            LocalDate fechaNacimiento = null;  // Declarar la variable fuera del bloque
 
-                BomberoData bd = new BomberoData();
-                bd.GuardarBombero(nuevoBombero);
-
-                limpiar();
-
-                JOptionPane.showMessageDialog(this, "Bombero agregado exitosamente.");
-            } else {
-                // Manejo de error o mensaje indicando que la Brigada no es válida
-                JOptionPane.showMessageDialog(this, "La Brigada seleccionada no es válida.");
+            // Validar nombre: solo letras, min 4, max 20
+            if (!nombre.matches("[a-zA-Z]+") || nombre.length() < 4 || nombre.length() > 20) {
+                mensajesError.add("El nombre debe contener solo letras y tener entre 4 y 20 caracteres.");
             }
+
+            // Validar apellido: solo letras, min 4, max 20
+            if (!apellido.matches("[a-zA-Z]+") || apellido.length() < 4 || apellido.length() > 20) {
+                mensajesError.add("El apellido debe contener solo letras y tener entre 4 y 20 caracteres.");
+            }
+
+            // Validar dni: solo números, min 7, max 8
+            try {
+                int dni = Integer.parseInt(dniStr);
+                if (dni < 1000000 || dni > 99999999) {
+                    mensajesError.add("El DNI debe contener solo números y tener entre 7 y 8 dígitos.");
+                }
+            } catch (NumberFormatException e) {
+                mensajesError.add("Ingrese un DNI válido.");
+            }
+
+            // Validar fecha de nacimiento: al menos 18 años
+            java.util.Date fechaNacimientoUtil = dateNac.getDate();
+            if (fechaNacimientoUtil == null) {
+                mensajesError.add("Seleccione una fecha de nacimiento.");
+            } else {
+                fechaNacimiento = fechaNacimientoUtil.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                Period edad = Period.between(fechaNacimiento, LocalDate.now());
+                if (edad.getYears() < 18) {
+                    mensajesError.add("Debe tener al menos 18 años de edad.");
+                }
+            }
+
+            // Validar grupo sanguíneo: seleccionar uno
+            if (grupoSanguineo == null) {
+                mensajesError.add("Seleccione un grupo sanguíneo.");
+            }
+
+            // Validar teléfono: solo números, min 6, max 14
+            if (!celular.matches("\\d{6,14}")) {
+                mensajesError.add("El teléfono debe contener solo números y tener entre 6 y 14 dígitos.");
+            }
+
+            // Validar chapa de identificación: solo números
+            if (!chapaIden.matches("\\d+")) {
+                mensajesError.add("La chapa de identificación debe contener solo números.");
+            }
+
+            // Validar brigada asignada: seleccionar una obligatoria
+            if (nombreBrigada == null || nombreBrigada.equals("Brigadas")) {
+                mensajesError.add("Seleccione una brigada.");
+            }
+
+            if (mensajesError.isEmpty()) {
+                // Todas las validaciones pasaron, proceder con la creación del Bombero
+                BrigadaData brigadaData = new BrigadaData();
+                Brigada brigada = brigadaData.BuscarBrigada(nombreBrigada);
+
+                if (brigada != null && brigada.getId_brigada() != 0) {
+                    Bombero nuevoBombero = new Bombero(nombre, apellido, Integer.parseInt(dniStr),
+                            fechaNacimiento, grupoSanguineo, brigada, celular, estado, chapaIden);
+
+                    BomberoData bd = new BomberoData();
+                    bd.GuardarBombero(nuevoBombero);
+
+                    limpiar();
+
+                    JOptionPane.showMessageDialog(this, "Bombero agregado exitosamente.");
+                } else {
+                    // Manejo de error o mensaje indicando que la Brigada no es válida
+                    JOptionPane.showMessageDialog(this, "La Brigada seleccionada no es válida.");
+                }
+            } else {
+                // Mostrar mensajes de error
+                String mensajeFinal = String.join("\n", mensajesError);
+                JOptionPane.showMessageDialog(this, mensajeFinal, "Errores de validación", JOptionPane.ERROR_MESSAGE);
+            }
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un DNI válido" + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Ingrese un DNI válido.");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -246,6 +312,18 @@ public class CargaBombero extends javax.swing.JFrame {
 
         try {
             String dniBuscar = txtIngDNI.getText();
+
+            // Validar que el DNI no esté vacío
+            if (dniBuscar.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Ingrese un DNI.");
+                return; // Salir del método si el DNI está vacío
+            }
+
+            // Validar que el DNI contenga solo números y tenga entre 7 y 8 dígitos
+            if (!dniBuscar.matches("\\d{7,8}")) {
+                JOptionPane.showMessageDialog(this, "El DNI debe contener solo números y tener entre 7 y 8 dígitos.");
+                return; // Salir del método si el DNI no cumple con las condiciones
+            }
 
             BomberoData bomberoData = new BomberoData();
             Bombero bomberoOk = bomberoData.BuscarBomberoPorDni(dniBuscar);
@@ -265,16 +343,21 @@ public class CargaBombero extends javax.swing.JFrame {
                 txtTelefono.setText(bomberoOk.getCelular());
                 txtIdentif.setText(bomberoOk.getChapa_iden());
                 checkAct.setSelected(bomberoOk.isEstado());
-                
+
                 Brigada brigada = bomberoOk.getBrigada();
                 if (brigada != null) {
                     String nombreBrigada = brigada.getNombre_brigada();
-                    cmbBrigadas.addItem(nombreBrigada);
-                } else {   
+                    cmbBrigadas.setSelectedItem(nombreBrigada);
+
+                } else {
                     JOptionPane.showMessageDialog(this, "El bombero no tiene asignada una brigada.");
                 }
+
                 JOptionPane.showMessageDialog(this, "Bombero encontrado: Dni " + dniBuscar + " . Puede ver/modificar sus datos en la tabla.");
                 return;
+            } else {
+                JOptionPane.showMessageDialog(this, "Bombero inexistente: Dni " + dniBuscar + ".");
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -285,6 +368,106 @@ public class CargaBombero extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifActionPerformed
+
+        String dniBuscar = txtDni.getText().trim();
+        BomberoData bomberoData = new BomberoData();
+        BrigadaData brigadaData = new BrigadaData();
+        Bombero bomberoOk = bomberoData.BuscarBomberoPorDni(dniBuscar);
+
+        if (bomberoOk != null) {
+            // Lista para almacenar mensajes de error
+            List<String> mensajesError = new ArrayList<>();
+
+            // Validar nombre: solo letras, min 4, max 20
+            String nombre = txtNombre.getText().toUpperCase().trim();
+            if (!nombre.matches("[a-zA-Z ]+") || nombre.length() < 4 || nombre.length() > 20) {
+                mensajesError.add("El nombre debe contener solo letras y espacios, y tener entre 4 y 20 caracteres.");
+            }
+
+            // Validar apellido: solo letras, min 4, max 20
+            String apellido = txtApellido.getText().toUpperCase().trim();
+            if (!apellido.matches("[a-zA-Z]+") || apellido.length() < 4 || apellido.length() > 20) {
+                mensajesError.add("El apellido debe contener solo letras y tener entre 4 y 20 caracteres.");
+            }
+
+            // Validar DNI: solo números, min 7, max 8
+            try {
+                int dni = Integer.parseInt(txtDni.getText().trim());
+                if (dni < 1000000 || dni > 99999999) {
+                    mensajesError.add("El DNI debe contener solo números y tener entre 7 y 8 dígitos.");
+                }
+            } catch (NumberFormatException e) {
+                mensajesError.add("Ingrese un DNI válido.");
+            }
+
+            // Validar fecha de nacimiento: al menos 18 años
+            java.util.Date fechaNacimientoUtil = dateNac.getDate();
+            if (fechaNacimientoUtil == null) {
+                mensajesError.add("Seleccione una fecha de nacimiento.");
+            } else {
+                LocalDate fechaNacimiento = fechaNacimientoUtil.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                Period edad = Period.between(fechaNacimiento, LocalDate.now());
+                if (edad.getYears() < 18) {
+                    mensajesError.add("Debe tener al menos 18 años de edad.");
+                }
+            }
+
+            // Validar grupo sanguíneo: seleccionar uno
+            String grupoSanguineo = (String) cmbGrupSan.getSelectedItem();
+            if (grupoSanguineo == null) {
+                mensajesError.add("Seleccione un grupo sanguíneo.");
+            }
+
+            // Validar teléfono: solo números, min 6, max 14
+            String telefono = txtTelefono.getText().trim();
+            if (!telefono.matches("\\d{6,14}")) {
+                mensajesError.add("El teléfono debe contener solo números y tener entre 6 y 14 dígitos.");
+            }
+
+            // Validar chapa de identificación: solo números
+            String chapaIden = txtIdentif.getText().trim();
+            if (!chapaIden.matches("\\d+")) {
+                mensajesError.add("La chapa de identificación debe contener solo números.");
+            }
+
+            // Validar brigada asignada: seleccionar una obligatoria
+            String nombreBrigada = (String) cmbBrigadas.getSelectedItem();
+            if (nombreBrigada == null || nombreBrigada.equals("Brigadas")) {
+                mensajesError.add("Seleccione una brigada.");
+            }
+
+            if (mensajesError.isEmpty()) {
+                // Todas las validaciones pasaron, proceder con la modificación del Bombero
+                bomberoOk.setNombre(nombre);
+                bomberoOk.setApellido(apellido);
+                bomberoOk.setDni(Integer.parseInt(txtDni.getText().trim()));
+
+                // Obtener la fecha del DateChooser
+                LocalDate fechaNacimiento = fechaNacimientoUtil.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                // Asignar la fecha de nacimiento al objeto bomberoOk
+                bomberoOk.setFecha_nacimiento(fechaNacimiento);
+                bomberoOk.setGrupo_sanguineo(grupoSanguineo);
+                bomberoOk.setCelular(telefono);
+                bomberoOk.setChapa_iden(chapaIden);
+                //parseo nombreBrigada a  id_brigada
+                Brigada brigada = brigadaData.BuscarBrigada(nombreBrigada);
+                bomberoOk.setBrigada(brigada);
+                // Estado
+                boolean estadoCheckBox = checkAct.isSelected();
+                bomberoOk.setEstado(estadoCheckBox);
+
+                
+            } else {
+                // Mostrar mensajes de error
+                String mensajeFinal = String.join("\n", mensajesError);
+                JOptionPane.showMessageDialog(this, mensajeFinal, "Errores de validación", JOptionPane.ERROR_MESSAGE);
+            }
+            // enviar modificaciones a la base de datos
+                bomberoData.ModificarBombero(bomberoOk);
+        } else {
+            // No se puede modificar. Bombero inexistente en la base de datos
+        }
 
 
     }//GEN-LAST:event_btnModifActionPerformed

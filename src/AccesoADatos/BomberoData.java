@@ -83,7 +83,7 @@ public class BomberoData {
     public void ModificarBombero(Bombero bombero) {
 
         String SQL = " UPDATE bombero "
-                + "SET nombre = ?, apellido =?, fecha_nacimiento = ?, grupo_sanguineo = ?, id_brigada = ?, celular = ?, estado = ?, chapa_iden = ? "
+                + "SET nombre = ?, apellido =?, fecha_nacimiento = ?, grupo_sanguineo = ?, brigada = ?, celular = ?, estado = ?, chapa_iden = ? "
                 + "WHERE dni = ?";//LO CAMBIE AL ULTIMO DATO POR DNI NO ID_BOMBERO
         PreparedStatement ps = null;
         try {
@@ -92,7 +92,7 @@ public class BomberoData {
             ps.setString(1, bombero.getNombre());
             ps.setString(2, bombero.getApellido());
             ps.setDate(3, Date.valueOf(bombero.getFecha_nacimiento()));
-            ps.setString(4, bombero.getGrupo_sanguineo());
+            ps.setString(4, bombero.getGrupo_sanguineo());         
             ps.setInt(5, bombero.getBrigada().getId_brigada());
             ps.setString(6, bombero.getCelular());
             ps.setBoolean(7, bombero.isEstado());
@@ -161,37 +161,41 @@ public class BomberoData {
     }
     
     public Bombero BuscarBomberoPorDni(String dni) {
-        Bombero bombero = null;
-        String SQL = "SELECT * FROM bombero WHERE dni = ?";
-        PreparedStatement ps = null;
-        try {
-            ps = con.prepareStatement(SQL);
-            ps.setString(1, dni);
-            ResultSet rs = ps.executeQuery();
-            Brigada brg;
-            if (rs.next()) {
-                bombero = new Bombero();
-                brg = new Brigada();
-                bombero.setDni(rs.getInt("dni"));
-                bombero.setId_bombero(rs.getInt("id_bombero"));
-                bombero.setNombre(rs.getString("nombre"));
-                bombero.setApellido(rs.getString("apellido"));
-                bombero.setFecha_nacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
-                bombero.setGrupo_sanguineo(rs.getString("grupo_sanguineo"));
-                bombero.setBrigada(brg);
-                bombero.setCelular(rs.getString("celular"));
-                bombero.setEstado(rs.getBoolean("estado"));
-                bombero.setChapa_iden(rs.getString("chapa_iden"));
-            } else {
-                
-            }
-            ps.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Bombero: " + ex);
-         ex.printStackTrace();
+       Bombero bombero = null;
+    String SQL = "SELECT * FROM bombero WHERE dni = ?";
+    PreparedStatement ps = null;
+    try {
+        ps = con.prepareStatement(SQL);
+        ps.setString(1, dni);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            bombero = new Bombero();
+            bombero.setDni(rs.getInt("dni"));
+            bombero.setId_bombero(rs.getInt("id_bombero"));
+            bombero.setNombre(rs.getString("nombre"));
+            bombero.setApellido(rs.getString("apellido"));
+            bombero.setFecha_nacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
+            bombero.setGrupo_sanguineo(rs.getString("grupo_sanguineo"));
+            
+            // Obtén la Brigada asociada al Bombero
+            BrigadaData bd = new BrigadaData();
+            //Tabla bombero contiene "brigada" es el id_brigada
+            int idBrigada = rs.getInt("brigada");
+            //Busca la brigada completa
+            Brigada nombreBrigada = bd.BuscarBrigadaPorId(idBrigada);
+            bombero.setBrigada(nombreBrigada);
+            bombero.setCelular(rs.getString("celular"));
+            bombero.setEstado(rs.getBoolean("estado"));
+            bombero.setChapa_iden(rs.getString("chapa_iden"));
+        } else {
+            // Si no se encontró al bombero, bombero seguirá siendo null
         }
-        
-        return bombero;
+        ps.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Bombero: " + ex);
+        ex.printStackTrace();
+    }
+    return bombero;
     }
 
     public List<Bombero> ListarBomberos() {
