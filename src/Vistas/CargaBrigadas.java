@@ -7,6 +7,7 @@ import Entidades.Brigada;
 import Entidades.Cuartel;
 import Entidades.Especialidad;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -20,7 +21,7 @@ public class CargaBrigadas extends javax.swing.JFrame {
         initComponents();
         cargarComboBox();
         cargarEspecialidad();
-        
+
     }
 
     private void cargarComboBox() {
@@ -34,13 +35,14 @@ public class CargaBrigadas extends javax.swing.JFrame {
             cmbCuartel.addItem(elem.getNombre_cuartel());
         }
     }
+
     private void cargarEspecialidad() {
-    cmbEspec.removeAllItems();
-    Especialidad[] especialidades = Especialidad.values();
-    for (Especialidad especialidad : especialidades) {
-        cmbEspec.addItem(especialidad);
+        cmbEspec.removeAllItems();
+        Especialidad[] especialidades = Especialidad.values();
+        for (Especialidad especialidad : especialidades) {
+            cmbEspec.addItem(especialidad);
+        }
     }
-}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -123,7 +125,6 @@ public class CargaBrigadas extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, -1, -1));
 
         cmbEspec.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cmbEspec.setSelectedIndex(-1);
         getContentPane().add(cmbEspec, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 273, -1));
 
         jInternalFrame1.setClosable(true);
@@ -422,7 +423,6 @@ public class CargaBrigadas extends javax.swing.JFrame {
 
                 cmbCuartel.setSelectedItem(brig.getNombreCuartel());
 
-
             } else {
                 System.out.println("No se encontró una Brigada con este nombre.");
                 JOptionPane.showMessageDialog(this, "No se encontró una Brigada con este nombre.");
@@ -467,19 +467,53 @@ public class CargaBrigadas extends javax.swing.JFrame {
         BrigadaData brigadaData = new BrigadaData();
         Brigada nuevaBrigada = new Brigada();
 
-        nuevaBrigada.setNombre_brigada(txtNombre.getText());
-        Especialidad especialidadSeleccionada = (Especialidad) cmbEspec.getSelectedItem();
-        String especialidadComoString = especialidadSeleccionada.toString();
-        nuevaBrigada.setEspecialidad(especialidadComoString);
-        nuevaBrigada.setDisponibilidad(checkDispon.isSelected());
-        nuevaBrigada.setEstado(checkAct.isSelected());
+        // Validaciones
+        List<String> errores = new ArrayList<>();
 
-        asignarCuartelABrigada(nuevaBrigada);
+        // Validar nombre
+        String nombre = txtNombre.getText();
+        if (nombre.length() < 4 || nombre.length() > 20 || !nombre.matches("[a-zA-Z ]+")) {
+            errores.add("Nombre: Debe tener entre 4 y 20 letras y solo puede contener letras y espacios.");
+        }
 
-        brigadaData.GuardarBrigada(nuevaBrigada);
+        // Validar especialidad
+        String especialidadSeleccionada = cmbEspec.getSelectedItem().toString();
+        if ("SELECCIONAR_ESPECIALIDAD".equals(especialidadSeleccionada)) {
+            errores.add("Debe seleccionar una especialidad diferente a 'SELECCIONAR_ESPECIALIDAD'.");
+        }
 
-        JOptionPane.showMessageDialog(this, "Brigada Agregada Exitosamente.");
-        limpiar();
+        // Validar cuartel
+        String cuartelSeleccionado = cmbCuartel.getSelectedItem().toString();
+        if ("Cuarteles".equals(cuartelSeleccionado)) {
+            errores.add("Debe seleccionar un cuartel diferente a 'Cuarteles'.");
+        }
+
+        // Mostrar errores si los hay
+        if (!errores.isEmpty()) {
+            StringBuilder mensaje = new StringBuilder("Errores:\n");
+            for (String error : errores) {
+                mensaje.append("- ").append(error).append("\n");
+            }
+            JOptionPane.showMessageDialog(this, mensaje.toString(), "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            //si no hay errores, los campos son todos validos
+            //Agregar brigada
+            nuevaBrigada.setNombre_brigada(nombre);
+            nuevaBrigada.setEspecialidad(especialidadSeleccionada);
+            nuevaBrigada.setDisponibilidad(checkDispon.isSelected());
+            nuevaBrigada.setEstado(checkAct.isSelected());
+
+            asignarCuartelABrigada(nuevaBrigada);
+
+            if (brigadaData.GuardarBrigada(nuevaBrigada)) {
+                JOptionPane.showMessageDialog(this, "Brigada Agregada Exitosamente.");
+                limpiar();
+            }
+
+        }
+
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -488,17 +522,19 @@ public class CargaBrigadas extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
-            String nombre = txtnomBuscar.getText();
+            // Validar nombre de búsqueda
+            String nombreBusqueda = txtnomBuscar.getText().trim();
+            if (nombreBusqueda.isEmpty() || !nombreBusqueda.matches("[a-zA-Z ]{4,20}")) {
+                JOptionPane.showMessageDialog(this, "Ingrese un nombre válido para la búsqueda. Debe tener entre 4 y 20 letras y solo puede contener letras y espacios.");
+                return;
+            }
 
             BrigadaData brigadaData = new BrigadaData();
-            Brigada brigada = brigadaData.BuscarBrigada(nombre);
+            Brigada brigada = brigadaData.BuscarBrigada(nombreBusqueda);
 
             if (brigada != null) {
-
                 txtNombre.setText(brigada.getNombre_brigada());
-
                 cmbEspec.setSelectedItem(brigada.getEspecialidad());
-
                 checkAct.setSelected(brigada.isEstado());
                 checkDispon.setSelected(brigada.getDisponibilidad());
 
@@ -515,7 +551,7 @@ public class CargaBrigadas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "No se encontró una Brigada con este nombre.");
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un nombre válido para la búsqueda: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al buscar la Brigada: " + e.getMessage());
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 

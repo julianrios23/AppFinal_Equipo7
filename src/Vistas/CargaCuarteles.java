@@ -2,6 +2,8 @@ package Vistas;
 
 import AccesoADatos.*;
 import Entidades.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class CargaCuarteles extends javax.swing.JFrame {
@@ -173,53 +175,73 @@ public class CargaCuarteles extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
+
     private void jButton3ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed1
-
         Cuartel cuartel = new Cuartel();
-        cuartel.setNombre_cuartel(txtNombre.getText());
-        cuartel.setDireccion(txtDirecc.getText());
 
-        // valido coordenadas
-        String coordenadaX = txtCoorX.getText();
-        String coordenadaY = txtCoorY.getText();
-        if (esNumero(coordenadaX) && esNumero(coordenadaY)) {
+        List<String> errores = new ArrayList<>();
+
+        // Validar nombre de cuartel
+        String nombreCuartel = txtNombre.getText().trim();
+        if (nombreCuartel.length() < 6 || nombreCuartel.length() > 50 || !nombreCuartel.matches("[a-zA-Z ]+")) {
+            errores.add("Nombre de cuartel: Debe tener entre 6 y 50 letras y solo puede contener letras y espacios.");
+        } else {
+            cuartel.setNombre_cuartel(nombreCuartel);
+        }
+
+        // Validar dirección
+        String direccion = txtDirecc.getText().trim();
+        if (direccion.length() < 6 || direccion.length() > 30 || !direccion.matches("[a-zA-Z -]+")) {
+            errores.add("Dirección: Debe tener entre 6 y 30 caracteres y puede contener letras, espacios o guiones medios.");
+        } else {
+            cuartel.setDireccion(direccion);
+        }
+
+        // Validar coordenadas
+        String coordenadaX = txtCoorX.getText().trim();
+        String coordenadaY = txtCoorY.getText().trim();
+        if (esNumeroDouble(coordenadaX) && esNumeroDouble(coordenadaY)) {
             cuartel.setCoord_X(Double.parseDouble(coordenadaX));
             cuartel.setCoord_Y(Double.parseDouble(coordenadaY));
         } else {
-            JOptionPane.showMessageDialog(this, "Las coordenadas deben ser números válidos.");
-            return;
+            errores.add("Las coordenadas deben ser números válidos.");
         }
 
-        // valido tel
-        String telefono = txtTel.getText();
-        if (esNumero(telefono)) {
+        // Validar teléfono
+        String telefono = txtTel.getText().trim();
+        if (telefono.length() < 6 || telefono.length() > 20 || !esNumero(telefono)) {
+            errores.add("Teléfono: Debe tener entre 6 y 20 caracteres y contener solo números.");
+        } else {
             cuartel.setTelefono(telefono);
-        } else {
-            JOptionPane.showMessageDialog(this, "El teléfono debe contener solo números.");
-            return;
         }
 
-        // valido correo 
-        String correo = txtCorreo.getText();
-        if (esCorreoValido(correo)) {
-            cuartel.setCorreo(correo);
+        // Validar correo
+        String correo = txtCorreo.getText().trim();
+        if (correo.length() > 19 || !esCorreoValido(correo)) {
+            errores.add("Correo electrónico: Debe tener un máximo de 20 caracteres y ser un correo válido.");
         } else {
-            JOptionPane.showMessageDialog(this, "El correo electrónico no es válido.");
-            return;
+            cuartel.setCorreo(correo);
         }
 
         cuartel.setEstado(checkAct.isSelected());
 
-        // existe el cuartel?
+        // Existe el cuartel?
         CuartelData cuartelData = new CuartelData();
-        Cuartel existingCuartel = cuartelData.BuscarCuartelPorId(cuartel.getId_cuartel());
+        Cuartel existeCuartel = cuartelData.BuscarCuartelPorNombre(nombreCuartel);
 
-        if (existingCuartel != null) {
-            JOptionPane.showMessageDialog(this, "Ya existe un Cuartel con este ID.");
+        if (existeCuartel != null) {
+            errores.add("Ya existe un Cuartel con el nombre ingresado.");
+        }
+
+        // Mostrar errores si los hay
+        if (!errores.isEmpty()) {
+            String mensajeFinal = String.join("\n", errores);
+            JOptionPane.showMessageDialog(this, mensajeFinal, "Errores de validación", JOptionPane.ERROR_MESSAGE);
         } else {
-            // si no existe se puede guardar
-            cuartelData.GuardarCuartel(cuartel);
-            JOptionPane.showMessageDialog(this, "Cuartel Agregado Exitosamente. ");
+            // Si no hay errores, guardar el cuartel
+            if (cuartelData.GuardarCuartel(cuartel)) {
+                JOptionPane.showMessageDialog(this, "Cuartel Agregado Exitosamente. ");
+            }
             limpiar();
         }
     }//GEN-LAST:event_jButton3ActionPerformed1
@@ -227,10 +249,15 @@ public class CargaCuarteles extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
         try {
-            String nombre = txtBucarNom.getText();
+            // Validar nombre de búsqueda
+            String nombreBusqueda = txtBucarNom.getText().trim();
+            if (nombreBusqueda.isEmpty() || !nombreBusqueda.matches("[a-zA-Z ]{6,50}")) {
+                JOptionPane.showMessageDialog(this, "Ingrese un nombre válido para la búsqueda. Debe tener entre 6 y 50 letras y/o espacios.");
+                return;
+            }
 
             CuartelData cuartelData = new CuartelData();
-            Cuartel cuartel = cuartelData.BuscarCuartelPorNombre(nombre);
+            Cuartel cuartel = cuartelData.BuscarCuartelPorNombre(nombreBusqueda);
 
             if (cuartel != null) {
                 txtNombre.setText(cuartel.getNombre_cuartel());
@@ -244,8 +271,9 @@ public class CargaCuarteles extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "No se encontró un Cuartel con este nombre.");
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un nombre válido para la búsqueda: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al buscar el Cuartel: " + e.getMessage());
         }
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -254,56 +282,80 @@ public class CargaCuarteles extends javax.swing.JFrame {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
-            String nombre = txtBucarNom.getText();
+            List<String> errores = new ArrayList<>();
 
-            CuartelData cuartelData = new CuartelData();
-            Cuartel cuartel = cuartelData.BuscarCuartelPorNombre(nombre);
-
-            if (cuartel != null) {
-                cuartel.setNombre_cuartel(txtNombre.getText());
-                cuartel.setDireccion(txtDirecc.getText());
-
-                // valido coord
-                String coordenadaX = txtCoorX.getText();
-                String coordenadaY = txtCoorY.getText();
-                if (esNumero(coordenadaX) && esNumero(coordenadaY)) {
-                    cuartel.setCoord_X(Double.parseDouble(coordenadaX));
-                    cuartel.setCoord_Y(Double.parseDouble(coordenadaY));
-                } else {
-                    JOptionPane.showMessageDialog(this, "Las coordenadas deben ser números válidos.");
-                    return;
-                }
-
-                // valido telefono
-                String telefono = txtTel.getText();
-                if (esNumero(telefono)) {
-                    cuartel.setTelefono(telefono);
-                } else {
-                    JOptionPane.showMessageDialog(this, "El teléfono debe contener solo números.");
-                    return;
-                }
-
-                // valido correo
-                String correo = txtCorreo.getText();
-                if (esCorreoValido(correo)) {
-                    cuartel.setCorreo(correo);
-                } else {
-                    JOptionPane.showMessageDialog(this, "El correo no es válido.");
-                    return;
-                }
-
-                cuartel.setEstado(checkAct.isSelected());
-
-                // metodo modificar cuartel
-                cuartelData.ModificarCuartel(cuartel);
-                JOptionPane.showMessageDialog(this, "Cuartel modificado exitosamente.");
-                limpiar();
+            // Validar nombre de cuartel
+            String nombreCuartel = txtNombre.getText().trim();
+            if (nombreCuartel.isEmpty() || nombreCuartel.length() < 6 || nombreCuartel.length() > 50 || !nombreCuartel.matches("[a-zA-Z ]+")) {
+                errores.add("Nombre de cuartel: Debe tener entre 6 y 50 letras y solo puede contener letras y espacios.");
             } else {
-                JOptionPane.showMessageDialog(this, "No se encontró un Cuartel con este nombre.");
+                // Si el nombre cumple, buscar el cuartel para modificarlo
+                CuartelData cuartelData = new CuartelData();
+                Cuartel cuartel = cuartelData.BuscarCuartelPorNombre(nombreCuartel);
+
+                if (cuartel != null) {
+                    // Asignar nombre de cuartel validado anteriormente
+                    cuartel.setNombre_cuartel(nombreCuartel);
+
+                    // Validar dirección
+                    String direccion = txtDirecc.getText().trim();
+                    if (direccion.isEmpty() || direccion.length() < 6 || direccion.length() > 30 || !direccion.matches("[a-zA-Z -]+")) {
+                        errores.add("Dirección: Debe tener entre 6 y 30 caracteres y puede contener letras, espacios o guiones medios.");
+                    } else {
+                        cuartel.setDireccion(direccion);
+                    }
+
+                    // Validar coordenadas
+                    String coordenadaX = txtCoorX.getText().trim();
+                    String coordenadaY = txtCoorY.getText().trim();
+                    if (coordenadaX.isEmpty() || coordenadaY.isEmpty() || !esNumeroDouble(coordenadaX) || !esNumeroDouble(coordenadaY)) {
+                        errores.add("Las coordenadas deben ser números válidos.");
+                    } else {
+                        cuartel.setCoord_X(Double.parseDouble(coordenadaX));
+                        cuartel.setCoord_Y(Double.parseDouble(coordenadaY));
+                    }
+
+                    // Validar teléfono
+                    String telefono = txtTel.getText().trim();
+                    if (telefono.isEmpty() || telefono.length() < 6 || telefono.length() > 20 || !esNumero(telefono)) {
+                        errores.add("Teléfono: Debe tener entre 6 y 20 caracteres y contener solo números.");
+                    } else {
+                        cuartel.setTelefono(telefono);
+                    }
+
+                    // Validar correo
+                    String correo = txtCorreo.getText().trim();
+                    if (correo.isEmpty() || correo.length() > 19 || !esCorreoValido(correo)) {
+                        errores.add("Correo electrónico: Debe tener un máximo de 20 caracteres y ser un correo válido.");
+                    } else {
+                        cuartel.setCorreo(correo);
+                    }
+
+                    cuartel.setEstado(checkAct.isSelected());
+
+                    // Mostrar errores si los hay
+                    if (!errores.isEmpty()) {
+                        String mensajeFinal = String.join("\n", errores);
+                        JOptionPane.showMessageDialog(this, mensajeFinal, "Errores de validación", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        // Método para modificar el cuartel
+                        if (cuartelData.ModificarCuartel(cuartel)) {
+                            JOptionPane.showMessageDialog(this, "Cuartel modificado exitosamente.");
+                            limpiar();
+                        }
+                    }
+
+                } else {
+                    errores.add("No se encontró un Cuartel con este nombre.");
+                }
             }
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número válido para el ID: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: Ingrese un número válido para el ID: " + e.getMessage(), "Error de formato", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
 
@@ -346,7 +398,13 @@ public class CargaCuarteles extends javax.swing.JFrame {
     }
 
     private boolean esNumero(String texto) {
+        // Permite números decimales con signo opcional y parte decimal opcional
         return texto.matches("\\d+");
+    }
+
+    private boolean esNumeroDouble(String texto) {
+        // Permite números decimales con signo opcional y parte decimal opcional
+        return texto.matches("-?\\d+(\\.\\d+)?");
     }
 
     private boolean esCorreoValido(String correo) {

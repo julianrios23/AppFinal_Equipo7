@@ -1,16 +1,14 @@
-
 package Entidades;
 
 import java.time.LocalDate;
 import java.util.Vector;
 
 /**
- 
+ *
  * @author Julian Rios
  */
 public class Bombero {
-    
-    
+
     private int id_bombero;
     private String nombre;
     private String apellido;
@@ -130,17 +128,14 @@ public class Bombero {
         this.chapa_iden = chapa_iden;
     }
 
+
     @Override
     public String toString() {
         return "Bombero{" + "id_bombero=" + id_bombero + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", fecha_nacimiento=" + fecha_nacimiento + ", grupo_sanguineo=" + grupo_sanguineo + ", brigada=" + brigada + ", celular=" + celular + ", estado=" + estado + ", chapa_iden=" + chapa_iden + '}';
     }
 
-         public Object[] toArray() {
-    return new Object[]{id_bombero, nombre,apellido ,dni ,  fecha_nacimiento, grupo_sanguineo, brigada, celular, estado ,chapa_iden};
-}
-
-    
-
-    
+    public Object[] toArray() {
+        return new Object[]{id_bombero, nombre, apellido, dni, fecha_nacimiento, grupo_sanguineo, brigada  , celular, estado, chapa_iden};
+    }
 
 }

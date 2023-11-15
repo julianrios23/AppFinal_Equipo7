@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class ListarBomberos extends javax.swing.JFrame {
-    
+
     // generar un modelo para la tabla que muestra los productos
     private DefaultTableModel modelo = new DefaultTableModel();
 

@@ -12,19 +12,32 @@ import javax.swing.JOptionPane;
 
 public class CuartelData {
 
-   private Connection con = null;
+    private Connection con = null;
 
     public CuartelData() {
         con = Conexion.getConexion();
     }
 
-  
+    public boolean GuardarCuartel(Cuartel cuartel) {
+        // Verificar si el nombre_cuartel ya existe en la base de datos
+        String checkNombreCuartelQuery = "SELECT COUNT(*) FROM cuartel WHERE nombre_cuartel = ?";
+        try (PreparedStatement checkNombreCuartelStatement = con.prepareStatement(checkNombreCuartelQuery)) {
+            checkNombreCuartelStatement.setString(1, cuartel.getNombre_cuartel());
+            ResultSet nombreCuartelResultSet = checkNombreCuartelStatement.executeQuery();
 
-    public void GuardarCuartel(Cuartel cuartel) {
-        String SQL = "INSERT INTO cuartel (nombre_cuartel, direccion, coord_X, coord_Y, telefono, correo, estado) "
+            if (nombreCuartelResultSet.next() && nombreCuartelResultSet.getInt(1) > 0) {
+                JOptionPane.showMessageDialog(null, "Error: El nombre de cuartel ya existe en la base de datos.");
+                return false;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al verificar el nombre de cuartel: " + e.getMessage());
+            return false;
+        }
+
+        // Si el nombre_cuartel no existe, proceder con la inserción
+        String insertCuartelQuery = "INSERT INTO cuartel (nombre_cuartel, direccion, coord_X, coord_Y, telefono, correo, estado) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+        try (PreparedStatement ps = con.prepareStatement(insertCuartelQuery, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, cuartel.getNombre_cuartel());
             ps.setString(2, cuartel.getDireccion());
             ps.setDouble(3, cuartel.getCoord_X());
@@ -33,16 +46,17 @@ public class CuartelData {
             ps.setString(6, cuartel.getCorreo());
             ps.setBoolean(7, cuartel.isEstado());
             ps.executeUpdate();
+
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 cuartel.setId_cuartel(rs.getInt(1));
-                
             }
+
             rs.close();
-            ps.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Cuartel" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Cuartel: " + e.getMessage());
         }
+        return true;
     }
 
     public Cuartel BuscarCuartelPorId(int id) {
@@ -65,8 +79,6 @@ public class CuartelData {
                 cuartel.setCorreo(rs.getString("correo"));
                 cuartel.setEstado(rs.getBoolean("estado"));
 
-            } else {
-                //JOptionPane.showMessageDialog(null, "No existe el Cuartel. ");
             }
             rs.close();
             ps.close();
@@ -75,11 +87,11 @@ public class CuartelData {
         }
         return cuartel;
     }
-    
+
     //En listar brigadas del comboBox obtengo el Strin nombre del cuartel
     //Necesito buscar ese cuartel y tenerlo como objeto para capturar su id 
     //ListarBrigadasPorCuartel(id) para agregar las brigadas a la tabla
-       public Cuartel BuscarCuartelPorNombre(String nombre) {
+    public Cuartel BuscarCuartelPorNombre(String nombre) {
         Cuartel cuartel = null;
         String SQL = "SELECT * FROM cuartel WHERE nombre_cuartel = ? ";
         PreparedStatement ps = null;
@@ -90,7 +102,7 @@ public class CuartelData {
 
             if (rs.next()) {
                 cuartel = new Cuartel();
-                cuartel.setId_cuartel(rs.getInt( "id_cuartel"));
+                cuartel.setId_cuartel(rs.getInt("id_cuartel"));
                 cuartel.setNombre_cuartel(rs.getString("nombre_cuartel"));
                 cuartel.setDireccion(rs.getString("direccion"));
                 cuartel.setCoord_X(rs.getDouble("coord_X"));
@@ -110,14 +122,11 @@ public class CuartelData {
         return cuartel;
     }
 
-    public void ModificarCuartel(Cuartel cuartel) {
+    public boolean ModificarCuartel(Cuartel cuartel) {
 
-        String SQL = " UPDATE cuartel SET nombre_cuartel = ?, direccion = ? ,coord_X  = ? ,coord_Y = ?, telefono = ?, correo = ?, estado = ? "
-                + "WHERE id_cuartel = ? ";
-        PreparedStatement ps = null;
-        try {
-            ps = con.prepareStatement(SQL);
-
+        String SQL = "UPDATE cuartel SET nombre_cuartel = ?, direccion = ?, coord_X = ?, coord_Y = ?, telefono = ?, correo = ?, estado = ? "
+                + "WHERE id_cuartel = ?";
+        try (PreparedStatement ps = con.prepareStatement(SQL)) {
             ps.setString(1, cuartel.getNombre_cuartel());
             ps.setString(2, cuartel.getDireccion());
             ps.setDouble(3, cuartel.getCoord_X());
@@ -127,16 +136,18 @@ public class CuartelData {
             ps.setBoolean(7, cuartel.isEstado());
             ps.setInt(8, cuartel.getId_cuartel());
 
-            int exito = ps.executeUpdate();
+            int rowsAffected = ps.executeUpdate();
 
-            if (exito > 0) {
-                //JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+            if (rowsAffected > 0) {
+                // La modificación fue exitosa
+                return true;
             } else {
-                //JOptionPane.showMessageDialog(null, "El Cuartel no existe");
+                // No se encontró el cuartel con el ID proporcionado
+                return false;
             }
-            ps.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Cuartel " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Cuartel: " + e.getMessage());
+            return false;
         }
     }
 

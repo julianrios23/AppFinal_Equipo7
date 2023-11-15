@@ -24,10 +24,24 @@ public class BrigadaData {
         con = Conexion.getConexion();
     }
 
-    public void GuardarBrigada(Brigada brigada) {
-        String SQL = "INSERT INTO brigada (nombre_brigada, especialidad, estado, id_cuartel, disponibilidad, nombre_cuartel) VALUES (?, ?, ?, ?, ?, ?)";
+    public boolean GuardarBrigada(Brigada brigada) {
+        String checkNombreBrigadaQuery = "SELECT COUNT(*) FROM brigada WHERE nombre_brigada = ?";
+        String insertBrigadaQuery = "INSERT INTO brigada (nombre_brigada, especialidad, estado, id_cuartel, disponibilidad, nombre_cuartel) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try {
+        try (PreparedStatement checkNombreBrigadaStatement = con.prepareStatement(checkNombreBrigadaQuery)) {
+            checkNombreBrigadaStatement.setString(1, brigada.getNombre_brigada());
+            ResultSet nombreBrigadaResultSet = checkNombreBrigadaStatement.executeQuery();
+
+            if (nombreBrigadaResultSet.next() && nombreBrigadaResultSet.getInt(1) > 0) {
+                JOptionPane.showMessageDialog(null, "Error: El nombre de brigada ya existe en la base de datos.");
+                return false;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al verificar el nombre de brigada: " + e.getMessage());
+            return false;
+        }
+
+        try (PreparedStatement insertBrigadaStatement = con.prepareStatement(insertBrigadaQuery, Statement.RETURN_GENERATED_KEYS)) {
             String nombreCuartel = brigada.getNombre_cuartel();
             CuartelData cuartelData = new CuartelData();
             Cuartel cuartel = cuartelData.BuscarCuartelPorNombre(nombreCuartel);
@@ -35,29 +49,30 @@ public class BrigadaData {
             if (cuartel != null) {
                 brigada.setId_cuartel(cuartel.getId_cuartel());
 
-                PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, brigada.getNombre_brigada());
-                ps.setString(2, brigada.getEspecialidad());
-                ps.setBoolean(3, brigada.isEstado());
-                ps.setInt(4, brigada.getId_cuartel());
-                ps.setBoolean(5, brigada.getDisponibilidad() != null && brigada.getDisponibilidad().booleanValue());
-                ps.setString(6, brigada.getNombre_cuartel());
-                ps.executeUpdate();
+                insertBrigadaStatement.setString(1, brigada.getNombre_brigada());
+                insertBrigadaStatement.setString(2, brigada.getEspecialidad());
+                insertBrigadaStatement.setBoolean(3, brigada.isEstado());
+                insertBrigadaStatement.setInt(4, brigada.getId_cuartel());
+                insertBrigadaStatement.setBoolean(5, brigada.getDisponibilidad() != null && brigada.getDisponibilidad().booleanValue());
+                insertBrigadaStatement.setString(6, brigada.getNombre_cuartel());
+                insertBrigadaStatement.executeUpdate();
 
-                ResultSet rs = ps.getGeneratedKeys();
+                ResultSet rs = insertBrigadaStatement.getGeneratedKeys();
                 if (rs.next()) {
                     brigada.setId_brigada(rs.getInt(1));
-                    //JOptionPane.showMessageDialog(null, "Brigada agregada exitosamente.");
                 }
 
                 rs.close();
-                ps.close();
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontró un Cuartel con este nombre.");
+                return false;
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada. " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada: " + e.getMessage());
+            return false;
         }
+
+        return true;
     }
 
     public Brigada BuscarBrigada(String nombre) {

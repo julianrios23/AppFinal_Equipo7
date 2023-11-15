@@ -195,6 +195,11 @@ public class CargaBombero extends javax.swing.JFrame {
         btnLimpiar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setText("LIMPIAR");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(593, 443, -1, -1));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
@@ -286,11 +291,11 @@ public class CargaBombero extends javax.swing.JFrame {
                             fechaNacimiento, grupoSanguineo, brigada, celular, estado, chapaIden);
 
                     BomberoData bd = new BomberoData();
-                    bd.GuardarBombero(nuevoBombero);
+                    if(bd.GuardarBombero(nuevoBombero)){
+                       JOptionPane.showMessageDialog(this, "Bombero agregado exitosamente.");
+                    }
 
                     limpiar();
-
-                    JOptionPane.showMessageDialog(this, "Bombero agregado exitosamente.");
                 } else {
                     // Manejo de error o mensaje indicando que la Brigada no es válida
                     JOptionPane.showMessageDialog(this, "La Brigada seleccionada no es válida.");
@@ -483,6 +488,19 @@ public class CargaBombero extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnModifActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        txtIngDNI.setText("");
+        txtNombre.setText("");
+        txtDni.setText("");
+        cmbGrupSan.setSelectedIndex(-1);
+        txtIdentif.setText("");
+        txtApellido.setText("");
+        dateNac.setDateFormatString("");
+        txtTelefono.setText("");
+        cmbBrigadas.setSelectedIndex(-1);
+        checkAct.setSelected(false);
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
