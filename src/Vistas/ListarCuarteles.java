@@ -155,7 +155,7 @@ public class ListarCuarteles extends javax.swing.JFrame {
 
             jtfCoordenadaX.setText(coorXstring);
             jtfCoordenadaY.setText(coorYstring);
-            if (cuartel.isEstado() == true) {
+            if (cuartel.getEstado()== true) {
                 jcbEstado.setSelected(true);
             } else {
                 jcbEstado.setSelected(false);

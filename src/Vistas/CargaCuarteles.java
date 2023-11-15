@@ -239,7 +239,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
                 txtCoorY.setText(String.valueOf(cuartel.getCoord_Y()));
                 txtTel.setText(cuartel.getTelefono());
                 txtCorreo.setText(cuartel.getCorreo());
-                checkAct.setSelected(cuartel.isEstado());
+                checkAct.setSelected(cuartel.getEstado());
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró un Cuartel con este nombre.");
             }
@@ -266,13 +266,13 @@ public class CargaCuarteles extends javax.swing.JFrame {
                 // valido coord
                 String coordenadaX = txtCoorX.getText();
                 String coordenadaY = txtCoorY.getText();
-                if (esNumero(coordenadaX) && esNumero(coordenadaY)) {
-                    cuartel.setCoord_X(Double.parseDouble(coordenadaX));
-                    cuartel.setCoord_Y(Double.parseDouble(coordenadaY));
-                } else {
-                    JOptionPane.showMessageDialog(this, "Las coordenadas deben ser números válidos.");
-                    return;
-                }
+//                if (esNumero(coordenadaX) && esNumero(coordenadaY)) {
+//                    cuartel.setCoord_X(Double.parseDouble(coordenadaX));
+//                    cuartel.setCoord_Y(Double.parseDouble(coordenadaY));
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Las coordenadas deben ser números válidos.");
+//                    return;
+//                }
 
                 // valido telefono
                 String telefono = txtTel.getText();

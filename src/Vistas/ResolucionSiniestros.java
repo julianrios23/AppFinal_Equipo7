@@ -175,7 +175,7 @@ public class ResolucionSiniestros extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Puntuación:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(449, 294, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 80, -1));
 
         txtPunt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtPunt.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -188,7 +188,7 @@ public class ResolucionSiniestros extends javax.swing.JFrame {
                 txtPuntKeyReleased(evt);
             }
         });
-        getContentPane().add(txtPunt, new org.netbeans.lib.awtextra.AbsoluteConstraints(545, 294, -1, -1));
+        getContentPane().add(txtPunt, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 130, -1));
 
         btnGuardar.setBackground(new java.awt.Color(0, 0, 0));
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
