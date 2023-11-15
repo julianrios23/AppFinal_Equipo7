@@ -44,7 +44,7 @@ public class CuartelData {
             ps.setDouble(4, cuartel.getCoord_Y());
             ps.setString(5, cuartel.getTelefono());
             ps.setString(6, cuartel.getCorreo());
-            ps.setBoolean(7, cuartel.isEstado());
+            ps.setBoolean(7, cuartel.getEstado());
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -133,7 +133,7 @@ public class CuartelData {
             ps.setDouble(4, cuartel.getCoord_Y());
             ps.setString(5, cuartel.getTelefono());
             ps.setString(6, cuartel.getCorreo());
-            ps.setBoolean(7, cuartel.isEstado());
+            ps.setBoolean(7, cuartel.getEstado());
             ps.setInt(8, cuartel.getId_cuartel());
 
             int rowsAffected = ps.executeUpdate();

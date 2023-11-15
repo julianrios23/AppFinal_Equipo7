@@ -1,6 +1,8 @@
 
 package Entidades;
 
+import java.text.DecimalFormat;
+
 /**
  
  * @author Julian Rios
@@ -10,8 +12,8 @@ public class Cuartel {
      private int id_cuartel;
     private String nombre_cuartel;
     private String direccion;
-    private double coord_X;
-    private double coord_Y;
+    private Double coord_X;
+    private Double coord_Y;
     private String telefono;
     private String correo;
     private Boolean estado;
@@ -19,7 +21,8 @@ public class Cuartel {
     public Cuartel() {
     }
 
-    public Cuartel(String nombre_cuartel, String direccion, double coord_X, double coord_Y, String telefono, String correo, Boolean estado) {
+    public Cuartel(int id_cuartel, String nombre_cuartel, String direccion, Double coord_X, Double coord_Y, String telefono, String correo, Boolean estado) {
+        this.id_cuartel = id_cuartel;
         this.nombre_cuartel = nombre_cuartel;
         this.direccion = direccion;
         this.coord_X = coord_X;
@@ -29,8 +32,7 @@ public class Cuartel {
         this.estado = estado;
     }
 
-    public Cuartel(int id_cuartel, String nombre_cuartel, String direccion, double coord_X, double coord_Y, String telefono, String correo, Boolean estado) {
-        this.id_cuartel = id_cuartel;
+    public Cuartel(String nombre_cuartel, String direccion, Double coord_X, Double coord_Y, String telefono, String correo, Boolean estado) {
         this.nombre_cuartel = nombre_cuartel;
         this.direccion = direccion;
         this.coord_X = coord_X;
@@ -64,19 +66,19 @@ public class Cuartel {
         this.direccion = direccion;
     }
 
-    public double getCoord_X() {
+    public Double getCoord_X() {
         return coord_X;
     }
 
-    public void setCoord_X(double coord_X) {
+    public void setCoord_X(Double coord_X) {
         this.coord_X = coord_X;
     }
 
-    public double getCoord_Y() {
+    public Double getCoord_Y() {
         return coord_Y;
     }
 
-    public void setCoord_Y(double coord_Y) {
+    public void setCoord_Y(Double coord_Y) {
         this.coord_Y = coord_Y;
     }
 
@@ -96,14 +98,16 @@ public class Cuartel {
         this.correo = correo;
     }
 
-    public boolean isEstado() {
-         return estado;
-       }
+    public Boolean getEstado() {
+        return estado;
+    }
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 
+    
+    
     @Override
     public String toString() {
         return " ID: " + id_cuartel

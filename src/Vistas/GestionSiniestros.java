@@ -11,7 +11,6 @@ import Entidades.Siniestro;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +30,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
         cargarEspecialidad();
     }
 
+    private JTable tab = new JTable();
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -40,7 +41,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        TF_CoordY = new javax.swing.JTextField();
+        txtCoordY = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tab1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -49,7 +50,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
         btnCargar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
-        TF_CoordX = new javax.swing.JTextField();
+        txtCoordX = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         data = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
@@ -60,7 +61,6 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -92,19 +92,19 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jLabel4.setPreferredSize(new java.awt.Dimension(14, 24));
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(405, 133, 96, 16));
 
-        TF_CoordY.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        TF_CoordY.setPreferredSize(new java.awt.Dimension(30, 25));
-        TF_CoordY.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtCoordY.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtCoordY.setPreferredSize(new java.awt.Dimension(30, 25));
+        txtCoordY.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                TF_CoordYFocusLost(evt);
+                txtCoordYFocusLost(evt);
             }
         });
-        TF_CoordY.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtCoordY.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                TF_CoordYKeyReleased(evt);
+                txtCoordYKeyReleased(evt);
             }
         });
-        getContentPane().add(TF_CoordY, new org.netbeans.lib.awtextra.AbsoluteConstraints(405, 159, 163, -1));
+        getContentPane().add(txtCoordY, new org.netbeans.lib.awtextra.AbsoluteConstraints(405, 159, 163, -1));
 
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -164,19 +164,19 @@ public class GestionSiniestros extends javax.swing.JFrame {
         });
         getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(616, 414, 161, -1));
 
-        TF_CoordX.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        TF_CoordX.setPreferredSize(new java.awt.Dimension(30, 25));
-        TF_CoordX.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtCoordX.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtCoordX.setPreferredSize(new java.awt.Dimension(30, 25));
+        txtCoordX.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                TF_CoordXFocusLost(evt);
+                txtCoordXFocusLost(evt);
             }
         });
-        TF_CoordX.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtCoordX.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                TF_CoordXKeyReleased(evt);
+                txtCoordXKeyReleased(evt);
             }
         });
-        getContentPane().add(TF_CoordX, new org.netbeans.lib.awtextra.AbsoluteConstraints(403, 102, 163, -1));
+        getContentPane().add(txtCoordX, new org.netbeans.lib.awtextra.AbsoluteConstraints(403, 102, 163, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("FECHA SINIESTRO");
@@ -203,56 +203,56 @@ public class GestionSiniestros extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TF_CoordYFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TF_CoordYFocusLost
+    private void txtCoordYFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCoordYFocusLost
 
         try {
-            double aux = Double.parseDouble(TF_CoordX.getText());
+            double aux = Double.parseDouble(txtCoordX.getText());
         } catch (ClassCastException | NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingrese la COORDENADA usando decimales");
             return;
         }
-    }//GEN-LAST:event_TF_CoordYFocusLost
+    }//GEN-LAST:event_txtCoordYFocusLost
 
-    private void TF_CoordYKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_CoordYKeyReleased
+    private void txtCoordYKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordYKeyReleased
         // Si la tecla ENTER es precionada se valida el campo
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
-                double aux = Double.parseDouble(TF_CoordX.getText());
+                double aux = Double.parseDouble(txtCoordX.getText());
             } catch (ClassCastException | NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Ingrese la COORDENADA usan decimales");
                 return;
             }
         }
-    }//GEN-LAST:event_TF_CoordYKeyReleased
+    }//GEN-LAST:event_txtCoordYKeyReleased
 
-    private void TF_CoordXFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TF_CoordXFocusLost
+    private void txtCoordXFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCoordXFocusLost
 
         try {
-            double aux = Double.parseDouble(TF_CoordX.getText());
+            double aux = Double.parseDouble(txtCoordX.getText());
         } catch (ClassCastException | NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingrese la COORDENADA usan decimales");
             return;
         }
-    }//GEN-LAST:event_TF_CoordXFocusLost
+    }//GEN-LAST:event_txtCoordXFocusLost
 
-    private void TF_CoordXKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TF_CoordXKeyReleased
+    private void txtCoordXKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCoordXKeyReleased
         // Si la tecla ENTER es precionada se valida el campo
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
-                double aux = Double.parseDouble(TF_CoordX.getText());
+                double aux = Double.parseDouble(txtCoordX.getText());
             } catch (ClassCastException | NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Ingrese la COORDENADA usan decimales");
                 return;
             }
         }
-    }//GEN-LAST:event_TF_CoordXKeyReleased
+    }//GEN-LAST:event_txtCoordXKeyReleased
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         Siniestro sin = new Siniestro();
         sin.setTipo((Especialidad) cmbTipos.getSelectedItem());
 
         LocalDate fechaSin;
-        LocalDateTime aux = LocalDateTime.now();
+        LocalDate aux = LocalDate.now();
 
         try {
             fechaSin = data.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -261,7 +261,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
             return;
         }
 
-        if (aux.toLocalDate().isAfter(fechaSin)) {
+        if (aux.isAfter(fechaSin)) {
             int resp = JOptionPane.showConfirmDialog(this, "¿Está seguro/a de ingresar una fecha anterior a la actual?", null, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (resp == JOptionPane.YES_OPTION) {
                 sin.setFechaSinietro(fechaSin);
@@ -274,8 +274,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
             txtHora.setText(sin.getHora());
 
             if (validarCoordenadas()) {
-                sin.setCoord_X(Double.parseDouble(TF_CoordX.getText()));
-                sin.setCoord_Y(Double.parseDouble(TF_CoordY.getText()));
+                sin.setCoord_X(Double.parseDouble(txtCoordX.getText()));
+                sin.setCoord_Y(Double.parseDouble(txtCoordY.getText()));
             } else {
                 return;
             }
@@ -339,8 +339,6 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField TF_CoordX;
-    private javax.swing.JTextField TF_CoordY;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnCerrar;
@@ -360,6 +358,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tab1;
     private javax.swing.JTextArea textArea;
+    private javax.swing.JTextField txtCoordX;
+    private javax.swing.JTextField txtCoordY;
     private javax.swing.JTextField txtHora;
     // End of variables declaration//GEN-END:variables
 
@@ -372,31 +372,27 @@ public class GestionSiniestros extends javax.swing.JFrame {
     }
 
     private void iniciarTabla() {
-        // Crear DefaultTableModel
+
         DefaultTableModel modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn(" COD ");
         modeloTabla.addColumn("Nombre");
         modeloTabla.addColumn("Cuartel");
         modeloTabla.addColumn("Distancia (Kms)");
 
-        
-        JTable tab1 = new JTable(modeloTabla);
-  
-       
+        tab.setModel(modeloTabla);
     }
 
     private void borrarFilas() {
-        int filas = tab1.getRowCount() - 1;
-        for (; filas >= 0; filas--) {
-            tab1.removeAll();
-        }
+
+        DefaultTableModel modeloTabla = (DefaultTableModel) tab.getModel();
+        modeloTabla.setRowCount(0);
     }
 
     private void limpiarCampos() {
         cmbTipos.setSelectedIndex(-1);
         data.setDate(null);
-        TF_CoordX.setText("");
-        TF_CoordY.setText("");
+        txtCoordX.setText("");
+        txtCoordY.setText("");
         textArea.setText("");
         borrarFilas();
     }
@@ -416,7 +412,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
             return;
         }
 
-        DefaultTableModel modeloTabla = (DefaultTableModel) tab1.getModel();
+        DefaultTableModel modeloTabla = (DefaultTableModel) tab.getModel();
         DecimalFormat df = new DecimalFormat("###.##");
 
         // Recorrer  cuarteles ordenados por distancia
@@ -425,63 +421,97 @@ public class GestionSiniestros extends javax.swing.JFrame {
                 int idCuartelEsp = Integer.parseInt(cuartelEsp[0]);
 
                 if (cuartelDist.getIdCuartel() == idCuartelEsp) {
-                    
+
                     String codigo = String.format("%02d", idCuartelEsp);
 
-                    
                     modeloTabla.addRow(new Object[]{codigo, cuartelEsp[1], cuartelEsp[2], df.format(cuartelDist.getDistancia())});
-                    break;  
+                    break;
                 }
             }
         }
     }
 
-    private double calcularDistancia(double coordX1, double coordY1) {
-        double dist = 0, coordX2, coordY2;
-        coordX2 = Double.parseDouble(TF_CoordX.getText());
-        coordY2 = Double.parseDouble(TF_CoordY.getText());
-        double radioTierra = 6371;//en kilmetros  
-        double dLat = Math.toRadians(coordX2 - coordX1);
-        double dLng = Math.toRadians(coordY2 - coordY1);
-        double sindLat = Math.sin(dLat / 2);
-        double sindLng = Math.sin(dLng / 2);
-        double va1 = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
-                * Math.cos(Math.toRadians(coordX1)) * Math.cos(Math.toRadians(coordX2));
-        double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
-        dist = radioTierra * va2;
+//    private double calcularDistancia(double coordX1, double coordY1) {
+//        double dist = 0, coordX2, coordY2;
+//        coordX2 = Double.parseDouble(TF_CoordX.getText());
+//        coordY2 = Double.parseDouble(TF_CoordY.getText());
+//        double radioTierra = 6371;//en kilmetros  
+//        double dLat = Math.toRadians(coordX2 - coordX1);
+//        double dLng = Math.toRadians(coordY2 - coordY1);
+//        double sindLat = Math.sin(dLat / 2);
+//        double sindLng = Math.sin(dLng / 2);
+//        double va1 = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
+//                * Math.cos(Math.toRadians(coordX1)) * Math.cos(Math.toRadians(coordX2));
+//        double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
+//        dist = radioTierra * va2;
+//
+//        return dist;
+//    }
+    private double calcularDistanciaCoseno(double latitud1, double longitud1, double latitud2, double longitud2) {
+        double radioTierra = 6371; // Radio de la Tierra en kilómetros
 
-        return dist;
+        // Convertir a radianes
+        latitud1 = Math.toRadians(latitud1);
+        longitud1 = Math.toRadians(longitud1);
+        latitud2 = Math.toRadians(latitud2);
+        longitud2 = Math.toRadians(longitud2);
+
+        // Diferencias de coordenadas
+        double dlat = latitud2 - latitud1;
+        double dlon = longitud2 - longitud1;
+
+        // Fórmula del coseno
+        double a = Math.sin(dlat / 2) * Math.sin(dlat / 2)
+                + Math.cos(latitud1) * Math.cos(latitud2)
+                * Math.sin(dlon / 2) * Math.sin(dlon / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        // Distancia en kilómetros
+        return radioTierra * c;
     }
 
     private ArrayList<CuartelDistancia> armarCuartelesporDistacia() {
         ArrayList<CuartelDistancia> cuartelDistancia = new ArrayList<>();
         CuartelData cuartelD = new CuartelData();
 
-        // Armar una Lista de objetos CuartelDistancia con el ID_Cuartel y distancia del cuartel al siniestro
+        // coordenadas del siniestro
+        double latitudSiniestro = 0;
+        double longitudSiniestro = 0;
+        boolean coordenadasValidas = false;
+
+        try {
+            latitudSiniestro = Double.parseDouble(txtCoordX.getText());
+            longitudSiniestro = Double.parseDouble(txtCoordY.getText());
+            coordenadasValidas = true;
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese coordenadas válidas usando decimales.", "Error de Coordenadas", JOptionPane.ERROR_MESSAGE);
+        }
+
+        if (!coordenadasValidas) {
+            // Si las coordenadas no son válidas, devolver una lista vacía
+            return new ArrayList<>();
+        }
+
+        // Resto del código que sigue después del try-catch
         for (Cuartel cuartel : cuartelD.ListarCuarteles()) {
-            double distancia = calcularDistancia(cuartel.getCoord_X(), cuartel.getCoord_Y());
+            double distancia = calcularDistanciaCoseno(
+                    latitudSiniestro, longitudSiniestro,
+                    cuartel.getCoord_X(), cuartel.getCoord_Y()
+            );
             int idCuartel = cuartel.getId_cuartel();
 
             CuartelDistancia cuartelDist = new CuartelDistancia(idCuartel, distancia);
             cuartelDistancia.add(cuartelDist);
         }
 
-        // Lista de menor distancia a mayor
-        Collections.sort(cuartelDistancia, new Comparator<CuartelDistancia>() {
-            @Override
-            public int compare(CuartelDistancia o1, CuartelDistancia o2) {
-                return Double.compare(o1.getDistancia(), o2.getDistancia());
-            }
-        });
-
-        // Lista ordenada
         return cuartelDistancia;
     }
 
     private boolean validarCoordenadas() {
         try {
-            double X = Double.parseDouble(TF_CoordX.getText());
-            double Y = Double.parseDouble(TF_CoordY.getText());
+            double X = Double.parseDouble(txtCoordX.getText());
+            double Y = Double.parseDouble(txtCoordY.getText());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Ingrese coordenadas válidas usando decimales.", "Error de Coordenadas", JOptionPane.ERROR_MESSAGE);
             return false;
