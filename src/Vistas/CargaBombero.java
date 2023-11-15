@@ -375,7 +375,6 @@ public class CargaBombero extends javax.swing.JFrame {
         Bombero bomberoOk = bomberoData.BuscarBomberoPorDni(dniBuscar);
 
         if (bomberoOk != null) {
-            // Lista para almacenar mensajes de error
             List<String> mensajesError = new ArrayList<>();
 
             // Validar nombre: solo letras, min 4, max 20
@@ -391,13 +390,18 @@ public class CargaBombero extends javax.swing.JFrame {
             }
 
             // Validar DNI: solo números, min 7, max 8
-            try {
-                int dni = Integer.parseInt(txtDni.getText().trim());
-                if (dni < 1000000 || dni > 99999999) {
-                    mensajesError.add("El DNI debe contener solo números y tener entre 7 y 8 dígitos.");
+            String dniStr = txtDni.getText().trim();
+            if (dniStr.equals("")) {
+                mensajesError.add("Ingrese un DNI.");
+            } else {
+                try {
+                    int dni = Integer.parseInt(dniStr);
+                    if (dni < 1000000 || dni > 99999999) {
+                        mensajesError.add("El DNI debe contener solo números y tener entre 7 y 8 dígitos.");
+                    }
+                } catch (NumberFormatException e) {
+                    mensajesError.add("Ingrese un DNI válido.");
                 }
-            } catch (NumberFormatException e) {
-                mensajesError.add("Ingrese un DNI válido.");
             }
 
             // Validar fecha de nacimiento: al menos 18 años
@@ -450,25 +454,26 @@ public class CargaBombero extends javax.swing.JFrame {
                 bomberoOk.setGrupo_sanguineo(grupoSanguineo);
                 bomberoOk.setCelular(telefono);
                 bomberoOk.setChapa_iden(chapaIden);
-                //parseo nombreBrigada a  id_brigada
+
+                // Parseo nombreBrigada a id_brigada
                 Brigada brigada = brigadaData.BuscarBrigada(nombreBrigada);
                 bomberoOk.setBrigada(brigada);
+
                 // Estado
                 boolean estadoCheckBox = checkAct.isSelected();
                 bomberoOk.setEstado(estadoCheckBox);
 
-                
+                // Enviar modificaciones a la base de datos
+                bomberoData.ModificarBombero(bomberoOk);
             } else {
                 // Mostrar mensajes de error
                 String mensajeFinal = String.join("\n", mensajesError);
                 JOptionPane.showMessageDialog(this, mensajeFinal, "Errores de validación", JOptionPane.ERROR_MESSAGE);
             }
-            // enviar modificaciones a la base de datos
-                bomberoData.ModificarBombero(bomberoOk);
-        } else {
-            // No se puede modificar. Bombero inexistente en la base de datos
-        }
-
+        
+        
+        
+        } 
 
     }//GEN-LAST:event_btnModifActionPerformed
 
