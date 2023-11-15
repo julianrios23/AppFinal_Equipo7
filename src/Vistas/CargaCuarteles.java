@@ -266,7 +266,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
                 txtCoorY.setText(String.valueOf(cuartel.getCoord_Y()));
                 txtTel.setText(cuartel.getTelefono());
                 txtCorreo.setText(cuartel.getCorreo());
-                checkAct.setSelected(cuartel.isEstado());
+                checkAct.setSelected(cuartel.getEstado());
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró un Cuartel con este nombre.");
             }
