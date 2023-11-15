@@ -2,6 +2,7 @@
 package Entidades;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  
@@ -9,57 +10,78 @@ import java.time.LocalDate;
  */
 public class Siniestro {
     
-    private int id_siniestro;
+    private int codSiniestro;
+    private Especialidad tipo;
+    private LocalDate fechaSinietro;
+    private String hora;
     private double coord_X;
     private double coord_Y;
-    private LocalDate fecha_siniestro;
-    private String hora_siniestro;
-    private String tipo;
     private String detalles;
-    private Brigada brigada;
-    private LocalDate fecha_resolucion;
-    private String hora_fin_siniestro;
-    private int calificacion;
-    private Boolean estado;
+    private LocalDate fechaResoluc;
+    private String horaResoluc;
+    private int puntuacion;
+    private Brigada Brigada;
 
     public Siniestro() {
     }
 
-    public Siniestro(double coord_X, double coord_Y, LocalDate fecha_siniestro, String hora_siniestro, String tipo, String detalles, Brigada brigada, LocalDate fecha_resolucion, String hora_fin_siniestro, int calificacion, Boolean estado) {
+    public Siniestro(Especialidad tipo, LocalDate fechaSinietro, String hora, double coord_X, double coord_Y, String detalles, LocalDate fechaResoluc, String horaResoluc, int puntuacion, Brigada Brigada) {
+        this.tipo = tipo;
+        this.fechaSinietro = fechaSinietro;
+        this.hora = hora;
         this.coord_X = coord_X;
         this.coord_Y = coord_Y;
-        this.fecha_siniestro = fecha_siniestro;
-        this.hora_siniestro = hora_siniestro;
-        this.tipo = tipo;
         this.detalles = detalles;
-        this.brigada = brigada;
-        this.fecha_resolucion = fecha_resolucion;
-        this.hora_fin_siniestro = hora_fin_siniestro;
-        this.calificacion = calificacion;
-        this.estado = estado;
+        this.fechaResoluc = fechaResoluc;
+        this.horaResoluc = horaResoluc;
+        this.puntuacion = puntuacion;
+        this.Brigada = Brigada;
     }
 
-    public Siniestro(int id_siniestro, double coord_X, double coord_Y, LocalDate fecha_siniestro, String hora_siniestro, String tipo, String detalles, Brigada brigada, LocalDate fecha_resolucion, String hora_fin_siniestro, int calificacion, Boolean estado) {
-        this.id_siniestro = id_siniestro;
+    public Siniestro(int codSiniestro, Especialidad tipo, LocalDate fechaSinietro, String hora, double coord_X, double coord_Y, String detalles, LocalDate fechaResoluc, String horaResoluc, int puntuacion, Brigada Brigada) {
+        this.codSiniestro = codSiniestro;
+        this.tipo = tipo;
+        this.fechaSinietro = fechaSinietro;
+        this.hora = hora;
         this.coord_X = coord_X;
         this.coord_Y = coord_Y;
-        this.fecha_siniestro = fecha_siniestro;
-        this.hora_siniestro = hora_siniestro;
-        this.tipo = tipo;
         this.detalles = detalles;
-        this.brigada = brigada;
-        this.fecha_resolucion = fecha_resolucion;
-        this.hora_fin_siniestro = hora_fin_siniestro;
-        this.calificacion = calificacion;
-        this.estado = estado;
+        this.fechaResoluc = fechaResoluc;
+        this.horaResoluc = horaResoluc;
+        this.puntuacion = puntuacion;
+        this.Brigada = Brigada;
     }
 
-    public int getId_siniestro() {
-        return id_siniestro;
+    public int getCodSiniestro() {
+        return codSiniestro;
     }
 
-    public void setId_siniestro(int id_siniestro) {
-        this.id_siniestro = id_siniestro;
+    public void setCodSiniestro(int codSiniestro) {
+        this.codSiniestro = codSiniestro;
+    }
+
+    public Especialidad getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Especialidad tipo) {
+        this.tipo = tipo;
+    }
+
+    public LocalDate getFechaSinietro() {
+        return fechaSinietro;
+    }
+
+    public void setFechaSinietro(LocalDate fechaSinietro) {
+        this.fechaSinietro = fechaSinietro;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
     public double getCoord_X() {
@@ -78,30 +100,6 @@ public class Siniestro {
         this.coord_Y = coord_Y;
     }
 
-    public LocalDate getFecha_siniestro() {
-        return fecha_siniestro;
-    }
-
-    public void setFecha_siniestro(LocalDate fecha_siniestro) {
-        this.fecha_siniestro = fecha_siniestro;
-    }
-
-    public String getHora_siniestro() {
-        return hora_siniestro;
-    }
-
-    public void setHora_siniestro(String hora_siniestro) {
-        this.hora_siniestro = hora_siniestro;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
     public String getDetalles() {
         return detalles;
     }
@@ -110,63 +108,46 @@ public class Siniestro {
         this.detalles = detalles;
     }
 
+    public LocalDate getFechaResoluc() {
+        return fechaResoluc;
+    }
+
+    public void setFechaResoluc(LocalDate fechaResoluc) {
+        this.fechaResoluc = fechaResoluc;
+    }
+
+    public String getHoraResoluc() {
+        return horaResoluc;
+    }
+
+    public void setHoraResoluc(String horaResoluc) {
+        this.horaResoluc = horaResoluc;
+    }
+
+    public int getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(int puntuacion) {
+        this.puntuacion = puntuacion;
+    }
+
     public Brigada getBrigada() {
-        return brigada;
+        return Brigada;
     }
 
-    public void setBrigada(Brigada brigada) {
-        this.brigada = brigada;
+    public void setBrigada(Brigada Brigada) {
+        this.Brigada = Brigada;
     }
 
-    public LocalDate getFecha_resolucion() {
-        return fecha_resolucion;
-    }
-
-    public void setFecha_resolucion(LocalDate fecha_resolucion) {
-        this.fecha_resolucion = fecha_resolucion;
-    }
-
-    public String getHora_fin_siniestro() {
-        return hora_fin_siniestro;
-    }
-
-    public void setHora_fin_siniestro(String hora_fin_siniestro) {
-        this.hora_fin_siniestro = hora_fin_siniestro;
-    }
-
-    public int getCalificacion() {
-        return calificacion;
-    }
-
-    public void setCalificacion(int calificacion) {
-        this.calificacion = calificacion;
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
+    @Override
+    public String toString() {
+        return "Siniestro{" + "codSiniestro=" + codSiniestro + ", tipo=" + tipo 
+                + ", fechaSinietro=" + fechaSinietro + ", hora=" + hora 
+                + ", coord_X=" + coord_X + ", coord_Y=" + coord_Y + ", detalles=" 
+                + detalles + ", fechaResoluc=" + fechaResoluc + ", horaResoluc=" 
+                + horaResoluc + ", puntuacion=" + puntuacion + ", Brigada=" + Brigada + '}';
     }
 
     
-    @Override
-    public String toString() {
-        return " ID" + id_siniestro
-                + ", Coordenadas X " + coord_X
-                + ", Coordenadas Y " + coord_Y
-                + ", Fecha Del Siniestro " + fecha_siniestro
-                + ", Tipo " + tipo 
-                + ", Detalles " + detalles
-                + ", Brigada" + brigada
-                + ", Fecha Resolucion " + fecha_resolucion
-                + ", Calificacion " + calificacion
-                + ", Estado " + estado;
-    }
-
-    public boolean isEstado() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }

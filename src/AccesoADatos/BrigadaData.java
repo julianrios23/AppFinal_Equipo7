@@ -126,10 +126,10 @@ public class BrigadaData {
 
                 if (cuartel != null) {
                     brigada.setNombre_cuartel(nombreCuartel);
-                    
+
                 }
             } else {
-                 JOptionPane.showMessageDialog(null, "No se encontró una Brigada con este ID.");
+                JOptionPane.showMessageDialog(null, "No se encontró una Brigada con este ID.");
             }
 
             ps.close();
@@ -352,7 +352,7 @@ public class BrigadaData {
         try {
             ps = con.prepareStatement(SQL);
             ps.setInt(1, s1.getBrigada().getId_brigada());
-            ps.setInt(2, s1.getId_siniestro());
+            ps.setInt(2, s1.getCodSiniestro());
 
             int resultado = ps.executeUpdate();
             if (resultado > 0) {
@@ -372,6 +372,26 @@ public class BrigadaData {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada" + e.getMessage());
 //            e.printStackTrace();
+        }
+    }
+
+    public void liberarBrigada(int cod) {
+        String sql = "UPDATE brigada SET estado=? WHERE id_brigada=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setBoolean(1, true);
+            ps.setInt(2, cod);
+
+            int aux = ps.executeUpdate();
+            if (aux == 1) {
+                JOptionPane.showMessageDialog(null, "La Brigada " + cod + "  ha sido liberada");
+            } else {
+                JOptionPane.showMessageDialog(null, "Brigada no encontrada.");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ERROR AL CONECTAR CON LA TABLA BRIGADA\n" + ex.getMessage(), "ERROR CRITICO", 2);
         }
     }
 }
