@@ -5,9 +5,9 @@ import AccesoADatos.CuartelData;
 import AccesoADatos.SiniestroData;
 import Entidades.Brigada;
 import Entidades.Cuartel;
+import Entidades.CuartelDistancia;
 import Entidades.Especialidad;
 import Entidades.Siniestro;
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -16,26 +16,21 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 /**
  *
  * @author Julian Rios
  */
 public class GestionSiniestros extends javax.swing.JFrame {
-    
+
     public GestionSiniestros() {
         initComponents();
         cargarEspecialidad();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -209,7 +204,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TF_CoordYFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TF_CoordYFocusLost
-        
+
         try {
             double aux = Double.parseDouble(TF_CoordX.getText());
         } catch (ClassCastException | NumberFormatException e) {
@@ -231,7 +226,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
     }//GEN-LAST:event_TF_CoordYKeyReleased
 
     private void TF_CoordXFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TF_CoordXFocusLost
-        
+
         try {
             double aux = Double.parseDouble(TF_CoordX.getText());
         } catch (ClassCastException | NumberFormatException e) {
@@ -254,46 +249,44 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
         Siniestro sin = new Siniestro();
-        Especialidad especialidadSeleccionada = (Especialidad) cmbTipos.getSelectedItem();
-        String especialidadComoString = especialidadSeleccionada.toString();
-        sin.setTipo(String.valueOf(cmbTipos.getSelectedItem()));
-        
+        sin.setTipo((Especialidad) cmbTipos.getSelectedItem());
+
         LocalDate fechaSin;
         LocalDateTime aux = LocalDateTime.now();
-        
+
         try {
             fechaSin = data.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(this, "Coloque una fecha válida", "FECHA", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         if (aux.toLocalDate().isAfter(fechaSin)) {
             int resp = JOptionPane.showConfirmDialog(this, "¿Está seguro/a de ingresar una fecha anterior a la actual?", null, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (resp == JOptionPane.YES_OPTION) {
-                sin.setFecha_siniestro(fechaSin);
+                sin.setFechaSinietro(fechaSin);
             } else {
                 return;
             }
         } else {
-            sin.setFecha_siniestro(fechaSin);
-            
-            txtHora.setText(sin.getHora_siniestro());
-            
+            sin.setFechaSinietro(fechaSin);
+
+            txtHora.setText(sin.getHora());
+
             if (validarCoordenadas()) {
                 sin.setCoord_X(Double.parseDouble(TF_CoordX.getText()));
                 sin.setCoord_Y(Double.parseDouble(TF_CoordY.getText()));
             } else {
                 return;
             }
-            
+
             if (textArea.getText().equals(" ") || textArea.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe describir el siniestro !!", "DESCRIPCION", 1);
                 return;
             } else {
                 sin.setDetalles(textArea.getText());
             }
-            
+
             Brigada brig = new Brigada();
             int codB = 0, filas = tab1.getSelectedRow();
             try {
@@ -304,22 +297,22 @@ public class GestionSiniestros extends javax.swing.JFrame {
             }
             brig.setId_brigada(codB);
             sin.setBrigada(brig);
-            
+
             int a = JOptionPane.showConfirmDialog(this, "¿Está seguro de asignar la brigada " + codB + " al incidente?", null, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (a == JOptionPane.YES_OPTION) {
                 SiniestroData sinD = new SiniestroData();
                 Siniestro dd = new Siniestro();
-                sinD.GuardarSiniestro(dd);
-                int sinCod = dd.getId_siniestro();
-                
+                sinD.guardarSiniestro(dd);
+                int sinCod = dd.getCodSiniestro();
+
                 JOptionPane.showMessageDialog(this, "Se generó un reporte con el código: " + sinCod);
-                
+
                 BrigadaData xx = new BrigadaData();
                 xx.AsignarBrigada(sin);
-                
+
                 limpiarCampos();
             }
-            
+
         }
     }//GEN-LAST:event_btnCargarActionPerformed
 
@@ -328,7 +321,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo de Incidente", "TIPO DE EVENTO", 1);
             return;
         }
-        
+
         if (!validarCoordenadas()) {
             return;
         }
@@ -371,13 +364,13 @@ public class GestionSiniestros extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void cargarEspecialidad() {
-    cmbTipos.setSelectedIndex(-1);
-    Especialidad[] especialidades = Especialidad.values();
-    for (Especialidad especialidad : especialidades) {
-        cmbTipos.addItem(especialidad);
+        cmbTipos.setSelectedIndex(-1);
+        Especialidad[] especialidades = Especialidad.values();
+        for (Especialidad especialidad : especialidades) {
+            cmbTipos.addItem(especialidad);
+        }
     }
-}
-    
+
     private void iniciarTabla() {
         // Crear DefaultTableModel
         DefaultTableModel modeloTabla = new DefaultTableModel();
@@ -386,57 +379,19 @@ public class GestionSiniestros extends javax.swing.JFrame {
         modeloTabla.addColumn("Cuartel");
         modeloTabla.addColumn("Distancia (Kms)");
 
-        // Crear JTable con el modelo
+        
         JTable tab1 = new JTable(modeloTabla);
-
-        // Configurar apariencia
-        tab1.setBackground(Color.YELLOW);
-        tab1.setForeground(Color.DARK_GRAY);
-        tab1.setSelectionBackground(Color.ORANGE);
-        tab1.setSelectionForeground(Color.BLACK);
-
-        // Configurar borde y título
-        tab1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(),
-                "BRIGADAS DISPONIBLES", TitledBorder.CENTER, TitledBorder.TOP));
-
-        // Configurar ancho de columnas
-        TableColumn column;
-        for (int i = 0; i < 4; i++) {
-            column = tab1.getColumnModel().getColumn(i);
-            switch (i) {
-                case 0:
-                    column.setMinWidth(30);
-                    column.setMaxWidth(50);
-                    break;
-                case 1:
-                    column.setMinWidth(55);
-                    column.setMaxWidth(70);
-                    break;
-                case 2:
-                    column.setMinWidth(200);
-                    column.setMaxWidth(300);
-                    break;
-                case 3:
-                    column.setMinWidth(50);
-                    break;
-            }
-        }
-
-        // Configurar alineación de celdas
-        DefaultTableCellRenderer alinear = new DefaultTableCellRenderer();
-        alinear.setHorizontalAlignment(SwingConstants.CENTER);
-        tab1.getColumnModel().getColumn(0).setCellRenderer(alinear);
-        tab1.getColumnModel().getColumn(1).setCellRenderer(alinear);
-        tab1.getColumnModel().getColumn(3).setCellRenderer(alinear);
+  
+       
     }
-    
+
     private void borrarFilas() {
         int filas = tab1.getRowCount() - 1;
         for (; filas >= 0; filas--) {
             tab1.removeAll();
         }
     }
-    
+
     private void limpiarCampos() {
         cmbTipos.setSelectedIndex(-1);
         data.setDate(null);
@@ -445,36 +400,42 @@ public class GestionSiniestros extends javax.swing.JFrame {
         textArea.setText("");
         borrarFilas();
     }
-    
+
     private void cargarTabla() {
-        String esp = (String) cmbTipos.getSelectedItem().toString();
+        String esp = cmbTipos.getSelectedItem().toString();
         SiniestroData sinD = new SiniestroData();
-        // buscar brigadas q coincidan con la especialidad y obtener el cuartel al q pertenecen
-        ArrayList<double[]> cuartelDistancia = armarCuartelesporDistacia();
-        ArrayList<String[]> CuartelesXEsp = sinD.listarCuarteslesXEsp(esp);
-        //
-        if (CuartelesXEsp == null || CuartelesXEsp.size() == 0) {
+
+        // lista de cuarteles ordenados por distancia
+        ArrayList<CuartelDistancia> cuartelesDistancia = armarCuartelesporDistacia();
+
+        // lista de cuarteles disponibles para la especialidad
+        ArrayList<String[]> cuartelesXEsp = sinD.listarCuarteslesXEsp(esp);
+
+        if (cuartelesXEsp == null || cuartelesXEsp.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay Brigadas Disponibles para la especialidad: " + esp);
             return;
         }
-        //
-        String codigo;
-        int aux;
+
+        DefaultTableModel modeloTabla = (DefaultTableModel) tab1.getModel();
         DecimalFormat df = new DecimalFormat("###.##");
-        for (double[] distancias : cuartelDistancia) {
-            for (String[] cuarteles : CuartelesXEsp) {
-                String temp = (int) distancias[0] + "";
-                if (temp.equals(cuarteles[3])) {
-                    aux = Integer.parseInt(cuarteles[0]);
-                    codigo = String.format("%02d", aux);
-                    DefaultTableModel modeloTabla = (DefaultTableModel) tab1.getModel();
-                    modeloTabla.addRow(new Object[]{codigo, cuarteles[1], cuarteles[2], df.format(distancias[1])});
+
+        // Recorrer  cuarteles ordenados por distancia
+        for (CuartelDistancia cuartelDist : cuartelesDistancia) {
+            for (String[] cuartelEsp : cuartelesXEsp) {
+                int idCuartelEsp = Integer.parseInt(cuartelEsp[0]);
+
+                if (cuartelDist.getIdCuartel() == idCuartelEsp) {
                     
+                    String codigo = String.format("%02d", idCuartelEsp);
+
+                    
+                    modeloTabla.addRow(new Object[]{codigo, cuartelEsp[1], cuartelEsp[2], df.format(cuartelDist.getDistancia())});
+                    break;  
                 }
             }
         }
     }
-    
+
     private double calcularDistancia(double coordX1, double coordY1) {
         double dist = 0, coordX2, coordY2;
         coordX2 = Double.parseDouble(TF_CoordX.getText());
@@ -488,40 +449,44 @@ public class GestionSiniestros extends javax.swing.JFrame {
                 * Math.cos(Math.toRadians(coordX1)) * Math.cos(Math.toRadians(coordX2));
         double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
         dist = radioTierra * va2;
-        
+
         return dist;
     }
-    
-    private ArrayList<double[]> armarCuartelesporDistacia() {
-        ArrayList<double[]> cuartelDistancia = new ArrayList<double[]>();
-        double[] dist_coord = new double[2];
+
+    private ArrayList<CuartelDistancia> armarCuartelesporDistacia() {
+        ArrayList<CuartelDistancia> cuartelDistancia = new ArrayList<>();
         CuartelData cuartelD = new CuartelData();
-        // Armar una Lista de vectores con el ID_Cuartel y distancia del cuartel al siniestro
+
+        // Armar una Lista de objetos CuartelDistancia con el ID_Cuartel y distancia del cuartel al siniestro
         for (Cuartel cuartel : cuartelD.ListarCuarteles()) {
-            dist_coord[1] = calcularDistancia(cuartel.getCoord_X(), cuartel.getCoord_Y());
-            dist_coord[0] = cuartel.getId_cuartel();
-            cuartelDistancia.add(dist_coord.clone());
+            double distancia = calcularDistancia(cuartel.getCoord_X(), cuartel.getCoord_Y());
+            int idCuartel = cuartel.getId_cuartel();
+
+            CuartelDistancia cuartelDist = new CuartelDistancia(idCuartel, distancia);
+            cuartelDistancia.add(cuartelDist);
         }
-        // lista de menor distancia a mayor
-        Collections.sort(cuartelDistancia, new Comparator<double[]>() {
+
+        // Lista de menor distancia a mayor
+        Collections.sort(cuartelDistancia, new Comparator<CuartelDistancia>() {
             @Override
-            public int compare(double[] o1, double[] o2) {
-                return Double.compare(o1[1], o2[1]);
+            public int compare(CuartelDistancia o1, CuartelDistancia o2) {
+                return Double.compare(o1.getDistancia(), o2.getDistancia());
             }
         });
-        // lista ordenada
+
+        // Lista ordenada
         return cuartelDistancia;
     }
-    
+
     private boolean validarCoordenadas() {
-        double X, Y;
         try {
-            X = Double.parseDouble(TF_CoordX.getText());
-            Y = Double.parseDouble(TF_CoordY.getText());
-        } catch (ClassCastException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese las COORDENADA usando decimales");
+            double X = Double.parseDouble(TF_CoordX.getText());
+            double Y = Double.parseDouble(TF_CoordY.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese coordenadas válidas usando decimales.", "Error de Coordenadas", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
+
 }

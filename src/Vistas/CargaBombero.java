@@ -4,14 +4,12 @@ import AccesoADatos.BomberoData;
 import AccesoADatos.BrigadaData;
 import Entidades.Bombero;
 import Entidades.Brigada;
-import Entidades.Cuartel;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 public class CargaBombero extends javax.swing.JFrame {
 
@@ -83,14 +81,14 @@ public class CargaBombero extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 156, -1, 30));
 
         txtNombre.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 251, -1));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 152, 251, 30));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Apellido:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 150, -1, 40));
 
         txtApellido.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 160, 270, 20));
+        getContentPane().add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 150, 270, 30));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("DNI N°:");
