@@ -9,6 +9,7 @@ import Entidades.Especialidad;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 public class CargaBrigadas extends javax.swing.JFrame {
@@ -21,6 +22,8 @@ public class CargaBrigadas extends javax.swing.JFrame {
         initComponents();
         cargarComboBox();
         cargarEspecialidad();
+        btnGuardar.setEnabled(false);
+        btnModificar.setEnabled(false);
 
     }
 
@@ -357,6 +360,11 @@ public class CargaBrigadas extends javax.swing.JFrame {
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 409, -1, -1));
 
         cmbCuartel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cmbCuartel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmbCuartelMouseClicked(evt);
+            }
+        });
         getContentPane().add(cmbCuartel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 410, 273, -1));
 
         txtNombre.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -367,6 +375,11 @@ public class CargaBrigadas extends javax.swing.JFrame {
         btnModificar.setForeground(new java.awt.Color(255, 255, 255));
         btnModificar.setText("MODIFICAR");
         btnModificar.setToolTipText("Modificar Brigada Existente");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 490, -1, -1));
 
         btnLimpiar.setBackground(new java.awt.Color(0, 0, 0));
@@ -534,7 +547,9 @@ public class CargaBrigadas extends javax.swing.JFrame {
 
             if (brigada != null) {
                 txtNombre.setText(brigada.getNombre_brigada());
-                cmbEspec.setSelectedItem(brigada.getEspecialidad());
+                Especialidad[] especialidades = Especialidad.values();
+                DefaultComboBoxModel<Especialidad> model = new DefaultComboBoxModel<>(especialidades);
+                cmbEspec.setModel(model);
                 checkAct.setSelected(brigada.isEstado());
                 checkDispon.setSelected(brigada.getDisponibilidad());
 
@@ -547,6 +562,7 @@ public class CargaBrigadas extends javax.swing.JFrame {
                 }
 
                 cmbCuartel.setSelectedItem(brigada.getNombre_cuartel());
+
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró una Brigada con este nombre.");
             }
@@ -554,6 +570,52 @@ public class CargaBrigadas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al buscar la Brigada: " + e.getMessage());
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+
+        try {
+            // Obtener los datos actuales de la brigada
+            String nombreBusqueda = txtnomBuscar.getText().trim();
+            BrigadaData brigadaData = new BrigadaData();
+            Brigada brigadaExistente = brigadaData.BuscarBrigada(nombreBusqueda);
+
+            if (brigadaExistente != null) {
+                // Actualizar los campos de la brigadaExistente
+                brigadaExistente.setNombre_brigada(txtNombre.getText());
+
+                // Obtener la especialidad seleccionada del JComboBox
+                Especialidad especialidadSeleccionada = (Especialidad) cmbEspec.getSelectedItem();
+                brigadaExistente.setEspecialidad(especialidadSeleccionada.name()); // Guardar el nombre del enum como String
+
+                brigadaExistente.setEstado(checkAct.isSelected());
+                brigadaExistente.setDisponibilidad(checkDispon.isSelected());
+
+                // Obtener el nombre del cuartel seleccionado
+                String nombreCuartelSeleccionado = (String) cmbCuartel.getSelectedItem();
+
+                // Actualizar el nombre del cuartel en la brigada existente
+                brigadaExistente.setNombre_cuartel(nombreCuartelSeleccionado);
+
+                // Llamar al método para modificar la brigada
+                BrigadaData bd = new BrigadaData();
+                bd.modificarBrigada(brigadaExistente);
+
+                JOptionPane.showMessageDialog(this, "Modificado Exitosamente.");
+                limpiar();
+                cargarEspecialidades();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró una Brigada con este nombre.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar o modificar la Brigada: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void cmbCuartelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbCuartelMouseClicked
+        btnGuardar.setEnabled(true);
+        btnModificar.setEnabled(true);
+    }//GEN-LAST:event_cmbCuartelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -624,5 +686,14 @@ public class CargaBrigadas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Seleccione un Cuartel válido.");
         }
     }
+    
+    private void cargarEspecialidades() {
+    
+    cmbEspec.removeAllItems();
+
+    for (Especialidad especialidad : Especialidad.values()) {
+        cmbEspec.addItem(especialidad);
+    }
+}
 
 }

@@ -156,7 +156,7 @@ public class BrigadaData {
         return brigada;
     }
 
-    public void ModificarBrigada(Brigada brigada) {
+    public void modificarBrigada(Brigada brigada) {
         String SQL = " UPDATE brigada "
                 + " SET nombre_brigada = ?, especialidad = ?, estado = ?, id_cuartel = ?, disponibilidad =?, nombre_cuartel =?"
                 + " WHERE id_brigada = ?";
@@ -182,7 +182,7 @@ public class BrigadaData {
                 int exito = ps.executeUpdate();
 
                 if (exito == 1) {
-                    JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+                    //JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
                 } else {
                     JOptionPane.showMessageDialog(null, "La Brigada no existe");
                 }

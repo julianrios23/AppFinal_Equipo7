@@ -20,9 +20,10 @@ public class BomberoData {
     }
 
     public boolean GuardarBombero(Bombero bombero) {
-
         String checkDniQuery = "SELECT COUNT(*) FROM bombero WHERE dni = ?";
+        String countBomberosQuery = "SELECT COUNT(*) FROM bombero WHERE brigada = ?";
         String insertQuery = "INSERT INTO bombero (nombre, apellido, dni, fecha_nacimiento, grupo_sanguineo, brigada, celular, estado, chapa_iden) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         boolean bomberoAgregado = false;
 
         try {
@@ -37,7 +38,18 @@ public class BomberoData {
                 }
             }
 
-            // Si no existe, agregar bombero nuevo
+            // Verificar el límite de bomberos asignados a la brigada
+            try (PreparedStatement countBomberosStatement = con.prepareStatement(countBomberosQuery)) {
+                countBomberosStatement.setInt(1, bombero.getBrigada().getId_brigada());
+                ResultSet countBomberosResultSet = countBomberosStatement.executeQuery();
+
+                if (countBomberosResultSet.next() && countBomberosResultSet.getInt(1) >= 5) {
+                    JOptionPane.showMessageDialog(null, "Error: la brigada ya tiene asignados 5 bomberos. No se puede agregar más.");
+                    return bomberoAgregado;
+                }
+            }
+
+            // Si no hay problemas, agregar bombero nuevo
             try (PreparedStatement insertStatement = con.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
                 insertStatement.setString(1, bombero.getNombre());
                 insertStatement.setString(2, bombero.getApellido());
@@ -63,7 +75,6 @@ public class BomberoData {
         }
 
         return bomberoAgregado;
-
     }
 
     public Bombero BuscarBombero(int id) {
