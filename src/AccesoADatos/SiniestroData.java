@@ -24,34 +24,43 @@ public class SiniestroData {
     }
 
     public int guardarSiniestro(Siniestro sin) {
+
         int codSiniestro = 0;
 
-        String sql = "INSERT INTO siniestro (tipo, fechaSinietro, horaSiniestro, coord_X, coord_Y, detalles, id_brigada)"
-                + "VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO siniestro (tipo, fechaSiniestro, horaSiniestro, coord_X, coord_Y, detalles, id_brigada)"
+                + "VALUES (?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            ps.setString(1, sin.getTipo().name());
-            ps.setObject(2, sin.getFechaSinietro());
-            ps.setDouble(3, sin.getCoord_X());
-            ps.setDouble(4, sin.getCoord_Y());
-            ps.setString(5, sin.getDetalles());
-            ps.setInt(6, sin.getBrigada().getId_brigada());
+            ps.setString(1, sin.getTipo().name());  // Corregido: índice 1 en lugar de 2
+            ps.setDate(2, java.sql.Date.valueOf(sin.getFechaSinietro()));
+            ps.setString(3, sin.getHora());
+            ps.setDouble(4, sin.getCoord_X());
+            ps.setDouble(5, sin.getCoord_Y());
+            ps.setString(6, sin.getDetalles());
+            ps.setInt(7, sin.getBrigada().getId_brigada());
 
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                sin.setCodSiniestro(rs.getInt("insert_id"));
-                codSiniestro = rs.getInt("insert_id");
+                sin.setCodSiniestro(rs.getInt(1));
+                codSiniestro = rs.getInt(1);
                 JOptionPane.showMessageDialog(null, "Incidente cargado correctamente.");
             }
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Bombero !!");
-        }
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Siniestro: " + ex.getMessage());
+            // Opcional: Imprimir información adicional sobre la excepción
+            System.err.println("SQLState: " + ex.getSQLState());
+            System.err.println("Error Code: " + ex.getErrorCode());
+        }// catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Siniestro !!");
+//        }
 
         return codSiniestro;
+
     }
 
     public void concluirSiniestro(Siniestro sin) {

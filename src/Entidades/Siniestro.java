@@ -4,10 +4,6 @@ package Entidades;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- 
- * @author Julian Rios
- */
 public class Siniestro {
     
     private int codSiniestro;

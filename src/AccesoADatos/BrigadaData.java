@@ -331,7 +331,7 @@ public class BrigadaData {
 
     }
 
-    public List<Brigada> ObtenerBrigadasDisponibles() {
+    public ArrayList<Brigada> ObtenerBrigadasDisponibles() {
 
         ArrayList<Brigada> brigadas = new ArrayList<>();
         String SQL = "SELECT * FROM brigada WHERE disponibilidad = 1";
@@ -344,7 +344,13 @@ public class BrigadaData {
                 brigada.setNombre_brigada(rs.getString("nombre_brigada"));
                 brigada.setEspecialidad(rs.getString("especialidad"));
                 brigada.setEstado(rs.getBoolean("estado"));
-                brigada.setId_cuartel(rs.getInt("id_cuartel"));
+                //con el id cuartel busco el cuartel completo para asignarlo a la brigada
+                CuartelData cuartelData = new CuartelData();
+                Cuartel cuartelDeBrigada = new Cuartel();
+                cuartelDeBrigada = cuartelData.BuscarCuartelPorId(rs.getInt("id_cuartel"));
+                brigada.setCuartel(cuartelDeBrigada);
+                
+                
                 brigada.setDisponibilidad(rs.getBoolean("disponibilidad"));
                 brigada.setNombre_cuartel(rs.getString("nombre_cuartel"));
 
