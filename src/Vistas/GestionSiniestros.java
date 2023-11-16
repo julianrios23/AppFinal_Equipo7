@@ -237,6 +237,10 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
             // Llamada a la función asignarBrigada
             asignarBrigada(coorX, coorY, especialidadSeleccionada, siniestroNuevo);
+            
+            
+            modelo.addRow(new Object[]{siniestroNuevo.getCodSiniestro(), siniestroNuevo.getBrigada().getNombre_brigada(), siniestroNuevo.getBrigada().getNombreCuartel(), siniestroNuevo.getBrigada().getEspecialidad()});
+        
         }
     }//GEN-LAST:event_btnCargarActionPerformed
 
@@ -267,9 +271,10 @@ public class GestionSiniestros extends javax.swing.JFrame {
                     if (distancia < distanciaMinima) {
                         distanciaMinima = distancia;
 
-                        // Si además de estar más cerca está disponible
+                        // Si además de estar más cerca coincide la especialidad de la brigada
                         if (brigada.getEspecialidad().equals(tipo)) {
                             brigadaIdeal = brigada;
+                            System.out.println("Brigada ideal:"+ brigada);
                         } else {
                             brigadaMasCerca = brigada;
                         }
@@ -282,10 +287,13 @@ public class GestionSiniestros extends javax.swing.JFrame {
             if (brigadaIdeal != null) {
                 siniestro.setBrigada(brigadaIdeal);
                 siniestroData.guardarSiniestro(siniestro);
+                brigadaIdeal.setDisponibilidad(false);
+                brigadaData.ModificarBrigada(brigadaIdeal);
             } else if (brigadaMasCerca != null) {
                 siniestro.setBrigada(brigadaMasCerca);
-                
                 siniestroData.guardarSiniestro(siniestro);
+                brigadaMasCerca.setDisponibilidad(false);
+                brigadaData.ModificarBrigada(brigadaMasCerca);
             } else {
                 mensajesError.add("No se pudo asignar una brigada.");
             }
@@ -365,10 +373,10 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
     //metodo para la tabla que muestra los productos
     private void armarCabecera() {
-        modelo.addColumn("CODIGO");
-        modelo.addColumn("NOMBRE");
+        modelo.addColumn("SINIESTRO CODIGO");
+        modelo.addColumn("BRIGADA");
         modelo.addColumn("CUARTEL");
-        modelo.addColumn("DISTANCIA KMS");
+        modelo.addColumn("ESPECIALIDAD");
 
         tab1.setModel(modelo);
     }

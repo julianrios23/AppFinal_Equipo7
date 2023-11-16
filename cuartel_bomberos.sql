@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-11-2023 a las 19:22:36
+-- Tiempo de generación: 16-11-2023 a las 07:49:36
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -73,7 +73,94 @@ INSERT INTO `bombero` (`id_bombero`, `nombre`, `apellido`, `dni`, `fecha_nacimie
 (55, 'Facundo', 'Cabral', 29050345, '1991-02-01', 'B+', 40, '2664325670', 1, '124'),
 (56, 'Lionel', 'Messi', 10101010, '1990-11-10', 'O+', 41, '2664101011', 1, '124'),
 (57, 'Kuni', 'Aguero', 29870674, '2000-02-02', 'O-', 41, '2664050477', 1, '125'),
-(58, 'Coti', 'Romero', 28012454, '1994-02-09', 'B+', 41, '2664757580', 1, '124');
+(58, 'Coti', 'Romero', 28012454, '1994-02-09', 'B+', 41, '2664757580', 1, '124'),
+(59, 'pepito', 'lopez', 12312312, '2000-11-02', 'O+', 33, '2664325465', 1, '200'),
+(60, 'Hector', 'Fernandez', 3012345, '1990-11-02', 'O+', 34, '1664325465', 1, '124');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `brigada`
+--
+
+CREATE TABLE `brigada` (
+  `id_brigada` int(11) NOT NULL,
+  `nombre_brigada` varchar(20) NOT NULL,
+  `especialidad` varchar(30) NOT NULL,
+  `estado` tinyint(4) NOT NULL,
+  `id_cuartel` int(11) NOT NULL,
+  `disponibilidad` tinyint(4) NOT NULL,
+  `nombre_cuartel` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `brigada`
+--
+
+INSERT INTO `brigada` (`id_brigada`, `nombre_brigada`, `especialidad`, `estado`, `id_cuartel`, `disponibilidad`, `nombre_cuartel`) VALUES
+(33, 'Matafuegos', 'INCENDIO_EN_VIVIENDA', 1, 6, 1, 'Los Matafuego'),
+(34, 'AlfaCasa', 'INCENDIO_EN_VIVIENDA', 1, 7, 1, 'San Luis Capital'),
+(35, 'AlfaIndustria', 'INCENDIO_EN_INDUSTRIA', 1, 7, 1, 'San Luis Capital'),
+(36, 'BetaDerrumbe', 'SOCORRO_EN_DERRUMBE', 1, 7, 1, 'San Luis Capital'),
+(37, 'DeltaSierras', 'SOCORRO_AMBITO_DE_MONTAÑA', 1, 7, 1, 'San Luis Capital'),
+(38, 'OmegaTransito', 'SOCORRO_ACCIDENTE_DE_TRANSITO', 1, 9, 1, 'Juana Koslay'),
+(39, 'MojarrasAlRescate', 'SOCORRO_INUNDACIONES', 1, 8, 1, 'La Punta'),
+(40, 'AlaDelta', 'SOCORRO_EN_ALTURA', 1, 8, 1, 'La Punta'),
+(41, 'MatafuegosInd', 'INCENDIO_EN_INDUSTRIA', 1, 9, 1, 'Juana Koslay');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cuartel`
+--
+
+CREATE TABLE `cuartel` (
+  `id_cuartel` int(11) NOT NULL,
+  `nombre_cuartel` varchar(50) NOT NULL,
+  `direccion` varchar(30) NOT NULL,
+  `coord_X` decimal(10,0) NOT NULL,
+  `coord_Y` decimal(10,0) NOT NULL,
+  `telefono` varchar(20) NOT NULL,
+  `correo` varchar(20) NOT NULL,
+  `estado` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cuartel`
+--
+
+INSERT INTO `cuartel` (`id_cuartel`, `nombre_cuartel`, `direccion`, `coord_X`, `coord_Y`, `telefono`, `correo`, `estado`) VALUES
+(6, 'Los Matafuego', 'San Luis', 2030, 3020, '26548512', 'matafuego@gmail.com', 1),
+(7, 'San Luis Capital', 'San Luis - Capital', 460, 708, '2664566778', 'SLcapital@gmail.com', 1),
+(8, 'La Punta', 'San Luis - La Punta', 100, 300, '2664200432', 'bomblp@gmail.com', 1),
+(9, 'Juana Koslay', 'San Luis - Juana Koslay', 500, 200, '2664121323', 'bombjk@gmail.com', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `siniestro`
+--
+
+CREATE TABLE `siniestro` (
+  `cod_siniestro` int(11) NOT NULL,
+  `tipo` varchar(30) NOT NULL,
+  `fechaSiniestro` date NOT NULL,
+  `horaSiniestro` varchar(5) NOT NULL,
+  `coord_X` double(10,0) NOT NULL,
+  `coord_Y` double(10,0) NOT NULL,
+  `detalles` varchar(200) NOT NULL,
+  `fechaResoluc` date NOT NULL,
+  `horaResoluc` varchar(5) NOT NULL,
+  `puntuacion` int(11) NOT NULL,
+  `id_brigada` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `siniestro`
+--
+
+INSERT INTO `siniestro` (`cod_siniestro`, `tipo`, `fechaSiniestro`, `horaSiniestro`, `coord_X`, `coord_Y`, `detalles`, `fechaResoluc`, `horaResoluc`, `puntuacion`, `id_brigada`) VALUES
+(1, 'SOCORRO_EN_ALTURA', '2023-11-14', '10:20', 100, 91, 'gato en arbol alto muy alto', '0000-00-00', '', 0, 39);
 
 --
 -- Índices para tablas volcadas
@@ -89,6 +176,29 @@ ALTER TABLE `bombero`
   ADD KEY `brigada` (`brigada`);
 
 --
+-- Indices de la tabla `brigada`
+--
+ALTER TABLE `brigada`
+  ADD PRIMARY KEY (`id_brigada`),
+  ADD UNIQUE KEY `nombre_brigada` (`nombre_brigada`),
+  ADD KEY `id_cuartel` (`id_cuartel`);
+
+--
+-- Indices de la tabla `cuartel`
+--
+ALTER TABLE `cuartel`
+  ADD PRIMARY KEY (`id_cuartel`),
+  ADD UNIQUE KEY `nombre_cuartel` (`nombre_cuartel`);
+
+--
+-- Indices de la tabla `siniestro`
+--
+ALTER TABLE `siniestro`
+  ADD UNIQUE KEY `cod_siniestro` (`cod_siniestro`),
+  ADD UNIQUE KEY `cod_siniestro_2` (`cod_siniestro`),
+  ADD KEY `id_brigada` (`id_brigada`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -96,7 +206,25 @@ ALTER TABLE `bombero`
 -- AUTO_INCREMENT de la tabla `bombero`
 --
 ALTER TABLE `bombero`
-  MODIFY `id_bombero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id_bombero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+
+--
+-- AUTO_INCREMENT de la tabla `brigada`
+--
+ALTER TABLE `brigada`
+  MODIFY `id_brigada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+
+--
+-- AUTO_INCREMENT de la tabla `cuartel`
+--
+ALTER TABLE `cuartel`
+  MODIFY `id_cuartel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `siniestro`
+--
+ALTER TABLE `siniestro`
+  MODIFY `cod_siniestro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
@@ -107,6 +235,18 @@ ALTER TABLE `bombero`
 --
 ALTER TABLE `bombero`
   ADD CONSTRAINT `bombero_ibfk_1` FOREIGN KEY (`brigada`) REFERENCES `brigada` (`id_brigada`);
+
+--
+-- Filtros para la tabla `brigada`
+--
+ALTER TABLE `brigada`
+  ADD CONSTRAINT `brigada_ibfk_1` FOREIGN KEY (`id_cuartel`) REFERENCES `cuartel` (`id_cuartel`);
+
+--
+-- Filtros para la tabla `siniestro`
+--
+ALTER TABLE `siniestro`
+  ADD CONSTRAINT `siniestro_ibfk_1` FOREIGN KEY (`id_brigada`) REFERENCES `brigada` (`id_brigada`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
