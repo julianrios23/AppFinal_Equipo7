@@ -286,21 +286,11 @@ public class GestionSiniestros extends javax.swing.JFrame {
             if (brigadaIdeal != null) {
                 siniestro.setBrigada(brigadaIdeal);
                 siniestroData.guardarSiniestro(siniestro);
-<<<<<<< Updated upstream
-                brigadaIdeal.setDisponibilidad(false);
-                brigadaData.modificarBrigada(brigadaIdeal);
-            } else if (brigadaMasCerca != null) {
-                siniestro.setBrigada(brigadaMasCerca);
-                siniestroData.guardarSiniestro(siniestro);
-                brigadaMasCerca.setDisponibilidad(false);
-                brigadaData.modificarBrigada(brigadaMasCerca);
-=======
                 brigadaData.brigadaOcupada(brigadaIdeal.getNombre_brigada());
             } else if (brigadaIdeal == null && brigadaCerca != null) {
                 siniestro.setBrigada(brigadaCerca);
                 siniestroData.guardarSiniestro(siniestro);
                 brigadaData.brigadaOcupada(brigadaCerca.getNombre_brigada());
->>>>>>> Stashed changes
             } else {
                 mensajesError.add("No se pudo asignar una brigada.");
             }

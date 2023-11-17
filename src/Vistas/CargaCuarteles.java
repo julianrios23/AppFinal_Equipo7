@@ -11,15 +11,9 @@ public class CargaCuarteles extends javax.swing.JFrame {
     public CargaCuarteles() {
         initComponents();
         setVisible(true);
-<<<<<<< Updated upstream
         checkAct.setSelected(true);
-        btnNuevo.setEnabled(false);
         btnModificar.setEnabled(false);
-=======
-        btnModificar.setEnabled(false);
-        btnNuevo.setEnabled(false);
-        checkAct.setSelected(true);
->>>>>>> Stashed changes
+        jButton3.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -45,7 +39,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
         checkAct = new javax.swing.JCheckBox();
         jLabel9 = new javax.swing.JLabel();
         txtTel = new javax.swing.JTextField();
-        btnNuevo = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
@@ -135,29 +129,23 @@ public class CargaCuarteles extends javax.swing.JFrame {
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 356, -1, -1));
 
         txtTel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-<<<<<<< Updated upstream
-        txtTel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTelKeyTyped(evt);
-=======
         txtTel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtTelMouseClicked(evt);
->>>>>>> Stashed changes
             }
         });
         getContentPane().add(txtTel, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 356, 209, -1));
 
-        btnNuevo.setBackground(new java.awt.Color(0, 0, 0));
-        btnNuevo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnNuevo.setForeground(new java.awt.Color(255, 255, 255));
-        btnNuevo.setText("NUEVO CUARTEL");
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setBackground(new java.awt.Color(0, 0, 0));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("NUEVO CUARTEL");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed1(evt);
+                jButton3ActionPerformed1(evt);
             }
         });
-        getContentPane().add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 466, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 466, -1, -1));
 
         btnModificar.setBackground(new java.awt.Color(0, 0, 0));
         btnModificar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -196,22 +184,22 @@ public class CargaCuarteles extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
 
-    private void btnNuevoActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed1
+    private void jButton3ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed1
         Cuartel cuartel = new Cuartel();
 
         List<String> errores = new ArrayList<>();
 
-        // validacion y condiciones
+        // Validar nombre de cuartel
         String nombreCuartel = txtNombre.getText().trim();
-        if (nombreCuartel.length() < 6 || nombreCuartel.length() > 50 || !nombreCuartel.matches("[a-zA-Z0-9 -]+")) {
-            errores.add("Nombre de cuartel: Debe tener entre 6 y 50 caracteres y solo puede contener letras, números, espacios y guiones.");
+        if (nombreCuartel.length() < 6 || nombreCuartel.length() > 50 || !nombreCuartel.matches("[a-zA-Z ]+")) {
+            errores.add("Nombre de cuartel: Debe tener entre 6 y 50 letras y solo puede contener letras y espacios.");
         } else {
             cuartel.setNombre_cuartel(nombreCuartel);
         }
 
-        // validacion y condiciones
+        // Validar dirección
         String direccion = txtDirecc.getText().trim();
-        if (direccion.length() < 6 || direccion.length() > 30 || !direccion.matches("[a-zA-Z0-9 -]+")) {
+        if (direccion.length() < 6 || direccion.length() > 30 || !direccion.matches("[a-zA-Z -]+")) {
             errores.add("Dirección: Debe tener entre 6 y 30 caracteres y puede contener letras, espacios o guiones medios.");
         } else {
             cuartel.setDireccion(direccion);
@@ -257,22 +245,19 @@ public class CargaCuarteles extends javax.swing.JFrame {
         if (!errores.isEmpty()) {
             String mensajeFinal = String.join("\n", errores);
             JOptionPane.showMessageDialog(this, mensajeFinal, "Errores de validación", JOptionPane.ERROR_MESSAGE);
-
-            // Desactivar los botones en caso de errores
         } else {
-            // Activar los botones si no hay errores
-
             // Si no hay errores, guardar el cuartel
             if (cuartelData.GuardarCuartel(cuartel)) {
                 JOptionPane.showMessageDialog(this, "Cuartel Agregado Exitosamente. ");
             }
             limpiar();
         }
-    }//GEN-LAST:event_btnNuevoActionPerformed1
+    }//GEN-LAST:event_jButton3ActionPerformed1
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
+        
         btnModificar.setEnabled(true);
+        
         try {
             // Validar nombre de búsqueda
             String nombreBusqueda = txtBucarNom.getText().trim();
@@ -292,8 +277,6 @@ public class CargaCuarteles extends javax.swing.JFrame {
                 txtTel.setText(cuartel.getTelefono());
                 txtCorreo.setText(cuartel.getCorreo());
                 checkAct.setSelected(cuartel.getEstado());
-                btnNuevo.setEnabled(true);
-                btnModificar.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró un Cuartel con este nombre.");
             }
@@ -362,17 +345,11 @@ public class CargaCuarteles extends javax.swing.JFrame {
 
                     // Mostrar errores si los hay
                     if (!errores.isEmpty()) {
-                        // Desactivar los botones en caso de errores
-                        btnNuevo.setEnabled(false);
-                        btnModificar.setEnabled(false);
                         String mensajeFinal = String.join("\n", errores);
                         JOptionPane.showMessageDialog(this, mensajeFinal, "Errores de validación", JOptionPane.ERROR_MESSAGE);
                     } else {
                         // Método para modificar el cuartel
                         if (cuartelData.ModificarCuartel(cuartel)) {
-                            // Desactivar los botones en caso de errores
-                            btnNuevo.setEnabled(false);
-                            btnModificar.setEnabled(true);
                             JOptionPane.showMessageDialog(this, "Cuartel modificado exitosamente.");
                             limpiar();
                         }
@@ -391,24 +368,18 @@ public class CargaCuarteles extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
-<<<<<<< Updated upstream
-    private void txtTelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelKeyTyped
-        btnNuevo.setEnabled(true);
-    }//GEN-LAST:event_txtTelKeyTyped
-=======
     private void txtTelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTelMouseClicked
-        btnNuevo.setEnabled(true);
+        jButton3.setEnabled(true);
     }//GEN-LAST:event_txtTelMouseClicked
->>>>>>> Stashed changes
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnNuevo;
     private javax.swing.JCheckBox checkAct;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -436,9 +407,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
         txtCorreo.setText("");
         txtDirecc.setText("");
         txtTel.setText("");
-        checkAct.setSelected(true);
-        btnModificar.setEnabled(false);
-        btnNuevo.setEnabled(false);
+        checkAct.setSelected(false);
 
     }
 

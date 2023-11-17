@@ -289,6 +289,7 @@ public class CargaBombero extends javax.swing.JFrame {
                 mensajesError.add("Seleccione una brigada.");
                         
             }
+            
 
             if (mensajesError.isEmpty()) {
                 // Todas las validaciones pasaron, proceder con la creación del Bombero

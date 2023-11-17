@@ -22,11 +22,9 @@ public class CargaBrigadas extends javax.swing.JFrame {
         initComponents();
         cargarComboBox();
         cargarEspecialidad();
-<<<<<<< Updated upstream
-=======
+
         checkAct.setSelected(true);
         checkDispon.setSelected(true);
->>>>>>> Stashed changes
         btnGuardar.setEnabled(false);
         btnModificar.setEnabled(false);
 
@@ -365,11 +363,6 @@ public class CargaBrigadas extends javax.swing.JFrame {
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 409, -1, -1));
 
         cmbCuartel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cmbCuartel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cmbCuartelMouseClicked(evt);
-            }
-        });
         getContentPane().add(cmbCuartel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 410, 273, -1));
 
         txtNombre.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -577,10 +570,7 @@ public class CargaBrigadas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
         try {
             // Obtener los datos actuales de la brigada
             String nombreBusqueda = txtnomBuscar.getText().trim();
@@ -606,11 +596,11 @@ public class CargaBrigadas extends javax.swing.JFrame {
 
                 // Llamar al método para modificar la brigada
                 BrigadaData bd = new BrigadaData();
-<<<<<<< Updated upstream
+
                 bd.modificarBrigada(brigadaExistente);
-=======
-                bd.ModificarBrigada(brigadaExistente);
->>>>>>> Stashed changes
+
+                bd.modificarBrigada(brigadaExistente);
+
 
                 JOptionPane.showMessageDialog(this, "Modificado Exitosamente.");
                 limpiar();
@@ -621,20 +611,9 @@ public class CargaBrigadas extends javax.swing.JFrame {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Error al buscar o modificar la Brigada: " + e.getMessage());
         }
-<<<<<<< Updated upstream
+
 
     }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void cmbCuartelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbCuartelMouseClicked
-=======
-    }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void cmbCuartelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbCuartelMouseClicked
-        btnBuscar.setEnabled(false);
->>>>>>> Stashed changes
-        btnGuardar.setEnabled(true);
-        btnModificar.setEnabled(true);
-    }//GEN-LAST:event_cmbCuartelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -718,13 +697,6 @@ public class CargaBrigadas extends javax.swing.JFrame {
     }
 }
 
-    private void cargarEspecialidades() {
-
-        cmbEspec.removeAllItems();
-
-        for (Especialidad especialidad : Especialidad.values()) {
-            cmbEspec.addItem(especialidad);
-        }
-    }
+   
 
 }
