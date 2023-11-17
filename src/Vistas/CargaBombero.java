@@ -118,6 +118,11 @@ public class CargaBombero extends javax.swing.JFrame {
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 130, -1));
 
         cmbBrigadas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cmbBrigadas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmbBrigadasMouseClicked(evt);
+            }
+        });
         getContentPane().add(cmbBrigadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, 210, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -232,14 +237,14 @@ public class CargaBombero extends javax.swing.JFrame {
 
             LocalDate fechaNacimiento = null;  // Declarar la variable fuera del bloque
 
-            // Validar nombre: solo letras, min 4, max 20
-            if (!nombre.matches("[a-zA-Z]+") || nombre.length() < 4 || nombre.length() > 20) {
-                mensajesError.add("El nombre debe contener solo letras y tener entre 4 y 20 caracteres.");
+            // Validar nombre: solo letras, min 2, max 20
+            if (!nombre.matches("[a-zA-Z]+") || nombre.length() < 2 || nombre.length() > 20) {
+                mensajesError.add("El nombre debe contener solo letras y tener entre 2 y 20 caracteres.");
             }
 
-            // Validar apellido: solo letras, min 4, max 20
-            if (!apellido.matches("[a-zA-Z]+") || apellido.length() < 4 || apellido.length() > 20) {
-                mensajesError.add("El apellido debe contener solo letras y tener entre 4 y 20 caracteres.");
+            // Validar apellido: solo letras, min 2, max 20
+            if (!apellido.matches("[a-zA-Z]+") || apellido.length() < 2 || apellido.length() > 20) {
+                mensajesError.add("El apellido debe contener solo letras y tener entre 2 y 20 caracteres.");
             }
 
             // Validar dni: solo números, min 7, max 8
@@ -282,6 +287,7 @@ public class CargaBombero extends javax.swing.JFrame {
             // Validar brigada asignada: seleccionar una obligatoria
             if (nombreBrigada == null || nombreBrigada.equals("Brigadas")) {
                 mensajesError.add("Seleccione una brigada.");
+                        
             }
 
             if (mensajesError.isEmpty()) {
@@ -305,6 +311,7 @@ public class CargaBombero extends javax.swing.JFrame {
                 }
             } else {
                 // Mostrar mensajes de error
+                
                 String mensajeFinal = String.join("\n", mensajesError);
                 JOptionPane.showMessageDialog(this, mensajeFinal, "Errores de validación", JOptionPane.ERROR_MESSAGE);
             }
@@ -503,8 +510,17 @@ public class CargaBombero extends javax.swing.JFrame {
         dateNac.setDateFormatString("");
         txtTelefono.setText("");
         cmbBrigadas.setSelectedIndex(-1);
-        checkAct.setSelected(false);
+        checkAct.setSelected(true);
+        btnBuscar.setEnabled(true);
+        btnGuardar.setEnabled(false);
+        btnModif.setEnabled(false);
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void cmbBrigadasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbBrigadasMouseClicked
+        btnBuscar.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        btnModif.setEnabled(true);
+    }//GEN-LAST:event_cmbBrigadasMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

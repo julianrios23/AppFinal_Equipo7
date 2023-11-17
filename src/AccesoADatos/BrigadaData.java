@@ -349,8 +349,7 @@ public class BrigadaData {
                 Cuartel cuartelDeBrigada = new Cuartel();
                 cuartelDeBrigada = cuartelData.BuscarCuartelPorId(rs.getInt("id_cuartel"));
                 brigada.setCuartel(cuartelDeBrigada);
-                
-                
+
                 brigada.setDisponibilidad(rs.getBoolean("disponibilidad"));
                 brigada.setNombre_cuartel(rs.getString("nombre_cuartel"));
 
@@ -366,36 +365,70 @@ public class BrigadaData {
     }
 
     public void AsignarBrigada(Siniestro s1) {
-        PreparedStatement ps = null;
 
-        String SQL = "UPDATE siniestro SET id_brigada = ? WHERE id_siniestro = ?";
+     
+    PreparedStatement ps = null;
 
-        try {
-            ps = con.prepareStatement(SQL);
-            ps.setInt(1, s1.getBrigada().getId_brigada());
-            ps.setInt(2, s1.getCodSiniestro());
+    try {
+        // Actualizar el siniestro con la brigada asignada
+        String sqlSiniestro = "UPDATE siniestro SET id_brigada = ? WHERE id_siniestro = ?";
+        ps = con.prepareStatement(sqlSiniestro);
+        ps.setInt(1, s1.getBrigada().getId_brigada());
+        ps.setInt(2, s1.getCodSiniestro());
 
-            int resultado = ps.executeUpdate();
-            if (resultado > 0) {
-                ps = null;
-                SQL = "UPDATE brigada SET disponibilidad = ? WHERE id_brigada =?";
+        int resultado = ps.executeUpdate();
+        ps.close();  // Cerrar el primer PreparedStatement
 
-                ps = con.prepareStatement(SQL);
+        if (resultado > 0) {
+            // Actualizar la disponibilidad de la brigada a false
+            String sqlDisponibilidad = "UPDATE brigada SET disponibilidad = ? WHERE id_brigada = ?";
+            ps = con.prepareStatement(sqlDisponibilidad);
+            ps.setBoolean(1, false);
+            ps.setInt(2, s1.getBrigada().getId_brigada());
+            int resultado2 = ps.executeUpdate();
+            ps.close();  // Cerrar el segundo PreparedStatement
+
+            if (resultado2 > 0) {
+                JOptionPane.showMessageDialog(null, "Brigada Asignada.");
+
+                // Modificar la disponibilidad de la brigada a 0
+                String sqlLiberarBrigada = "UPDATE brigada SET disponibilidad = ? WHERE id_brigada = ?";
+                ps = con.prepareStatement(sqlLiberarBrigada);
                 ps.setBoolean(1, false);
                 ps.setInt(2, s1.getBrigada().getId_brigada());
-                int resultado2 = ps.executeUpdate();
+                int resultadoEstado = ps.executeUpdate();
+                ps.close();  // Cerrar el tercer PreparedStatement
 
-                if (resultado2 > 0) {
-                    JOptionPane.showMessageDialog(null, "Brigada Asignada. ");
+                if (resultadoEstado > 0) {
+                    JOptionPane.showMessageDialog(null, "La Brigada " + s1.getBrigada().getId_brigada() + " ha sido liberada");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Brigada no encontrada.");
                 }
             }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada" + e.getMessage());
-//            e.printStackTrace();
         }
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada" + e.getMessage());
     }
 
+    }
+
+    public void brigadaOcupada(String nombre) {
+        String sql = "UPDATE brigada SET disponibilidad=? WHERE nombre_brigada=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setBoolean(1, false);
+            ps.setString(2, nombre);
+
+            int aux = ps.executeUpdate();
+            
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ERROR AL CONECTAR CON LA TABLA BRIGADA\n" + ex.getMessage(), "ERROR CRITICO", 2);
+        }
+    }
+    
     public void liberarBrigada(int cod) {
         String sql = "UPDATE brigada SET estado=? WHERE id_brigada=?";
 

@@ -11,9 +11,15 @@ public class CargaCuarteles extends javax.swing.JFrame {
     public CargaCuarteles() {
         initComponents();
         setVisible(true);
+<<<<<<< Updated upstream
         checkAct.setSelected(true);
         btnNuevo.setEnabled(false);
         btnModificar.setEnabled(false);
+=======
+        btnModificar.setEnabled(false);
+        btnNuevo.setEnabled(false);
+        checkAct.setSelected(true);
+>>>>>>> Stashed changes
     }
 
     @SuppressWarnings("unchecked")
@@ -129,9 +135,15 @@ public class CargaCuarteles extends javax.swing.JFrame {
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 356, -1, -1));
 
         txtTel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+<<<<<<< Updated upstream
         txtTel.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtTelKeyTyped(evt);
+=======
+        txtTel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTelMouseClicked(evt);
+>>>>>>> Stashed changes
             }
         });
         getContentPane().add(txtTel, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 356, 209, -1));
@@ -189,17 +201,17 @@ public class CargaCuarteles extends javax.swing.JFrame {
 
         List<String> errores = new ArrayList<>();
 
-        // Validar nombre de cuartel
+        // validacion y condiciones
         String nombreCuartel = txtNombre.getText().trim();
-        if (nombreCuartel.length() < 6 || nombreCuartel.length() > 50 || !nombreCuartel.matches("[a-zA-Z ]+")) {
-            errores.add("Nombre de cuartel: Debe tener entre 6 y 50 letras y solo puede contener letras y espacios.");
+        if (nombreCuartel.length() < 6 || nombreCuartel.length() > 50 || !nombreCuartel.matches("[a-zA-Z0-9 -]+")) {
+            errores.add("Nombre de cuartel: Debe tener entre 6 y 50 caracteres y solo puede contener letras, números, espacios y guiones.");
         } else {
             cuartel.setNombre_cuartel(nombreCuartel);
         }
 
-        // Validar dirección
+        // validacion y condiciones
         String direccion = txtDirecc.getText().trim();
-        if (direccion.length() < 6 || direccion.length() > 30 || !direccion.matches("[a-zA-Z -]+")) {
+        if (direccion.length() < 6 || direccion.length() > 30 || !direccion.matches("[a-zA-Z0-9 -]+")) {
             errores.add("Dirección: Debe tener entre 6 y 30 caracteres y puede contener letras, espacios o guiones medios.");
         } else {
             cuartel.setDireccion(direccion);
@@ -260,6 +272,7 @@ public class CargaCuarteles extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
+        btnModificar.setEnabled(true);
         try {
             // Validar nombre de búsqueda
             String nombreBusqueda = txtBucarNom.getText().trim();
@@ -378,9 +391,15 @@ public class CargaCuarteles extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
+<<<<<<< Updated upstream
     private void txtTelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelKeyTyped
         btnNuevo.setEnabled(true);
     }//GEN-LAST:event_txtTelKeyTyped
+=======
+    private void txtTelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTelMouseClicked
+        btnNuevo.setEnabled(true);
+    }//GEN-LAST:event_txtTelMouseClicked
+>>>>>>> Stashed changes
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -417,7 +436,9 @@ public class CargaCuarteles extends javax.swing.JFrame {
         txtCorreo.setText("");
         txtDirecc.setText("");
         txtTel.setText("");
-        checkAct.setSelected(false);
+        checkAct.setSelected(true);
+        btnModificar.setEnabled(false);
+        btnNuevo.setEnabled(false);
 
     }
 

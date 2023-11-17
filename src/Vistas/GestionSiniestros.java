@@ -176,6 +176,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
         // Guardar tipo siniestro
         Especialidad especialidadSeleccionada = (Especialidad) cmbTipos.getSelectedItem();
+        String especialidadString = especialidadSeleccionada.name();
         if (especialidadSeleccionada == Especialidad.SELECCIONAR_ESPECIALIDAD) {
             mensajesError.add("Seleccione un tipo de siniestro");
         }
@@ -236,11 +237,10 @@ public class GestionSiniestros extends javax.swing.JFrame {
             siniestroNuevo.setDetalles(detallesSiniestro);
 
             // Llamada a la función asignarBrigada
-            asignarBrigada(coorX, coorY, especialidadSeleccionada, siniestroNuevo);
-            
-            
+            asignarBrigada(coorX, coorY, especialidadString, siniestroNuevo);
+
             modelo.addRow(new Object[]{siniestroNuevo.getCodSiniestro(), siniestroNuevo.getBrigada().getNombre_brigada(), siniestroNuevo.getBrigada().getNombreCuartel(), siniestroNuevo.getBrigada().getEspecialidad()});
-        
+
         }
     }//GEN-LAST:event_btnCargarActionPerformed
 
@@ -250,7 +250,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
-    private void asignarBrigada(double siniestroX, double siniestroY, Especialidad tipo, Siniestro siniestro) {
+    private void asignarBrigada(double siniestroX, double siniestroY, String especialidad, Siniestro siniestro) {
 
         // Lista para almacenar mensajes de error
         List<String> mensajesError = new ArrayList<>();
@@ -258,35 +258,35 @@ public class GestionSiniestros extends javax.swing.JFrame {
         SiniestroData siniestroData = new SiniestroData();
         BrigadaData brigadaData = new BrigadaData();
         ArrayList<Brigada> brigadas = brigadaData.ObtenerBrigadasDisponibles();
+        Brigada brigadaIdeal = new Brigada();
+        Brigada brigadaCerca = new Brigada();
+        boolean cumpleDistancia = false;
 
         if (!brigadas.isEmpty()) {
-            Brigada brigadaIdeal = null;
-            Brigada brigadaMasCerca = null;
             double distanciaMinima = Double.MAX_VALUE;
-
-            for (Brigada brigada : brigadas) {
-                if (brigada.getCuartel() != null) {
-                    double distancia = calcularDistancia(siniestroX, siniestroY, brigada.getCuartel().getCoord_X(), brigada.getCuartel().getCoord_Y());
+            //For para asignar solo si existe brigada ideal en distancia y especialidad
+            for (Brigada elem : brigadas) {
+                if (elem.getCuartel() != null) {
+                    double distancia = calcularDistancia(siniestroX, siniestroY, elem.getCuartel().getCoord_X(), elem.getCuartel().getCoord_Y());
 
                     if (distancia < distanciaMinima) {
                         distanciaMinima = distancia;
-
-                        // Si además de estar más cerca coincide la especialidad de la brigada
-                        if (brigada.getEspecialidad().equals(tipo)) {
-                            brigadaIdeal = brigada;
-                            System.out.println("Brigada ideal:"+ brigada);
-                        } else {
-                            brigadaMasCerca = brigada;
-                        }
+                        brigadaCerca = elem;
+                        cumpleDistancia = true;
+                    }
+                    // Si además de estar más cerca coincide la especialidad de la brigada
+                    if (cumpleDistancia && elem.getEspecialidad().equals(especialidad)) {
+                        brigadaIdeal = elem;
+                        System.out.println("Ideal:" + brigadaIdeal);
                     }
                 } else {
                     mensajesError.add("La brigada tiene un cuartel nulo.");
                 }
             }
-
             if (brigadaIdeal != null) {
                 siniestro.setBrigada(brigadaIdeal);
                 siniestroData.guardarSiniestro(siniestro);
+<<<<<<< Updated upstream
                 brigadaIdeal.setDisponibilidad(false);
                 brigadaData.modificarBrigada(brigadaIdeal);
             } else if (brigadaMasCerca != null) {
@@ -294,6 +294,13 @@ public class GestionSiniestros extends javax.swing.JFrame {
                 siniestroData.guardarSiniestro(siniestro);
                 brigadaMasCerca.setDisponibilidad(false);
                 brigadaData.modificarBrigada(brigadaMasCerca);
+=======
+                brigadaData.brigadaOcupada(brigadaIdeal.getNombre_brigada());
+            } else if (brigadaIdeal == null && brigadaCerca != null) {
+                siniestro.setBrigada(brigadaCerca);
+                siniestroData.guardarSiniestro(siniestro);
+                brigadaData.brigadaOcupada(brigadaCerca.getNombre_brigada());
+>>>>>>> Stashed changes
             } else {
                 mensajesError.add("No se pudo asignar una brigada.");
             }
@@ -355,9 +362,11 @@ public class GestionSiniestros extends javax.swing.JFrame {
     private void limpiarCampos() {
         cmbTipos.setSelectedIndex(-1);
         data.setDate(null);
+        txtHora.setText("");
         txtCoordX.setText("");
         txtCoordY.setText("");
         textArea.setText("");
+        modelo.setRowCount(0);
     }
 
     private boolean validarCoordenadas() {

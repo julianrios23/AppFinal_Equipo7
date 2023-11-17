@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-11-2023 a las 07:49:36
+-- Tiempo de generación: 17-11-2023 a las 17:03:20
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -156,13 +156,6 @@ CREATE TABLE `siniestro` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `siniestro`
---
-
-INSERT INTO `siniestro` (`cod_siniestro`, `tipo`, `fechaSiniestro`, `horaSiniestro`, `coord_X`, `coord_Y`, `detalles`, `fechaResoluc`, `horaResoluc`, `puntuacion`, `id_brigada`) VALUES
-(1, 'SOCORRO_EN_ALTURA', '2023-11-14', '10:20', 100, 91, 'gato en arbol alto muy alto', '0000-00-00', '', 0, 39);
-
---
 -- Índices para tablas volcadas
 --
 
@@ -224,7 +217,7 @@ ALTER TABLE `cuartel`
 -- AUTO_INCREMENT de la tabla `siniestro`
 --
 ALTER TABLE `siniestro`
-  MODIFY `cod_siniestro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cod_siniestro` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas

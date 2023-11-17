@@ -1,6 +1,7 @@
 package AccesoADatos;
 
 import Entidades.*;
+import Vistas.CargaBombero;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -34,6 +35,16 @@ public class BomberoData {
 
                 if (dniCheckResultSet.next() && dniCheckResultSet.getInt(1) > 0) {
                     JOptionPane.showMessageDialog(null, "Error: el DNI ya está registrado.");
+                    return bomberoAgregado;
+                }
+            }
+            // Verificar el límite de bomberos asignados a la brigada
+            try (PreparedStatement countBomberosStatement = con.prepareStatement(countBomberosQuery)) {
+                countBomberosStatement.setInt(1, bombero.getBrigada().getId_brigada());
+                ResultSet countBomberosResultSet = countBomberosStatement.executeQuery();
+
+                if (countBomberosResultSet.next() && countBomberosResultSet.getInt(1) >= 5) {
+                    JOptionPane.showMessageDialog(null, "Error: la brigada ya tiene asignados 5 bomberos. No se puede agregar más.");
                     return bomberoAgregado;
                 }
             }
@@ -75,6 +86,31 @@ public class BomberoData {
         }
 
         return bomberoAgregado;
+    }
+
+    //metodo contar bomberos por brigada
+    public int contarBomberosPorBrigada(int idBrigada) {
+        int cantidadBomberos = 0;
+
+        try {
+            String countBomberosQuery = "SELECT COUNT(*) FROM bombero WHERE brigada = ?";
+            try (PreparedStatement countBomberosStatement = con.prepareStatement(countBomberosQuery)) {
+                countBomberosStatement.setInt(1, idBrigada);
+                ResultSet countBomberosResultSet = countBomberosStatement.executeQuery();
+
+                if (countBomberosResultSet.next()) {
+                    cantidadBomberos = countBomberosResultSet.getInt(1);
+                    System.out.println("Cantidad de bomberos en la brigada: " + cantidadBomberos);
+                }
+
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al contar los bomberos por brigada: " + e.getMessage());
+        }
+
+        return cantidadBomberos;
+       
     }
 
     public Bombero BuscarBombero(int id) {
@@ -323,4 +359,5 @@ public class BomberoData {
         }
         return bomberos;
     }
+
 }
