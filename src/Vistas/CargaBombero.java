@@ -118,11 +118,6 @@ public class CargaBombero extends javax.swing.JFrame {
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 130, -1));
 
         cmbBrigadas.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cmbBrigadas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cmbBrigadasMouseClicked(evt);
-            }
-        });
         getContentPane().add(cmbBrigadas, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, 210, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -321,6 +316,7 @@ public class CargaBombero extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
+        btnModif.setEnabled(true);
         try {
             String dniBuscar = txtIngDNI.getText();
 
@@ -509,10 +505,6 @@ public class CargaBombero extends javax.swing.JFrame {
         cmbBrigadas.setSelectedIndex(-1);
         checkAct.setSelected(false);
     }//GEN-LAST:event_btnLimpiarActionPerformed
-
-    private void cmbBrigadasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbBrigadasMouseClicked
-        btnGuardar.setEnabled(true);
-    }//GEN-LAST:event_cmbBrigadasMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
