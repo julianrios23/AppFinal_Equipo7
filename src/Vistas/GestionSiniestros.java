@@ -17,6 +17,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class GestionSiniestros extends javax.swing.JFrame {
 
+    //La misma instancia se va utilizar en el evento buscar brigadas, donde le asignamos los primeros datos al siniestro
+    //Luego en el evento enviar brigada , le asignamos la brigada al siniestro y cambiamos la disponibilidad de la brigada a 0
+    private Siniestro siniestroNuevo = new Siniestro(); // Declarar la variable de instancia
     private DefaultTableModel modelo = new DefaultTableModel();
 
     public GestionSiniestros() {
@@ -260,17 +263,24 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
     private void btnEnviarBrigadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarBrigadaActionPerformed
         //acomodar pero es algo asi...
-        //                if (brigadaIdeal != null) {
-//                    siniestro.setBrigada(brigadaIdeal);
-//                    siniestroData.guardarSiniestro(siniestro);
-//                    brigadaData.brigadaOcupada(brigadaIdeal.getNombre_brigada());
-//                } else if (brigadaIdeal == null && brigadaCerca != null) {
-//                    siniestro.setBrigada(brigadaCerca);
-//                    siniestroData.guardarSiniestro(siniestro);
-//                    brigadaData.brigadaOcupada(brigadaCerca.getNombre_brigada());
-//                } else {
-//                    mensajesError.add("No se pudo asignar una brigada.");
+        // Verificar la cantidad de elementos en el JComboBox
+        if (jcbDisponibles.getItemCount() > 1) {
+            if (jcbDisponibles.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(this, "Debe asignar una brigada antes de ENVIARLA.", "Seleccione una brigada", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                String nombreBrigada = (String) jcbDisponibles.getSelectedItem();
+                SiniestroData sd = new SiniestroData();
+                BrigadaData bd = new BrigadaData();
+                Brigada brigadaAsignada = new Brigada();
+                brigadaAsignada = bd.BuscarBrigada(nombreBrigada);
+                siniestroNuevo.setBrigada(brigadaAsignada);
+                sd.guardarSiniestro(siniestroNuevo);
+                bd.brigadaOcupada(brigadaAsignada.getNombre_brigada());
+            }
 
+        } else if (jcbDisponibles.getItemCount() == 1) {
+            JOptionPane.showMessageDialog(this, "Primero busque las brigadas disponibles.", "Error:sin brigadas.", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnEnviarBrigadaActionPerformed
 
     //Funcion auxiliar para asignarBrigada mas cercana
@@ -279,7 +289,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
-    private void buscarBrigadas(double siniestroX, double siniestroY, String especialidad, Siniestro siniestro) {
+    private void buscarBrigadas(double siniestroX, double siniestroY, String especialidad, Siniestro siniestroNuevo) {
         //Vaciar campos por si vuelven a presionar buscar no se repita informacion
         modelo.setRowCount(0);
         jcbDisponibles.removeAllItems();
@@ -356,7 +366,6 @@ public class GestionSiniestros extends javax.swing.JFrame {
     private void btnBuscarBrigadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarBrigadasActionPerformed
         // Lista para almacenar mensajes de error
         List<String> mensajesError = new ArrayList<>();
-        Siniestro siniestroNuevo = new Siniestro();
 
         // Declarar las variables fuera de los bloques try
         Double coorX = null;
@@ -415,8 +424,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, mensajeFinal, "Errores de validación", JOptionPane.ERROR_MESSAGE);
 
         } else {
-
             // Asignar valores al siniestroNuevo
+
             siniestroNuevo.setTipo(especialidadSeleccionada);
             siniestroNuevo.setFechaSinietro(fechaSiniestro);
             siniestroNuevo.setHora(horaSiniestro);
@@ -426,7 +435,6 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
             // Llamada a la función asignarBrigada
             buscarBrigadas(coorX, coorY, especialidadString, siniestroNuevo);
-
         }
     }//GEN-LAST:event_btnBuscarBrigadasActionPerformed
 
@@ -510,7 +518,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
             // Establecer el índice seleccionado (opcional)
             jcbDisponibles.setSelectedIndex(0);
-        } 
+        }
 
     }
 }
