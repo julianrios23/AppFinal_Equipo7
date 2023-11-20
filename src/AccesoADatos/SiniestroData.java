@@ -124,9 +124,10 @@ public class SiniestroData {
                 brig = new Brigada();
                 sin.setCodSiniestro(cod);
                 sin.setTipo(Especialidad.valueOf(rs.getString("tipo")));
-                String datetimeString = rs.getString("fechaSinietro");
-                LocalDateTime localDateTime = LocalDateTime.parse(datetimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                sin.setFechaSinietro(localDateTime.toLocalDate());
+                String datetimeString = rs.getString("fechaSiniestro");
+                LocalDate localDate = LocalDate.parse(datetimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                sin.setFechaSinietro(localDate);
+
                 sin.setCoord_X(rs.getDouble("coord_X"));
                 sin.setCoord_Y(rs.getDouble("coord_Y"));
                 sin.setDetalles(rs.getString("detalles"));
@@ -166,7 +167,7 @@ public class SiniestroData {
                 brig = new Brigada();
                 sin.setCodSiniestro(rs.getInt("cod_siniestro"));
                 sin.setTipo(Especialidad.valueOf(rs.getString("tipo")));
-                String datetimeString = rs.getString("fechaSinietro");
+                String datetimeString = rs.getString("fechaSiniestro");
                 LocalDateTime localDateTime = LocalDateTime.parse(datetimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 sin.setFechaSinietro(localDateTime.toLocalDate());
                 sin.setCoord_X(rs.getDouble("coord_X"));
@@ -197,7 +198,7 @@ public class SiniestroData {
         ArrayList<Siniestro> listaSin = new ArrayList<>();
         Siniestro sin;
         Brigada brig;
-        String sql = "SELECT * FROM siniestro WHERE fechaSinietro BETWEEN ? AND ?";
+        String sql = "SELECT * FROM siniestro WHERE fechaSiniestro BETWEEN ? AND ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setObject(1, fecha1);
@@ -208,7 +209,7 @@ public class SiniestroData {
                 brig = new Brigada();
                 sin.setCodSiniestro(rs.getInt("cod_siniestro"));
                 sin.setTipo(Especialidad.valueOf(rs.getString("tipo")));
-                String datetimeString = rs.getString("fechaSinietro");
+                String datetimeString = rs.getString("fechaSiniestro");
                 LocalDateTime localDateTime = LocalDateTime.parse(datetimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 sin.setFechaSinietro(localDateTime.toLocalDate());
                 sin.setHora(rs.getString("horaSiniestro"));

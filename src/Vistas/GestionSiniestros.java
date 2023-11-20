@@ -59,7 +59,6 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -265,6 +264,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
         }
         if (!brigadasEncontradas.isEmpty()) {
             cargarComboBox(brigadasEncontradas);
+            
         } else {
             mensajesError.add("No hay brigadas disponibles.Estan ocupadas en otras emergencias.");
         }

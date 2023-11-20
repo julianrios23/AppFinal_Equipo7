@@ -218,7 +218,7 @@ public class Escritorio extends javax.swing.JFrame {
     }//GEN-LAST:event_itemBomberosActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        ResolucionSiniestros rs = new ResolucionSiniestros();
+        ResolucionSiniestro rs = new ResolucionSiniestro();
         rs.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
