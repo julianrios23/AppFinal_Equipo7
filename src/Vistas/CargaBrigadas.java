@@ -597,9 +597,9 @@ public class CargaBrigadas extends javax.swing.JFrame {
                 // Llamar al método para modificar la brigada
                 BrigadaData bd = new BrigadaData();
 
-                bd.modificarBrigada(brigadaExistente);
+                bd.ModificarBrigada(brigadaExistente);
 
-                bd.modificarBrigada(brigadaExistente);
+                bd.ModificarBrigada(brigadaExistente);
 
 
                 JOptionPane.showMessageDialog(this, "Modificado Exitosamente.");
