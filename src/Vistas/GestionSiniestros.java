@@ -41,7 +41,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
-        btnCargar = new javax.swing.JButton();
+        btnEnviarBrigada = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         txtCoordX = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -50,15 +50,15 @@ public class GestionSiniestros extends javax.swing.JFrame {
         txtHora = new javax.swing.JTextField();
         cmbTipos = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        jcbDisponibles = new javax.swing.JComboBox<>();
+        btnBuscarBrigadas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Gestión de Siniestros");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 24, -1, -1));
 
         btnCerrar.setBackground(new java.awt.Color(0, 0, 0));
         btnCerrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -69,25 +69,20 @@ public class GestionSiniestros extends javax.swing.JFrame {
                 btnCerrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 31, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("TIPO DE SINIESTRO");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Coordenas X:");
         jLabel3.setPreferredSize(new java.awt.Dimension(14, 24));
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 109, 20));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Coordenas Y:");
         jLabel4.setPreferredSize(new java.awt.Dimension(14, 24));
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, 96, 16));
 
         txtCoordY.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtCoordY.setPreferredSize(new java.awt.Dimension(30, 25));
-        getContentPane().add(txtCoordY, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, 180, -1));
 
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -102,28 +97,22 @@ public class GestionSiniestros extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tab1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 390, 520, 187));
-
         textArea.setColumns(20);
         textArea.setRows(5);
         jScrollPane2.setViewportView(textArea);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 510, 90));
-
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel5.setText("DETALLES DEL SINIESTRO:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, 34));
 
-        btnCargar.setBackground(new java.awt.Color(0, 0, 0));
-        btnCargar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnCargar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCargar.setText("CARGAR SINIESTRO");
-        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+        btnEnviarBrigada.setBackground(new java.awt.Color(0, 0, 0));
+        btnEnviarBrigada.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnEnviarBrigada.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnviarBrigada.setText("ENVIAR BRIGADA");
+        btnEnviarBrigada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarActionPerformed(evt);
+                btnEnviarBrigadaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 250, -1, 60));
 
         btnLimpiar.setBackground(new java.awt.Color(0, 0, 0));
         btnLimpiar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -134,38 +123,237 @@ public class GestionSiniestros extends javax.swing.JFrame {
                 btnLimpiarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 540, 161, 30));
 
         txtCoordX.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtCoordX.setPreferredSize(new java.awt.Dimension(30, 25));
-        getContentPane().add(txtCoordX, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 180, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("FECHA SINIESTRO");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, -1, -1));
-        getContentPane().add(data, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 183, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("HORA SINIESTRO");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, -1, -1));
 
         txtHora.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(txtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 100, 180, -1));
 
         cmbTipos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        getContentPane().add(cmbTipos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 183, -1));
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Formato 24HS (Ej. 14:45)");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, -1, -1));
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo rojo.jpeg"))); // NOI18N
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 600));
+        jcbDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE BRIGADA" }));
+
+        btnBuscarBrigadas.setBackground(new java.awt.Color(0, 0, 0));
+        btnBuscarBrigadas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnBuscarBrigadas.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarBrigadas.setText("BUSCAR BRIGADA");
+        btnBuscarBrigadas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarBrigadasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEnviarBrigada, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcbDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabel2)
+                        .addGap(113, 113, 113)
+                        .addComponent(jLabel6)
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel7))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(530, 530, 530)
+                        .addComponent(jLabel8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(cmbTipos, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(data, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(131, 131, 131)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(txtCoordX, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
+                        .addComponent(txtCoordY, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabel5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(415, 415, 415)
+                                .addComponent(btnCerrar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(67, 67, 67)
+                                .addComponent(btnBuscarBrigadas, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(20, 20, 20))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(btnCerrar)))
+                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addComponent(jLabel8)
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbTipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(data, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCoordX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCoordY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarBrigadas, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jcbDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEnviarBrigada, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(23, 23, 23))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+    private void btnEnviarBrigadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarBrigadaActionPerformed
+        //acomodar pero es algo asi...
+        //                if (brigadaIdeal != null) {
+//                    siniestro.setBrigada(brigadaIdeal);
+//                    siniestroData.guardarSiniestro(siniestro);
+//                    brigadaData.brigadaOcupada(brigadaIdeal.getNombre_brigada());
+//                } else if (brigadaIdeal == null && brigadaCerca != null) {
+//                    siniestro.setBrigada(brigadaCerca);
+//                    siniestroData.guardarSiniestro(siniestro);
+//                    brigadaData.brigadaOcupada(brigadaCerca.getNombre_brigada());
+//                } else {
+//                    mensajesError.add("No se pudo asignar una brigada.");
+
+    }//GEN-LAST:event_btnEnviarBrigadaActionPerformed
+
+    //Funcion auxiliar para asignarBrigada mas cercana
+    private double calcularDistancia(double x1, double y1, double x2, double y2) {
+        // Aquí puedes usar la fórmula de distancia euclidiana u otras fórmulas según tus necesidades
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+
+    private void buscarBrigadas(double siniestroX, double siniestroY, String especialidad, Siniestro siniestro) {
+        //Vaciar campos por si vuelven a presionar buscar no se repita informacion
+        modelo.setRowCount(0);
+        jcbDisponibles.removeAllItems();
+        jcbDisponibles.addItem("SELECCIONE BRIGADA");
+        jcbDisponibles.setSelectedIndex(0);
+
+        // Lista para almacenar mensajes de error
+        List<String> mensajesError = new ArrayList<>();
+
+        SiniestroData siniestroData = new SiniestroData();
+        BrigadaData brigadaData = new BrigadaData();
+        ArrayList<Brigada> brigadas = brigadaData.ObtenerBrigadasDisponibles();
+        //Lista de brigadas filtradas para agregar al comboBox
+        ArrayList<Brigada> brigadasEncontradas = new ArrayList<>();
+        Brigada brigadaIdeal = new Brigada();
+        Brigada brigadaAux = new Brigada();
+
+        if (!brigadas.isEmpty()) {
+            double distanciaMinima = Double.MAX_VALUE;
+
+            //For para agregar a la tabla solo si existe brigada ideal en distancia y especialidad
+            for (Brigada elem : brigadas) {
+                if (elem.getCuartel() != null) {
+                    double distancia = calcularDistancia(siniestroX, siniestroY, elem.getCuartel().getCoord_X(), elem.getCuartel().getCoord_Y());
+                    if (distancia < distanciaMinima && elem.getEspecialidad().equals(especialidad)) {
+                        distanciaMinima = distancia;
+                        brigadaIdeal = elem;
+                        brigadasEncontradas.add(brigadaIdeal);
+                        modelo.addRow(new Object[]{elem.getNombreCuartel(), elem.getNombre_brigada(), elem.getEspecialidad(), distancia});
+                    }
+                }
+            }
+            // For para agregar a la tabla las demás brigadas disponibles
+            distanciaMinima = Double.MAX_VALUE;
+
+            for (Brigada elem : brigadas) {
+                if (elem.getCuartel() != null) {
+                    double distancia = calcularDistancia(siniestroX, siniestroY, elem.getCuartel().getCoord_X(), elem.getCuartel().getCoord_Y());
+                    // Agregar a la tabla solo si no fue agregada en el primer bucle
+                    if (distancia < distanciaMinima && !elem.equals(brigadaIdeal)) {
+                        distanciaMinima = distancia;
+                        modelo.addRow(new Object[]{elem.getNombreCuartel(), elem.getNombre_brigada(), elem.getEspecialidad(), distancia});
+                        //cargar ComboBox recibe una brigada
+                        brigadaAux = elem;
+                        brigadasEncontradas.add(brigadaAux);
+                    }
+                }
+            }
+        }
+        if (!brigadasEncontradas.isEmpty()) {
+            cargarComboBox(brigadasEncontradas);
+        } else {
+            mensajesError.add("No hay brigadas disponibles.Estan ocupadas en otras emergencias.");
+        }
+
+        // Manejo de mensajes de error
+        if (!mensajesError.isEmpty()) {
+            // Mostrar mensajes de error
+            String mensajeFinal = String.join("\n", mensajesError);
+            JOptionPane.showMessageDialog(this, mensajeFinal, "Errores en asignación de brigada", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnBuscarBrigadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarBrigadasActionPerformed
         // Lista para almacenar mensajes de error
         List<String> mensajesError = new ArrayList<>();
         Siniestro siniestroNuevo = new Siniestro();
@@ -237,89 +425,16 @@ public class GestionSiniestros extends javax.swing.JFrame {
             siniestroNuevo.setDetalles(detallesSiniestro);
 
             // Llamada a la función asignarBrigada
-            asignarBrigada(coorX, coorY, especialidadString, siniestroNuevo);
-
-            modelo.addRow(new Object[]{siniestroNuevo.getCodSiniestro(), siniestroNuevo.getBrigada().getNombre_brigada(), siniestroNuevo.getBrigada().getNombreCuartel(), siniestroNuevo.getBrigada().getEspecialidad()});
+            buscarBrigadas(coorX, coorY, especialidadString, siniestroNuevo);
 
         }
-    }//GEN-LAST:event_btnCargarActionPerformed
-
-    //Funcion auxiliar para asignarBrigada mas cercana
-    private double calcularDistancia(double x1, double y1, double x2, double y2) {
-        // Aquí puedes usar la fórmula de distancia euclidiana u otras fórmulas según tus necesidades
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-    }
-
-    private void asignarBrigada(double siniestroX, double siniestroY, String especialidad, Siniestro siniestro) {
-
-        // Lista para almacenar mensajes de error
-        List<String> mensajesError = new ArrayList<>();
-
-        SiniestroData siniestroData = new SiniestroData();
-        BrigadaData brigadaData = new BrigadaData();
-        ArrayList<Brigada> brigadas = brigadaData.ObtenerBrigadasDisponibles();
-        Brigada brigadaIdeal = new Brigada();
-        Brigada brigadaCerca = new Brigada();
-        boolean cumpleDistancia = false;
-
-        if (!brigadas.isEmpty()) {
-            double distanciaMinima = Double.MAX_VALUE;
-            //For para asignar solo si existe brigada ideal en distancia y especialidad
-            for (Brigada elem : brigadas) {
-                if (elem.getCuartel() != null) {
-                    double distancia = calcularDistancia(siniestroX, siniestroY, elem.getCuartel().getCoord_X(), elem.getCuartel().getCoord_Y());
-
-                    if (distancia < distanciaMinima) {
-                        distanciaMinima = distancia;
-                        brigadaCerca = elem;
-                        cumpleDistancia = true;
-                    }
-                    // Si además de estar más cerca coincide la especialidad de la brigada
-                    if (cumpleDistancia && elem.getEspecialidad().equals(especialidad)) {
-                        brigadaIdeal = elem;
-                        System.out.println("Ideal:" + brigadaIdeal);
-                    }
-                } else {
-                    mensajesError.add("La brigada tiene un cuartel nulo.");
-                }
-            }
-            if (brigadaIdeal != null) {
-                siniestro.setBrigada(brigadaIdeal);
-                siniestroData.guardarSiniestro(siniestro);
-                brigadaData.brigadaOcupada(brigadaIdeal.getNombre_brigada());
-            } else if (brigadaIdeal == null && brigadaCerca != null) {
-                siniestro.setBrigada(brigadaCerca);
-                siniestroData.guardarSiniestro(siniestro);
-                brigadaData.brigadaOcupada(brigadaCerca.getNombre_brigada());
-            } else {
-                mensajesError.add("No se pudo asignar una brigada.");
-            }
-        } else {
-            mensajesError.add("No hay brigadas disponibles.");
-        }
-
-        // Manejo de mensajes de error
-        if (!mensajesError.isEmpty()) {
-            // Mostrar mensajes de error
-            String mensajeFinal = String.join("\n", mensajesError);
-            JOptionPane.showMessageDialog(this, mensajeFinal, "Errores en asignación de brigada", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }
-
-
-    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-        setVisible(false);
-    }//GEN-LAST:event_btnCerrarActionPerformed
-
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        limpiarCampos();
-    }//GEN-LAST:event_btnLimpiarActionPerformed
+    }//GEN-LAST:event_btnBuscarBrigadasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCargar;
+    private javax.swing.JButton btnBuscarBrigadas;
     private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnEnviarBrigada;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<Especialidad> cmbTipos;
     private com.toedter.calendar.JDateChooser data;
@@ -331,9 +446,9 @@ public class GestionSiniestros extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JComboBox<String> jcbDisponibles;
     private javax.swing.JTable tab1;
     private javax.swing.JTextArea textArea;
     private javax.swing.JTextField txtCoordX;
@@ -357,6 +472,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
         txtCoordY.setText("");
         textArea.setText("");
         modelo.setRowCount(0);
+        jcbDisponibles.removeAllItems();
+        jcbDisponibles.addItem("SELECCIONE BRIGADA");
     }
 
     private boolean validarCoordenadas() {
@@ -372,12 +489,28 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
     //metodo para la tabla que muestra los productos
     private void armarCabecera() {
-        modelo.addColumn("SINIESTRO CODIGO");
-        modelo.addColumn("BRIGADA");
         modelo.addColumn("CUARTEL");
+        modelo.addColumn("BRIGADA");
         modelo.addColumn("ESPECIALIDAD");
-
+        modelo.addColumn("DISTANCIA");
         tab1.setModel(modelo);
     }
 
+    //Cargar comboBox con brigadas agregadas a la tabla
+    private void cargarComboBox(ArrayList<Brigada> brigadasEncontradas) {
+
+        jcbDisponibles.removeAllItems();
+        jcbDisponibles.addItem("SELECCIONE BRIGADA");
+        jcbDisponibles.setSelectedIndex(0);
+        if (!brigadasEncontradas.isEmpty()) {
+            // Agregar el resto de las brigadas
+            for (Brigada elem : brigadasEncontradas) {
+                jcbDisponibles.addItem(elem.getNombre_brigada());
+            }
+
+            // Establecer el índice seleccionado (opcional)
+            jcbDisponibles.setSelectedIndex(0);
+        } 
+
+    }
 }
