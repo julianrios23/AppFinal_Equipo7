@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class SiniestroData {
@@ -64,25 +65,28 @@ public class SiniestroData {
     }
 
     public void concluirSiniestro(Siniestro sin) {
-        String sql = "UPDATE siniestro SET fechaResoluc=?,puntuacion=? "
+        String sql = "UPDATE siniestro SET fechaResoluc=?, horaResoluc=?, puntuacion=? "
                 + "WHERE cod_siniestro=?";
+
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setDate(1, Date.valueOf(sin.getFechaResoluc()));
-            ps.setInt(2, sin.getPuntuacion());
-            ps.setInt(3, sin.getCodSiniestro());
+            ps.setString(2, sin.getHoraResoluc());
+            ps.setInt(3, sin.getPuntuacion());
+            ps.setInt(4, sin.getCodSiniestro());
+            int filasActualizadas = ps.executeUpdate();
 
-            int aux = ps.executeUpdate();
-            if (aux == 1) {
-                JOptionPane.showMessageDialog(null, "Reporte actualizado");
+            if (filasActualizadas > 0) {
+                //JOptionPane.showMessageDialog(null, "Siniestro concluido exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo concluir el siniestro. No se encontró el siniestro con el código proporcionado.");
             }
 
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Bombero !!");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Siniestro: " + ex.getMessage());
         }
-
     }
 
     public ArrayList<String[]> listarCuarteslesXEsp(String especialidad) {
@@ -137,6 +141,7 @@ public class SiniestroData {
                 } else {
                     sin.setFechaResoluc(aux.toLocalDate());
                 }
+                sin.setHoraResoluc(rs.getString("horaResoluc"));
                 sin.setPuntuacion(rs.getInt("puntuacion"));
                 brig.setId_brigada(rs.getInt("id_brigada"));
                 sin.setBrigada(brig);
@@ -179,6 +184,8 @@ public class SiniestroData {
                 } else {
                     sin.setFechaResoluc(aux.toLocalDate());
                 }
+                sin.setHoraResoluc(rs.getString("horaResoluc"));
+
                 sin.setPuntuacion(rs.getInt("puntuacion"));
                 brig.setId_brigada(rs.getInt("id_brigada"));
                 sin.setBrigada(brig);
@@ -194,15 +201,15 @@ public class SiniestroData {
         return listaSin;
     }
 
-    public ArrayList<Siniestro> listarSiniestrosXFecha(LocalDate fecha1, LocalDate fecha2) {
+    public ArrayList<Siniestro> listarSiniestrosXFecha(LocalDate fecha, LocalDate localFechaSeleccionada1) {
         ArrayList<Siniestro> listaSin = new ArrayList<>();
         Siniestro sin;
         Brigada brig;
-        String sql = "SELECT * FROM siniestro WHERE fechaSiniestro BETWEEN ? AND ?";
+        String sql = "SELECT * FROM siniestro WHERE fechaSiniestro = ?";
+
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setObject(1, fecha1);
-            ps.setObject(2, fecha2);
+            ps.setObject(1, fecha);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 sin = new Siniestro();
@@ -222,6 +229,8 @@ public class SiniestroData {
                 } else {
                     sin.setFechaResoluc(aux.toLocalDate());
                 }
+                sin.setHoraResoluc(rs.getString("horaResoluc"));
+
                 sin.setPuntuacion(rs.getInt("puntuacion"));
                 brig.setId_brigada(rs.getInt("id_brigada"));
                 sin.setBrigada(brig);
@@ -231,8 +240,116 @@ public class SiniestroData {
             rs.close();
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "No hay Reportes en la tabla Siniestros para las fechas seleccionadas", "ERROR !!", 2);
-//            System.out.println("Error: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al ejecutar la consulta: " + ex.getMessage(), "ERROR !!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return listaSin;
+    }
+
+    //nuevo
+    public ArrayList<Siniestro> listarTodosLosSiniestros() {
+        ArrayList<Siniestro> listaSin = new ArrayList<>();
+        Siniestro sin;
+        Brigada brig;
+
+        String sql = "SELECT s.*, b.nombre_brigada "
+                + "FROM siniestro s "
+                + "JOIN brigada b ON s.id_brigada = b.id_brigada";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                sin = new Siniestro();
+                brig = new Brigada();
+
+                sin.setCodSiniestro(rs.getInt("cod_siniestro"));
+                sin.setTipo(Especialidad.valueOf(rs.getString("tipo")));
+                String datetimeString = rs.getString("fechaSiniestro");
+                LocalDate localDate = LocalDate.parse(datetimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                sin.setFechaSinietro(localDate);
+                sin.setHora(rs.getString("horaSiniestro"));
+                sin.setCoord_X(rs.getDouble("coord_X"));
+                sin.setCoord_Y(rs.getDouble("coord_Y"));
+                sin.setDetalles(rs.getString("detalles"));
+
+                Date aux = rs.getDate("fechaResoluc");
+                if (aux == null) {
+                    sin.setFechaResoluc(null);
+                } else {
+                    sin.setFechaResoluc(aux.toLocalDate());
+                }
+
+                sin.setHoraResoluc(rs.getString("horaResoluc"));
+                sin.setPuntuacion(rs.getInt("puntuacion"));
+
+                brig.setId_brigada(rs.getInt("id_brigada"));
+                brig.setNombre_brigada(rs.getString("nombre_brigada"));
+
+                sin.setBrigada(brig);
+
+                listaSin.add(sin);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los siniestros", "ERROR !!", 2);
+        }
+
+        return listaSin;
+    }
+
+    public ArrayList<Siniestro> listarUltimas48Horas() {
+        ArrayList<Siniestro> listaSin = new ArrayList<>();
+        Siniestro sin;
+        Brigada brig;
+
+        LocalDateTime ahora = LocalDateTime.now();
+
+        // Calculo la fecha hace 48 horas
+        LocalDateTime hace48Horas = ahora.minusHours(48);
+
+        String sql = "SELECT s.*, b.nombre_brigada "
+                + "FROM siniestro s "
+                + "JOIN brigada b ON s.id_brigada = b.id_brigada "
+                + "WHERE s.fechaSiniestro BETWEEN ? AND ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setObject(1, hace48Horas);
+            ps.setObject(2, ahora);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                sin = new Siniestro();
+                brig = new Brigada();
+                sin.setCodSiniestro(rs.getInt("cod_siniestro"));
+                sin.setTipo(Especialidad.valueOf(rs.getString("tipo")));
+                String dateString = rs.getString("fechaSiniestro");
+                LocalDate localDate = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                sin.setFechaSinietro(localDate);
+                sin.setHora(rs.getString("horaSiniestro"));
+                sin.setCoord_X(rs.getDouble("coord_X"));
+                sin.setCoord_Y(rs.getDouble("coord_Y"));
+                sin.setDetalles(rs.getString("detalles"));
+                Date aux = rs.getDate("fechaResoluc");
+                if (aux == null) {
+                    sin.setFechaResoluc(null);
+                } else {
+                    sin.setFechaResoluc(aux.toLocalDate());
+                }
+                sin.setHoraResoluc(rs.getString("horaResoluc"));
+                sin.setPuntuacion(rs.getInt("puntuacion"));
+                brig.setId_brigada(rs.getInt("id_brigada"));
+                brig.setNombre_brigada(rs.getString("nombre_brigada"));
+
+                sin.setBrigada(brig);
+
+                listaSin.add(sin);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los siniestros de las últimas 48 horas", "ERROR !!", 2);
         }
 
         return listaSin;

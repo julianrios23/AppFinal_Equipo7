@@ -182,7 +182,7 @@ public class BrigadaData {
                 int exito = ps.executeUpdate();
 
                 if (exito == 1) {
-                    JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+                   // JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
                 } else {
                     JOptionPane.showMessageDialog(null, "La Brigada no existe");
                 }
@@ -400,7 +400,7 @@ public class BrigadaData {
                 ps.close();  // Cerrar el tercer PreparedStatement
 
                 if (resultadoEstado > 0) {
-                    JOptionPane.showMessageDialog(null, "La Brigada " + s1.getBrigada().getId_brigada() + " ha sido liberada");
+                    //JOptionPane.showMessageDialog(null, "La Brigada " + s1.getBrigada().getId_brigada() + " ha sido liberada");
                 } else {
                     JOptionPane.showMessageDialog(null, "Brigada no encontrada.");
                 }
@@ -430,7 +430,7 @@ public class BrigadaData {
     }
     
     public void liberarBrigada(int cod) {
-        String sql = "UPDATE brigada SET estado=? WHERE id_brigada=?";
+        String sql = "UPDATE brigada SET disponibilidad=? WHERE id_brigada=?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -439,7 +439,7 @@ public class BrigadaData {
 
             int aux = ps.executeUpdate();
             if (aux == 1) {
-                JOptionPane.showMessageDialog(null, "La Brigada " + cod + "  ha sido liberada");
+                //JOptionPane.showMessageDialog(null, "La Brigada " + cod + "  ha sido liberada");
             } else {
                 JOptionPane.showMessageDialog(null, "Brigada no encontrada.");
             }

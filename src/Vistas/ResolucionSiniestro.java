@@ -5,9 +5,11 @@ import AccesoADatos.SiniestroData;
 import Entidades.Brigada;
 import Entidades.Siniestro;
 import java.awt.event.KeyEvent;
-import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,12 +18,13 @@ import javax.swing.JOptionPane;
  */
 public class ResolucionSiniestro extends javax.swing.JFrame {
 
+    
+
     public ResolucionSiniestro() {
         initComponents();
-        btnGuardar.setVisible(false);
-        checkSi.setSelected(false);
-        checkNo.setSelected(false);
-        txtHora.setEditable(false);
+        btnGuardar.setEnabled(false);
+
+        txtHoraResoluc.setEditable(false);
         txtPunt.setEditable(false);
         date.setEnabled(false);
     }
@@ -46,7 +49,7 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
         date = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtHora = new javax.swing.JTextField();
+        txtHoraResoluc = new javax.swing.JTextField();
         txtPunt = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
@@ -146,13 +149,18 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
         jLabel8.setText("Puntuación:");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 368, -1, -1));
 
-        txtHora.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        getContentPane().add(txtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 318, 104, -1));
+        txtHoraResoluc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        getContentPane().add(txtHoraResoluc, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 318, 104, -1));
 
         txtPunt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtPunt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtPuntFocusLost(evt);
+            }
+        });
+        txtPunt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPuntMouseClicked(evt);
             }
         });
         getContentPane().add(txtPunt, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 362, 104, -1));
@@ -198,16 +206,15 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
         checkNo.setSelected(false);
         txtPunt.setEditable(true);
         date.setEnabled(true);
-        txtHora.setEditable(true);
-        btnGuardar.setVisible(true);
+        txtHoraResoluc.setEditable(true);
+        btnGuardar.setEnabled(true);
     }//GEN-LAST:event_checkSiActionPerformed
 
     private void checkNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkNoActionPerformed
         // Si se elegi opcion NO, la opcion SI se bloqua
         checkSi.setSelected(false);
         txtPunt.setEnabled(false);
-        date.setEnabled(false);
-        txtHora.setEditable(false);
+        txtHoraResoluc.setEditable(false);
     }//GEN-LAST:event_checkNoActionPerformed
 
     private void txtPuntFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPuntFocusLost
@@ -244,9 +251,11 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
         }
 
         int puntaje = 0, codigo = 0;
+        String horaRes = null;
         try {
             puntaje = Integer.parseInt(txtPunt.getText());
             codigo = Integer.parseInt(txtCodigo.getText());
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Debe ingresar un valor aceptable");
         }
@@ -262,6 +271,17 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
 
         if (sin.getFechaSinietro().isBefore(fechaFin) || fechaFin.isAfter(fecha)) {
             sin.setFechaResoluc(fechaFin);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+            try {
+                LocalTime horaResol = LocalTime.parse(txtHoraResoluc.getText(), formatter);
+                sin.setHoraResoluc(horaResol.toString());
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(this, "Formato de hora no válido. Ingrese la hora en formato HH:mm");
+                return;
+            }
+
             sin.setPuntuacion(puntaje);
             sin.setCodSiniestro(codigo);
         } else {
@@ -273,6 +293,7 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
                 + "el Reporte " + codigo + " ??", "CONFIRMAR", 0, 3);
         if (resp == 0) {
             sinD.concluirSiniestro(sin);
+            JOptionPane.showMessageDialog(this, "Reporte actualizado");
             liberarBrigada();
         } else {
             return;
@@ -280,6 +301,10 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
 
         limpiarCampos();
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtPuntMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPuntMouseClicked
+        btnGuardar.setEnabled(true);
+    }//GEN-LAST:event_txtPuntMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -301,7 +326,7 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField txtBrigada;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtHora;
+    private javax.swing.JTextField txtHoraResoluc;
     private javax.swing.JTextField txtPunt;
     private javax.swing.JTextField txtSiniestro;
     // End of variables declaration//GEN-END:variables
@@ -314,9 +339,8 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
         txtSiniestro.setText("");
         checkNo.setSelected(false);
         checkSi.setSelected(false);
-
-        btnGuardar.setVisible(false);
-        txtHora.setText("");
+        txtHoraResoluc.setText("");
+        btnGuardar.setEnabled(false);
     }
 
     private void nombreBrigada(int cod) {
@@ -332,7 +356,7 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
         try {
             cod = Integer.parseInt(txtCodigo.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingrese un código de Reporte válido");
+            JOptionPane.showMessageDialog(ResolucionSiniestro.this, "Ingrese un código de Reporte válido");
             return;
         }
         // Buscar SINIESTRO por CODIGO
@@ -343,30 +367,21 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
         limpiarCampos();
         if (sin != null) {
             txtCodigo.setText(sin.getCodSiniestro() + "");
-            checkSi.setEnabled(true);
+            checkSi.setSelected(true);
             date.setEnabled(true);
-            txtPunt.setEnabled(true);
+            txtPunt.setEditable(true);
+            txtHoraResoluc.setEditable(true);
             txtSiniestro.setText(sin.getTipo().name());
             nombreBrigada(sin.getBrigada().getId_brigada());
 
-            if (sin.getFechaResoluc() != null) {
-                btnGuardar.setVisible(false);
-                checkSi.setSelected(true);
-                checkNo.setEnabled(false);
-                txtPunt.setText(sin.getPuntuacion() + "");
-                txtPunt.setEditable(false);
-                txtPunt.setOpaque(false);
-                date.setDate(Date.valueOf(sin.getFechaResoluc()));
-                date.setEnabled(false);
-            } else {
-                btnGuardar.setVisible(true);
-                checkSi.setEnabled(true);
-                checkNo.setSelected(false);
-                txtPunt.setEditable(true);
-                txtPunt.setOpaque(true);
-                date.setEnabled(true);
-            }
+        } else {
+            btnGuardar.setEnabled(true);
+            checkSi.setSelected(true);
+            checkNo.setSelected(false);
+            txtPunt.setEditable(true);
+            date.setEnabled(true);
         }
+
     }
 
     private void liberarBrigada() {
@@ -375,6 +390,7 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
         String[] separar = text.split(" ");
         int codigo = Integer.parseInt(separar[0]);
         brigD.liberarBrigada(codigo);
+        JOptionPane.showMessageDialog(this, "Brigada " + text + " liberada");
     }
 
 }

@@ -544,6 +544,7 @@ public class CargaBrigadas extends javax.swing.JFrame {
             Brigada brigada = brigadaData.BuscarBrigada(nombreBusqueda);
 
             if (brigada != null) {
+                btnModificar.setEnabled(true);
                 txtNombre.setText(brigada.getNombre_brigada());
                 Especialidad[] especialidades = Especialidad.values();
                 DefaultComboBoxModel<Especialidad> model = new DefaultComboBoxModel<>(especialidades);
@@ -576,7 +577,7 @@ public class CargaBrigadas extends javax.swing.JFrame {
             String nombreBusqueda = txtnomBuscar.getText().trim();
             BrigadaData brigadaData = new BrigadaData();
             Brigada brigadaExistente = brigadaData.BuscarBrigada(nombreBusqueda);
-
+            btnModificar.setEnabled(true);
             if (brigadaExistente != null) {
                 // Actualizar los campos de la brigadaExistente
                 brigadaExistente.setNombre_brigada(txtNombre.getText());

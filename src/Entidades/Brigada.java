@@ -123,6 +123,8 @@ public class Brigada {
     public boolean isDisponibilidad() {
         return this.disponibilidad != null && this.disponibilidad;
     }
+    
+    
 
     @Override
     public String toString() {

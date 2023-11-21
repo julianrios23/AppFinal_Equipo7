@@ -5,7 +5,6 @@ import AccesoADatos.SiniestroData;
 import Entidades.Brigada;
 import Entidades.Especialidad;
 import Entidades.Siniestro;
-import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -199,6 +198,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
                 siniestroNuevo.setBrigada(brigadaAsignada);
                 sd.guardarSiniestro(siniestroNuevo);
                 bd.brigadaOcupada(brigadaAsignada.getNombre_brigada());
+                limpiarCampos();
             }
 
         } else if (jcbDisponibles.getItemCount() == 1) {
@@ -274,6 +274,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
             // Mostrar mensajes de error
             String mensajeFinal = String.join("\n", mensajesError);
             JOptionPane.showMessageDialog(this, mensajeFinal, "Errores en asignación de brigada", JOptionPane.ERROR_MESSAGE);
+            limpiarCampos();
         }
 
     }
@@ -315,7 +316,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
         String horaSiniestro = txtHora.getText().trim();
         try {
             if (horaSiniestro.isEmpty() || !horaSiniestro.matches("\\d{2}:\\d{2}")) {
-                mensajesError.add("La hora del siniestro debe tener el formato HH:mm (ejemplo: 01:25).");
+                mensajesError.add("La hora del siniestro debe tener el formato HH:mm (ejemplo: 22:25).");
             }
         } catch (NumberFormatException e) {
             mensajesError.add("Error al procesar la hora del siniestro.");
@@ -337,8 +338,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
         // Detalles del siniestro
         String detallesSiniestro = textArea.getText().trim();
-        if (detallesSiniestro.isEmpty() || detallesSiniestro.length() < 20 || detallesSiniestro.length() > 199) {
-            mensajesError.add("Los detalles del siniestro deben tener entre 20 y 199 caracteres.");
+        if (detallesSiniestro.isEmpty() || detallesSiniestro.length() < 10 || detallesSiniestro.length() > 199) {
+            mensajesError.add("Los detalles del siniestro deben tener entre 10 y 199 caracteres.");
         }
 
         // Manejo de mensajes de error

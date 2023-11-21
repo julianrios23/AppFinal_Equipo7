@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2023 a las 17:03:20
+-- Tiempo de generación: 21-11-2023 a las 22:36:16
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -74,8 +74,10 @@ INSERT INTO `bombero` (`id_bombero`, `nombre`, `apellido`, `dni`, `fecha_nacimie
 (56, 'Lionel', 'Messi', 10101010, '1990-11-10', 'O+', 41, '2664101011', 1, '124'),
 (57, 'Kuni', 'Aguero', 29870674, '2000-02-02', 'O-', 41, '2664050477', 1, '125'),
 (58, 'Coti', 'Romero', 28012454, '1994-02-09', 'B+', 41, '2664757580', 1, '124'),
-(59, 'pepito', 'lopez', 12312312, '2000-11-02', 'O+', 33, '2664325465', 1, '200'),
-(60, 'Hector', 'Fernandez', 3012345, '1990-11-02', 'O+', 34, '1664325465', 1, '124');
+(60, 'Hector', 'Fernandez', 3012345, '1990-11-02', 'O+', 34, '1664325465', 1, '124'),
+(63, 'Pedro', 'Aznar', 25369874, '1980-11-21', 'B-', 36, '26554128754', 1, '6000'),
+(68, 'Alfredo', 'Junco', 24563789, '2005-11-06', 'A+', 33, '2654789654', 1, '333'),
+(69, 'juan', 'palomino', 4563214, '1998-11-05', 'B+', 40, '12369854', 1, '555');
 
 -- --------------------------------------------------------
 
@@ -103,7 +105,7 @@ INSERT INTO `brigada` (`id_brigada`, `nombre_brigada`, `especialidad`, `estado`,
 (35, 'AlfaIndustria', 'INCENDIO_EN_INDUSTRIA', 1, 7, 1, 'San Luis Capital'),
 (36, 'BetaDerrumbe', 'SOCORRO_EN_DERRUMBE', 1, 7, 1, 'San Luis Capital'),
 (37, 'DeltaSierras', 'SOCORRO_AMBITO_DE_MONTAÑA', 1, 7, 1, 'San Luis Capital'),
-(38, 'OmegaTransito', 'SOCORRO_ACCIDENTE_DE_TRANSITO', 1, 9, 1, 'Juana Koslay'),
+(38, 'OmegaTransito', 'PREVENCION', 1, 9, 1, 'Juana Koslay'),
 (39, 'MojarrasAlRescate', 'SOCORRO_INUNDACIONES', 1, 8, 1, 'La Punta'),
 (40, 'AlaDelta', 'SOCORRO_EN_ALTURA', 1, 8, 1, 'La Punta'),
 (41, 'MatafuegosInd', 'INCENDIO_EN_INDUSTRIA', 1, 9, 1, 'Juana Koslay');
@@ -132,7 +134,7 @@ CREATE TABLE `cuartel` (
 INSERT INTO `cuartel` (`id_cuartel`, `nombre_cuartel`, `direccion`, `coord_X`, `coord_Y`, `telefono`, `correo`, `estado`) VALUES
 (6, 'Los Matafuego', 'San Luis', 2030, 3020, '26548512', 'matafuego@gmail.com', 1),
 (7, 'San Luis Capital', 'San Luis - Capital', 460, 708, '2664566778', 'SLcapital@gmail.com', 1),
-(8, 'La Punta', 'San Luis - La Punta', 100, 300, '2664200432', 'bomblp@gmail.com', 1),
+(8, 'La Punta', 'San Luis - La Punta Dos', 108, 301, '2664200432', 'bomblp@gmail.com', 1),
 (9, 'Juana Koslay', 'San Luis - Juana Koslay', 500, 200, '2664121323', 'bombjk@gmail.com', 1);
 
 -- --------------------------------------------------------
@@ -150,10 +152,25 @@ CREATE TABLE `siniestro` (
   `coord_Y` double(10,0) NOT NULL,
   `detalles` varchar(200) NOT NULL,
   `fechaResoluc` date NOT NULL,
-  `horaResoluc` varchar(5) NOT NULL,
+  `horaResoluc` varchar(6) NOT NULL,
   `puntuacion` int(11) NOT NULL,
   `id_brigada` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `siniestro`
+--
+
+INSERT INTO `siniestro` (`cod_siniestro`, `tipo`, `fechaSiniestro`, `horaSiniestro`, `coord_X`, `coord_Y`, `detalles`, `fechaResoluc`, `horaResoluc`, `puntuacion`, `id_brigada`) VALUES
+(18, 'INCENDIO_EN_VIVIENDA', '2023-11-20', '14.40', 900, 600, 'Aparente cortocircuito', '2023-11-21', '00:00', 9, 34),
+(19, 'INCENDIO_EN_VIVIENDA', '2023-11-19', '15.11', 1500, 900, 'aaaaasdexc', '2023-11-21', '15:11', 9, 34),
+(20, 'SOCORRO_AMBITO_DE_MONTAÑA', '2023-11-19', '15:14', 800, 1050, 'perdidos en accion', '2023-11-21', '15:15', 7, 37),
+(21, 'SOCORRO_AMBITO_DE_MONTAÑA', '2023-11-18', '10:15', 900, 1600, 'Senderistas extraviados', '2023-11-21', '17:37', 10, 37),
+(22, 'SOCORRO_ACCIDENTE_DE_TRANSITO', '2023-11-20', '06:55', 1010, 308, 'Colision multiple', '2023-11-21', '15:18', 9, 38),
+(23, 'INCENDIO_EN_INDUSTRIA', '2023-11-05', '12:45', 1500, 600, 'Incendio tablero electrico', '2023-11-21', '22:15', 10, 35),
+(24, 'SOCORRO_EN_ALTURA', '2023-11-20', '22:57', 2800, 1230, 'Gato en el arbol', '2023-11-21', '18:02', 10, 40),
+(25, 'SOCORRO_INUNDACIONES', '2023-11-20', '12:45', 1000, 2000, 'entra mucha agua', '2023-11-21', '10:00', 10, 39),
+(26, 'SOCORRO_EN_ALTURA', '2023-11-20', '12:45', 900, 1200, 'muuyy altooo', '2023-11-21', '17:50', 10, 40);
 
 --
 -- Índices para tablas volcadas
@@ -199,7 +216,7 @@ ALTER TABLE `siniestro`
 -- AUTO_INCREMENT de la tabla `bombero`
 --
 ALTER TABLE `bombero`
-  MODIFY `id_bombero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id_bombero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT de la tabla `brigada`
@@ -217,7 +234,7 @@ ALTER TABLE `cuartel`
 -- AUTO_INCREMENT de la tabla `siniestro`
 --
 ALTER TABLE `siniestro`
-  MODIFY `cod_siniestro` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cod_siniestro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Restricciones para tablas volcadas
