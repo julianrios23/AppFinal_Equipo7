@@ -25,6 +25,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
         initComponents();
         cargarEspecialidad();
         armarCabecera();
+        btnBuscarBrigadas.setEnabled(false);
+        btnEnviarBrigada.setEnabled(false);
 
     }
 
@@ -110,6 +112,11 @@ public class GestionSiniestros extends javax.swing.JFrame {
 
         textArea.setColumns(20);
         textArea.setRows(5);
+        textArea.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textAreaMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(textArea);
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 241, 510, 90));
@@ -198,6 +205,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
                 siniestroNuevo.setBrigada(brigadaAsignada);
                 sd.guardarSiniestro(siniestroNuevo);
                 bd.brigadaOcupada(brigadaAsignada.getNombre_brigada());
+                JOptionPane.showMessageDialog(this, "Siniestro cargado exitosamente! Brigada: "+brigadaAsignada.getNombre_brigada()+" en camino!!");
                 limpiarCampos();
             }
 
@@ -292,7 +300,7 @@ public class GestionSiniestros extends javax.swing.JFrame {
         // Lista para almacenar mensajes de error
         List<String> mensajesError = new ArrayList<>();
 
-        // Declarar las variables fuera de los bloques try
+       
         Double coorX = null;
         Double coorY = null;
 
@@ -326,14 +334,14 @@ public class GestionSiniestros extends javax.swing.JFrame {
         try {
             coorX = Double.parseDouble(txtCoordX.getText().trim());
         } catch (NumberFormatException e) {
-            mensajesError.add("La coordenada X debe ser un número double válido.");
+            mensajesError.add("La coordenada X debe ser un número válido.");
         }
 
         // CoordenadaY
         try {
             coorY = Double.parseDouble(txtCoordY.getText().trim());
         } catch (NumberFormatException e) {
-            mensajesError.add("La coordenada Y debe ser un número double válido.");
+            mensajesError.add("La coordenada Y debe ser un número válido.");
         }
 
         // Detalles del siniestro
@@ -358,10 +366,17 @@ public class GestionSiniestros extends javax.swing.JFrame {
             siniestroNuevo.setCoord_Y(coorY);
             siniestroNuevo.setDetalles(detallesSiniestro);
 
-            // Llamada a la función asignarBrigada
+            
             buscarBrigadas(coorX, coorY, especialidadString, siniestroNuevo);
         }
     }//GEN-LAST:event_btnBuscarBrigadasActionPerformed
+
+    private void textAreaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textAreaMouseClicked
+        if (textArea!=null){
+            btnBuscarBrigadas.setEnabled(true);
+            btnEnviarBrigada.setEnabled(true);
+        }
+    }//GEN-LAST:event_textAreaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -405,6 +420,8 @@ public class GestionSiniestros extends javax.swing.JFrame {
         txtCoordX.setText("");
         txtCoordY.setText("");
         textArea.setText("");
+        btnBuscarBrigadas.setEnabled(false);
+        btnEnviarBrigada.setEnabled(false);
         modelo.setRowCount(0);
         jcbDisponibles.removeAllItems();
         jcbDisponibles.addItem("SELECCIONE BRIGADA");

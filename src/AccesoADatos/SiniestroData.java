@@ -46,7 +46,7 @@ public class SiniestroData {
             if (rs.next()) {
                 sin.setCodSiniestro(rs.getInt(1));
                 codSiniestro = rs.getInt(1);
-                JOptionPane.showMessageDialog(null, "Incidente cargado correctamente.");
+                //JOptionPane.showMessageDialog(null, "Incidente cargado correctamente.");
             }
             rs.close();
             ps.close();
