@@ -38,17 +38,7 @@ public class BomberoData {
                     return bomberoAgregado;
                 }
             }
-            // Verificar el límite de bomberos asignados a la brigada
-            try (PreparedStatement countBomberosStatement = con.prepareStatement(countBomberosQuery)) {
-                countBomberosStatement.setInt(1, bombero.getBrigada().getId_brigada());
-                ResultSet countBomberosResultSet = countBomberosStatement.executeQuery();
-
-                if (countBomberosResultSet.next() && countBomberosResultSet.getInt(1) >= 5) {
-                    JOptionPane.showMessageDialog(null, "Error: la brigada ya tiene asignados 5 bomberos. No se puede agregar más.");
-                    return bomberoAgregado;
-                }
-            }
-
+            
             // Verificar el límite de bomberos asignados a la brigada
             try (PreparedStatement countBomberosStatement = con.prepareStatement(countBomberosQuery)) {
                 countBomberosStatement.setInt(1, bombero.getBrigada().getId_brigada());

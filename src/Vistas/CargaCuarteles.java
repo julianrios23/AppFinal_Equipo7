@@ -130,8 +130,8 @@ public class CargaCuarteles extends javax.swing.JFrame {
 
         txtTel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtTel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtTelMouseClicked(evt);
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                txtTelMouseReleased(evt);
             }
         });
         getContentPane().add(txtTel, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 356, 209, -1));
@@ -368,9 +368,9 @@ public class CargaCuarteles extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void txtTelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTelMouseClicked
+    private void txtTelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTelMouseReleased
         jButton3.setEnabled(true);
-    }//GEN-LAST:event_txtTelMouseClicked
+    }//GEN-LAST:event_txtTelMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

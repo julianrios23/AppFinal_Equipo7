@@ -1,7 +1,6 @@
 package Entidades;
 
 import java.time.LocalDate;
-import java.util.Vector;
 
 /**
  *
@@ -34,7 +33,7 @@ public class Bombero {
         this.celular = celular;
         this.estado = estado;
         this.chapa_iden = chapa_iden;
-        this.brigada = new Brigada();
+        
     }
 
     public Bombero(String nombre, String apellido, int dni, LocalDate fecha_nacimiento, String grupo_sanguineo, Brigada brigada, String celular, boolean estado, String chapa_iden) {
@@ -47,7 +46,7 @@ public class Bombero {
         this.celular = celular;
         this.estado = estado;
         this.chapa_iden = chapa_iden;
-        this.brigada = new Brigada();
+        
     }
 
     public int getId_bombero() {

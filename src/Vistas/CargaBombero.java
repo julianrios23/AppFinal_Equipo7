@@ -403,14 +403,14 @@ public class CargaBombero extends javax.swing.JFrame {
 
         // Validar nombre: solo letras, min 4, max 20
         String nombre = txtNombre.getText().toUpperCase().trim();
-        if (!nombre.matches("[a-zA-Z ]+") || nombre.length() < 4 || nombre.length() > 20) {
-            mensajesError.add("El nombre debe contener solo letras y espacios, y tener entre 4 y 20 caracteres.");
+        if (!nombre.matches("[a-zA-Z ]+") || nombre.length() < 2 || nombre.length() > 20) {
+            mensajesError.add("El nombre debe contener solo letras y espacios, y tener entre 2 y 20 caracteres.");
         }
 
         // Validar apellido: solo letras, min 4, max 20
         String apellido = txtApellido.getText().toUpperCase().trim();
-        if (!apellido.matches("[a-zA-Z]+") || apellido.length() < 4 || apellido.length() > 20) {
-            mensajesError.add("El apellido debe contener solo letras y tener entre 4 y 20 caracteres.");
+        if (!apellido.matches("[a-zA-Z]+") || apellido.length() < 2 || apellido.length() > 20) {
+            mensajesError.add("El apellido debe contener solo letras y tener entre 2 y 20 caracteres.");
         }
 
         // Validar fecha de nacimiento: al menos 18 años de edad
