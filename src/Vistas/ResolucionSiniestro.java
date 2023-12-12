@@ -23,7 +23,8 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
     public ResolucionSiniestro() {
         initComponents();
         btnGuardar.setEnabled(false);
-
+        checkNo.setSelected(false);
+        checkSi.setSelected(false);
         txtHoraResoluc.setEditable(false);
         txtPunt.setEditable(false);
         date.setEnabled(false);
@@ -367,7 +368,7 @@ public class ResolucionSiniestro extends javax.swing.JFrame {
         limpiarCampos();
         if (sin != null) {
             txtCodigo.setText(sin.getCodSiniestro() + "");
-            checkSi.setSelected(true);
+            //checkSi.setSelected(true);
             date.setEnabled(true);
             txtPunt.setEditable(true);
             txtHoraResoluc.setEditable(true);

@@ -363,6 +363,11 @@ public class CargaBrigadas extends javax.swing.JFrame {
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(192, 409, -1, -1));
 
         cmbCuartel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cmbCuartel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cmbCuartelMousePressed(evt);
+            }
+        });
         getContentPane().add(cmbCuartel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 410, 273, -1));
 
         txtNombre.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -615,6 +620,10 @@ public class CargaBrigadas extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void cmbCuartelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbCuartelMousePressed
+       btnGuardar.setEnabled(true);
+    }//GEN-LAST:event_cmbCuartelMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
